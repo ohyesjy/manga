@@ -297,6 +297,14 @@
   </details>
 
   <label class="vhs-row">
+    <input type="checkbox" id="free">
+    <div>
+      <div class="vt">📋 무료 모드 — 크레딧 0원</div>
+      <div class="vd">앱이 변환하는 대신, 완성된 프롬프트를 복사해줘요. 챗지피티 앱(월정액)에 사진과 함께 붙여넣으면 끝!</div>
+    </div>
+  </label>
+
+  <label class="vhs-row" id="vhs-row">
     <input type="checkbox" id="vhs" checked>
     <div>
       <div class="vt">📼 2차 패스 — 아날로그 방송 마감</div>
@@ -305,6 +313,18 @@
   </label>
 
   <button class="go" id="btn-go" disabled>🎞 셀로 뽑기</button>
+
+  <div id="free-actions" style="display:none">
+    <button class="go" id="btn-copy1" style="margin-bottom:10px">📋 1차 프롬프트 복사 (작화 변환)</button>
+    <button class="go" id="btn-copy2" style="background:#5C7F86">📋 2차 프롬프트 복사 (VHS 마감)</button>
+    <div class="hint" style="margin-top:10px; line-height:1.7">
+      사용법: ① 위 작화감 고르고 1차 복사 → 챗지피티 앱에 <b>사진과 함께</b> 붙여넣기 →
+      ② 나온 결과 이미지에 2차 복사본 붙여넣기 → 완성본 저장.
+      아래 부분 패치 버튼들도 무료 모드에서는 프롬프트가 복사돼요.
+    </div>
+    <div class="patch-title">부분 패치 프롬프트 복사</div>
+    <div class="patch-row" id="free-patches"></div>
+  </div>
 
   <!-- 진행 -->
   <div class="card" id="progress">
@@ -446,7 +466,7 @@ Soft blurry cel animation frame. Old analog TV broadcast quality.`;
 const STYLES = {
   orangeroad: {
     name: '오렌지로드',
-    sub: '지영님 워크플로우 원문 · 1980s 저예산 셀 (2패스 권장)',
+    sub: '변덕쟁이 오렌지로드 TV · 1987 앵커 실측 (2패스 권장)',
     emoji: '🍊',
     color: '#E0688F',
     // 지영님이 킷사텐 워크플로우에서 실전 사용하는 1차 프롬프트 원문 (2026-07-13 전달본)
@@ -454,147 +474,37 @@ const STYLES = {
 Redraw the attached image IN PLACE: keep the original composition, camera angle, perspective, framing, crop, character poses, face directions, and the position and scale of every object and prop 100% IDENTICAL to the input image. Do NOT zoom, do NOT recrop, do NOT move or resize anything, do NOT change the aspect ratio. ONLY the rendering style changes.
 
 [FRAMING]
-Keep the input image's framing and aspect ratio exactly as-is (vertical 9:16 Reels/Shorts source).
+Keep the input image's framing and aspect ratio exactly as-is.
 
-[STYLE]
-Draw the image in a classic 1980s Japanese TV anime cel-animation style.
-Make it look like a real hand-painted acetate cel frame from an old television anime.
+[스타일 — 변덕쟁이 오렌지로드 TV판 (1987-88, 스튜디오 피에로)]
+첨부한 이미지를 1987년 「변덕쟁이 오렌지로드」 TV판의 진짜 방송 프레임처럼 처음부터 다시 그려줘.
+아세테이트 셀에 물감을 손으로 칠한 완전 무광 화면 — 광택, 윤기, 번들거림이 전혀 없는.
 
-Use thin-to-medium, clean, slightly soft hand-inked linework.
-The lines should be simple, controlled, and minimally detailed — not sketchy, not rough, and not crisp like modern vector lineart.
-Use dark brown or colored hold-lines on hair, skin, and soft areas instead of pure black harsh outlines.
+[작화 — 아기자기하게]
+- 성인이든 아이든 모두 둥글고 아기자기하게: 둥근 얼굴, 짧고 부드러운 턱, 통통한 볼, 작은 코, 작은 입
+- 눈: 크고 둥글지만 반짝임은 최소 — 하이라이트 딱 1개, 홍채는 플랫 1~2톤,
+  윗눈매 선은 굵고 뭉툭하게 (가늘고 섬세한 속눈썹 금지)
+- 머리카락: 크고 풍성한 80년대 머리를 한 덩어리로 — 진한 단색 + 밝은 하이라이트 밴드 딱 1줄,
+  잔머리·개별 머리카락 묘사 없음 (인디고 네이비 #181A29 같은 큰 색 덩어리)
+- 선: 뭉툭하고 부드러운 중간 굵기의 다크브라운/네이비 선, 일부러 살짝 투박하게.
+  날카롭고 매끈한 현대 벡터 선 금지. 손·손가락은 단순하게
 
-Use very simple character rendering:
-- simplified 1980s anime facial structure
-- slightly longer, more mature face structure
-- NOT modern moe
-- large but minimally rendered eyes
-- little to no eyelash detail
-- simple irises with very little internal detail
-- only 1–2 small simple eye highlights
-- tiny simple nose
-- small simple mouth
-- no glossy eyes
-- no modern cute anime sparkle rendering
+[색 — 채도 있게, 표면은 무광으로]
+- 색은 선명하고 채도 있게 — 빛바랜 세피아, 물빠진 저채도 파스텔 금지. 대신 표면은 완전 무광 플랫
+- 실측 팔레트 계열로: 비비드 옐로(#D1CF2C), 로즈 핑크(#CD7399, #E0688F), 인디고 네이비(#181A29),
+  웜 우드 브라운(#8A5C34, #35281F), 크림 피부(#F0CBA8)에 그림자 1단(#D79E78)
+- 음영은 하드엣지로 딱 1단만, 그라데이션·에어브러시 절대 금지
+- 배경 소품(병, 선반, 가구, 간판)은 실루엣과 고유색만 남기고 단순화 — 따뜻한 생활감 유지
 
-Hair should keep the original hairstyle and silhouette, but be rendered in the 1980s cel-anime manner:
-- large simple hair masses
-- soft 1980s volume where appropriate
-- minimal strand detail
-- clean broad strand groupings
-- broad, simple hair highlights
-- flat cel-style hair shading
-- matte finish
-- no glossy shine
-- no hyper-detailed individual hairs
+[마감]
+- 1987년 TV 방송 필름의 부드러운 화면 — 아주 약한 색 번짐과 소프트 포커스만
+- 현대 디지털 일러스트의 쨍한 선명함·글로우·광택 전부 금지
 
-Coloring must be flat and simple, like paint applied to the back of an acetate cel:
-- large flat color areas
-- solid color fills
-- no painterly blending
-- no smooth digital gradients
-- no airbrush shading
-- no realistic skin rendering
-- no material realism
-
-Shading should be classic cel shading:
-- hard-edged 2-tone cel shading
-- one base color + one darker shadow shape
-- simple and broad shadow shapes
-- minimal shadow detail
-- even flat lighting
-- no single dramatic light source
-- no complex lighting logic
-- no soft rendered volume
-- no realistic highlights
-- no ambient occlusion
-- no rim light
-
-Use a muted, softly desaturated vintage palette:
-- gentle pastel-like colors
-- soft mint
-- pale turquoise
-- dusty rose pink
-- pale lavender
-- off-white
-- neutral cream
-- pale blue-gray
-- cool blue-green shadows
-- low contrast
-- slightly faded analog color harmony
-- no neon colors
-- no oversaturation
-- no vivid HDR color grading
-
-[COLOR CONTROL — IMPORTANT]
-Avoid yellow cast.
-Avoid sepia cast.
-Avoid dirty beige wash.
-Avoid orange skin tone.
-Do not cover the whole image with a warm yellow filter.
-Whites should stay clean off-white, not yellowed.
-Skin should be neutral pale peach-beige, not yellow or orange.
-Warm colors are allowed, but the overall image must remain neutral and slightly cool-balanced.
-Keep the palette soft, muted, clean, and vintage without becoming yellow or sepia.
-
-[BACKGROUND]
-Backgrounds should be simplified and readable:
-- clean shapes
-- minimal texture
-- low-detail environment rendering
-- flat painted background look
-- background figures and props quieter than the foreground
-- preserve all original objects, signs, perspective, and positions
-- no photorealistic materials
-- no modern highly detailed background painting
-
-[ANALOG FINISH]
-Soft analog cel-animation look.
-Subtle film grain.
-Very faint chromatic aberration at edges only.
-Tiny cel color-bleed.
-Slight cel-scan softness.
-Slightly faded and calm.
-Mild film-like softness only.
-Simple, clean, readable composition.
-
-[MOOD / MEDIUM]
-Looks like a frame from an old Japanese weekly TV anime, shot from hand-painted cels.
-Not polished.
-Not glossy.
-Not cinematic.
-Not modern digital illustration.
-
-[NEGATIVE]
-no modern anime rendering,
-no modern moe face,
-no glossy shading,
-no glossy eyes,
-no shiny hair,
-no realistic lighting,
-no painterly rendering,
-no highly detailed skin,
-no 3D look,
-no HDR,
-no bloom-heavy digital finish,
-no lens flare,
-no strong gradients,
-no airbrush shading,
-no over-detailed eyelashes,
-no highly detailed irises,
-no hyper-detailed hair strands,
-no photorealistic textures,
-no pure-black harsh outlines,
-no dramatic single-source lighting,
-no ambient occlusion,
-no rim light,
-no neon palette,
-no oversaturation,
-no yellow tint,
-no sepia tone,
-no dirty beige wash,
-no orange skin tone,
-no busy hyper-detailed background.
+[반드시 피할 것]
+- 광택, 윤기, 촉촉한 눈망울, 글로시 입술, 에어브러시 볼터치
+- 현대 미소녀 작화, 섬세한 속눈썹, 다중 눈 하이라이트, 이상화된 비율
+- 그라데이션, HDR, 시네마틱 조명, 렌즈플레어, 3D, 포토리얼, 리얼한 재질감
+- 채도 빠진 흐릿한 색, 세피아·누런 필터, 하이퍼 디테일
 
 [SCENE]
 {{EXTRA}}`,
@@ -627,6 +537,24 @@ no busy hyper-detailed background.
 - 황혼 외경이면: 벽돌 색면(#7E4A3C), 네이비 황혼 하늘(#3A4A63), 창문 램프 글로우(#F2D48A)
 - 1986년 TV 방송의 아련하고 포근한 색 번짐`,
   },
+  cityhunter: {
+    name: '시티헌터',
+    sub: '시티헌터 · 1987 선라이즈 · 도회적 80s',
+    emoji: '🌃',
+    color: '#C9252E',
+    mod: `[스타일 지정 — 시티헌터 (1987-91, 선라이즈 TV판)]
+- 80년대 후반 도회적 시티팝 무드의 성인 취향 TV 애니로
+- 이 스타일에서는 [작화]의 둥근 얼굴 기준 대신: 성인 비율(7~8등신)의 갸름한 얼굴,
+  각진 턱선, 또렷하고 굵은 눈썹, 작고 시원한 눈매(큰 반짝이 눈 절대 금지), 어른스러운 이목구비
+- 선은 균일하고 자신감 있는 중간 굵기 다크 라인, 머리카락은 네이비블랙(#14141E) 큰 단색 덩어리
+- 음영은 하드엣지 1~2단만 — 옷 주름 몇 개, 배경 소품은 실루엣 위주로 단순화
+- 실내 장면이면 이 실측 팔레트 계열로: 세이지 그린 벽(#99AF71, 어두운 면 #699258),
+  크림카키 옷·소품(#B9CA93), 웜 샌드 창틀(#E1B377), 다크브라운 가구(#363024)
+- 색 공식: 뮤트 톤 배경 + 비비드 원색 포인트 딱 1개(#C9252E 레드 같은)
+- 밤 도시 장면이면: 딥 블루~퍼플 하늘과 빌딩 실루엣, 창문 불빛은 웜 옐로 사각형,
+  네온사인만 핑크·시안 비비드로 튀게 (나머지는 전부 뮤트)
+- 87년 선라이즈 TV 필름의 살짝 바랜 색감, 쿨하고 여유로운 도시의 공기감`,
+  },
   eva: {
     name: '에반게리온',
     sub: '신세기 에반게리온 TV · 1995 가이낙스',
@@ -635,12 +563,15 @@ no busy hyper-detailed background.
     mod: `[스타일 지정 — 신세기 에반게리온 TV판 (1995-96, 가이낙스)]
 - 이 스타일에서는 [작화]의 둥근 얼굴 기준 대신 아래를 적용:
   사다모토 요시유키 계열의 갸름하고 샤프한 얼굴선, 가늘고 예리한 눈매, 얇은 입
-- 음영은 여전히 셀 2톤이지만 경계가 칼같이 하드하고 대비가 강하게 — 드라마틱한 그림자 덩어리
-- 팔레트: 뮤트 밀리터리 그린, 딥 네이비, 차가운 베이지, 블랙 대비 강하게 —
-  형광등 아래 실내의 서늘한 색면, 채도 억제
+- 음영은 하드엣지 2톤 셀 — 단, 그림자 면적은 작게, 꼭 필요한 곳에만.
+  얼굴·피부를 뒤덮는 거대한 어두운 그림자 덩어리 절대 금지
+- [밝기 — 중요] 실제 TV 방송 화면처럼 밝고 깨끗하게: 전체 명도는 원본 이미지 수준을 유지하고,
+  화면을 어둡고 침침하게 만들지 말 것. 밤 장면이 아니면 밝은 하이키 셀 컬러로
+- 팔레트: 밝은 크림·페일 베이지 벽, 페일 민트·틸, 밝은 오프화이트, 파스텔 핑크·페일 블루 베이스에
+  에바 특유의 비비드 포인트 원색 소량(레드·오렌지, 네이비)
 - 배경은 크고 조용한 색면 + 직선적인 구조물 실루엣, 여백을 넓게
-- 정적이고 긴장감 있는 무드, 90년대 중반 TV 필름의 거친 질감
-- 화사함·귀여움 금지, 건조하고 서늘한 공기감`,
+- 필름 그레인·노이즈는 아주 약하게만 — 거친 입자로 화면을 덮지 말 것
+- 정적이고 담백한 무드, 90년대 중반 TV 셀의 깨끗하고 밝은 색면`,
   },
 };
 
@@ -1217,9 +1148,51 @@ $('btn-share').onclick = async () => {
   toast('다운로드했어요. 공유가 안 되면 이미지를 꾹 눌러 "사진에 저장"을 쓰세요.');
 };
 
+/* ---------- 무료 모드 (프롬프트 복사) ---------- */
+async function copyText(t, label) {
+  try {
+    await navigator.clipboard.writeText(t);
+    toast('📋 ' + label + ' 복사 완료! 챗지피티 앱에 붙여넣으세요.');
+  } catch (e) {
+    // 폴백: 임시 텍스트영역
+    const ta = document.createElement('textarea');
+    ta.value = t; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('📋 ' + label + ' 복사 완료!'); }
+    catch (_) { toast('복사가 막혔어요. 길게 눌러 수동 복사해주세요.', true); }
+    ta.remove();
+  }
+}
+
+function renderFreePatches() {
+  const box = $('free-patches');
+  box.innerHTML = '';
+  Object.entries(PATCHES).forEach(([key, p]) => {
+    const b = document.createElement('button');
+    b.className = 'patch';
+    b.innerHTML = `<div><div class="pn">${p.name}</div><div class="pd">${p.desc}</div></div><div class="arrow">📋</div>`;
+    b.onclick = () => copyText(p.prompt, p.name);
+    box.appendChild(b);
+  });
+}
+
+function applyFreeMode() {
+  const on = $('free').checked;
+  localStorage.setItem('cel_free', on ? '1' : '');
+  $('vhs-row').style.display = on ? 'none' : '';
+  $('btn-go').style.display = on ? 'none' : '';
+  $('free-actions').style.display = on ? '' : 'none';
+}
+
+$('free').checked = !!localStorage.getItem('cel_free');
+$('free').onchange = applyFreeMode;
+$('btn-copy1').onclick = () => copyText(buildPrompt(state.styleKey, $('extra').value), '1차 프롬프트');
+$('btn-copy2').onclick = () => copyText(PASS2_PROMPT, '2차 프롬프트');
+
 /* ---------- 시작 ---------- */
 renderStyles();
 renderPatches();
+renderFreePatches();
+applyFreeMode();
 updateGo();
 // 샌드박스(채팅 미리보기 등 iframe) 감지 → 안내 배너
 try {
