@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="셀뽑기">
+<meta name="theme-color" content="#F5EEDC">
+<title>셀뽑기 — 90년대 셀 변환기</title>
+<style>
+  :root {
+    --paper: #F5EEDC;        /* 크림 화이트 */
+    --ivory: #EFE5CC;
+    --ink: #2B3A5A;          /* 딥 네이비 잉크선 */
+    --ink-soft: #4A5878;
+    --teal: #5C7F86;         /* 뮤트 틸 */
+    --pink: #E0688F;         /* 히카루 재킷 핑크 */
+    --pink-soft: #F2A6C2;
+    --lav: #C9B8D8;          /* 연한 라벤더 */
+    --gold: #E8C877;         /* 장지문 골드 */
+    --brown: #B07A3E;
+    --shadow: #18264222;
+    --err: #9E5B44;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  }
+  /* 종이 질감 살짝 */
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: radial-gradient(#2B3A5A08 1px, transparent 1px);
+    background-size: 5px 5px;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; position:relative; z-index:1; }
+
+  /* ---------- 헤더 ---------- */
+  header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding: calc(14px + env(safe-area-inset-top)) 2px 10px;
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-mark {
+    width:44px; height:44px; border-radius:12px; background:var(--ink);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    box-shadow: 3px 3px 0 var(--shadow);
+  }
+  .logo h1 { font-size:22px; letter-spacing:-0.5px; }
+  .logo .tag { font-size:11px; color:var(--ink-soft); letter-spacing:0.2px; margin-top:1px; }
+  .gear {
+    width:40px; height:40px; border-radius:11px; border:2px solid var(--ink);
+    background:var(--ivory); font-size:18px; display:flex; align-items:center; justify-content:center;
+    box-shadow: 2px 2px 0 var(--shadow); cursor:pointer;
+  }
+  .gear:active { transform: translate(1px,1px); box-shadow:none; }
+
+  /* ---------- 공통 카드 ---------- */
+  .card {
+    background:#FBF6E9; border:2px solid var(--ink); border-radius:16px;
+    padding:16px; margin-bottom:14px; box-shadow: 4px 4px 0 var(--shadow);
+  }
+  .card h2 { font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:7px; }
+  .step-no {
+    background:var(--ink); color:var(--paper); font-size:11px; width:20px; height:20px;
+    border-radius:7px; display:inline-flex; align-items:center; justify-content:center; font-weight:700;
+  }
+
+  /* ---------- 업로드 ---------- */
+  .drop {
+    border:2px dashed var(--ink-soft); border-radius:12px; background:var(--ivory);
+    min-height:150px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:8px; cursor:pointer; text-align:center; padding:18px; transition: background .15s;
+  }
+  .drop:active { background:#E7DCC0; }
+  .drop .big { font-size:34px; }
+  .drop .txt { font-size:14px; font-weight:600; }
+  .drop .sub { font-size:12px; color:var(--ink-soft); }
+  .preview-box { position:relative; display:none; }
+  .preview-box img {
+    width:100%; border-radius:12px; border:2px solid var(--ink); display:block;
+  }
+  .repick {
+    position:absolute; right:8px; bottom:8px; border:2px solid var(--ink); background:var(--paper);
+    border-radius:9px; font-size:12px; font-weight:700; padding:6px 10px; cursor:pointer;
+    box-shadow:2px 2px 0 var(--shadow);
+  }
+
+  /* ---------- 스타일 그리드 ---------- */
+  .styles { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .style-card {
+    border:2px solid var(--ink-soft); border-radius:13px; background:var(--ivory);
+    padding:12px 12px 10px; cursor:pointer; position:relative; overflow:hidden; transition: all .12s;
+  }
+  .style-card .em { font-size:22px; }
+  .style-card .nm { font-size:14.5px; font-weight:800; margin-top:5px; letter-spacing:-0.3px; }
+  .style-card .sb { font-size:10px; color:var(--ink-soft); margin-top:2px; line-height:1.35; }
+  .style-card .band { position:absolute; top:0; left:0; right:0; height:5px; opacity:.55; }
+  .style-card.sel {
+    border-color:var(--ink); background:#FFF9EA;
+    box-shadow: 3px 3px 0 var(--shadow); transform: translateY(-1px);
+  }
+  .style-card.sel .band { opacity:1; }
+  .style-card.sel::after {
+    content:'✓'; position:absolute; top:8px; right:9px; width:20px; height:20px;
+    background:var(--ink); color:var(--paper); border-radius:7px; font-size:12px;
+    display:flex; align-items:center; justify-content:center; font-weight:700;
+  }
+
+  /* ---------- 추가 지시 ---------- */
+  details.extra { margin-bottom:14px; }
+  details.extra summary {
+    font-size:13px; font-weight:700; color:var(--ink-soft); cursor:pointer;
+    padding:4px 2px; list-style:none; display:flex; align-items:center; gap:6px;
+  }
+  details.extra summary::-webkit-details-marker { display:none; }
+  details.extra summary::before { content:'▸'; transition: transform .15s; }
+  details.extra[open] summary::before { transform: rotate(90deg); }
+  details.extra textarea {
+    width:100%; min-height:70px; margin-top:8px; border:2px solid var(--ink-soft); border-radius:11px;
+    background:var(--ivory); padding:10px; font-size:14px; font-family:inherit; color:var(--ink); resize:vertical;
+  }
+
+  /* ---------- 2차 패스 토글 ---------- */
+  .vhs-row {
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+    border:2px solid var(--ink-soft); border-radius:13px; background:#FBF6E9;
+    padding:12px 14px; cursor:pointer; user-select:none;
+  }
+  .vhs-row input { width:20px; height:20px; accent-color:#2B3A5A; flex-shrink:0; }
+  .vhs-row .vt { font-size:13.5px; font-weight:800; }
+  .vhs-row .vd { font-size:11px; color:var(--ink-soft); margin-top:2px; line-height:1.4; }
+
+  /* ---------- 변환 버튼 ---------- */
+  .go {
+    width:100%; padding:17px; border:2px solid var(--ink); border-radius:15px;
+    background:var(--ink); color:var(--paper); font-size:17px; font-weight:800; letter-spacing:0.5px;
+    cursor:pointer; box-shadow: 4px 4px 0 var(--shadow); font-family:inherit;
+  }
+  .go:active { transform: translate(2px,2px); box-shadow:none; }
+  .go:disabled { opacity:.4; box-shadow:none; }
+
+  /* ---------- 진행 ---------- */
+  #progress { display:none; text-align:center; padding:26px 16px; }
+  .reel {
+    width:58px; height:58px; margin:0 auto 14px; border-radius:50%;
+    border:3px solid var(--ink); border-top-color:var(--pink); border-right-color:var(--gold);
+    animation: spin 1.1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #prog-status { font-size:14.5px; font-weight:700; min-height:20px; }
+  #prog-time { font-size:12px; color:var(--ink-soft); margin-top:6px; }
+  .prog-note { font-size:11px; color:var(--ink-soft); margin-top:12px; line-height:1.5; }
+
+  /* ---------- 결과 ---------- */
+  #result { display:none; }
+  .result-img-box { position:relative; }
+  .result-img-box img { width:100%; border-radius:12px; border:2px solid var(--ink); display:block; }
+  .hold-hint {
+    position:absolute; left:8px; bottom:8px; background:#182642CC; color:#fff; font-size:11px;
+    border-radius:8px; padding:5px 9px; pointer-events:none;
+  }
+  .act-row { display:flex; gap:8px; margin-top:12px; }
+  .act {
+    flex:1; padding:12px 6px; border:2px solid var(--ink); border-radius:12px; background:var(--ivory);
+    font-size:13.5px; font-weight:800; cursor:pointer; font-family:inherit; color:var(--ink);
+    box-shadow:2px 2px 0 var(--shadow);
+  }
+  .act:active { transform:translate(1px,1px); box-shadow:none; }
+  .act.primary { background:var(--gold); }
+  .patch-title { font-size:12px; font-weight:800; color:var(--ink-soft); margin:16px 0 8px; }
+  .patch-row { display:flex; flex-direction:column; gap:8px; }
+  .patch {
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    border:2px solid var(--ink-soft); border-radius:12px; background:var(--ivory);
+    padding:11px 13px; cursor:pointer; font-family:inherit; text-align:left;
+  }
+  .patch:active { background:#E7DCC0; }
+  .patch .pn { font-size:13.5px; font-weight:800; color:var(--ink); }
+  .patch .pd { font-size:11px; color:var(--ink-soft); margin-top:2px; }
+  .patch .arrow { font-size:15px; color:var(--ink-soft); }
+
+  /* ---------- 히스토리 ---------- */
+  #history-card { display:none; }
+  .hist-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
+  .hist-row img {
+    width:72px; height:72px; object-fit:cover; border-radius:10px; border:2px solid var(--ink-soft);
+    flex-shrink:0; cursor:pointer;
+  }
+
+  /* ---------- 설정 시트 ---------- */
+  #sheet-bg {
+    display:none; position:fixed; inset:0; background:#18264288; z-index:50;
+  }
+  #sheet {
+    display:none; position:fixed; left:0; right:0; bottom:0; z-index:51;
+    background:var(--paper); border-top:3px solid var(--ink); border-radius:22px 22px 0 0;
+    padding:22px 20px calc(26px + env(safe-area-inset-bottom));
+    max-width:520px; margin:0 auto; max-height:86vh; overflow-y:auto;
+  }
+  #sheet h3 { font-size:17px; margin-bottom:16px; }
+  .field { margin-bottom:15px; }
+  .field label { display:block; font-size:12.5px; font-weight:800; margin-bottom:6px; }
+  .field input[type=password], .field input[type=text] {
+    width:100%; padding:12px; border:2px solid var(--ink-soft); border-radius:11px;
+    background:var(--ivory); font-size:14px; font-family:inherit; color:var(--ink);
+  }
+  .seg { display:flex; gap:6px; flex-wrap:wrap; }
+  .seg button {
+    flex:1; min-width:0; padding:10px 4px; border:2px solid var(--ink-soft); border-radius:10px;
+    background:var(--ivory); font-size:12px; font-weight:700; font-family:inherit; color:var(--ink); cursor:pointer;
+    white-space:nowrap;
+  }
+  .seg button.on { border-color:var(--ink); background:var(--gold); }
+  .seg .cap { display:block; font-size:9.5px; font-weight:600; color:var(--ink-soft); margin-top:2px; }
+  .hint { font-size:11px; color:var(--ink-soft); line-height:1.55; margin-top:6px; }
+  .sheet-save {
+    width:100%; margin-top:6px; padding:15px; border:2px solid var(--ink); border-radius:13px;
+    background:var(--ink); color:var(--paper); font-size:15px; font-weight:800; font-family:inherit; cursor:pointer;
+  }
+  .keyrow { display:flex; gap:8px; }
+  .keyrow input { flex:1; }
+  .eye {
+    width:46px; border:2px solid var(--ink-soft); border-radius:11px; background:var(--ivory);
+    font-size:16px; cursor:pointer;
+  }
+
+  /* ---------- 토스트 ---------- */
+  #toast {
+    display:none; position:fixed; left:16px; right:16px; bottom:calc(24px + env(safe-area-inset-bottom));
+    z-index:60; background:var(--ink); color:var(--paper); border-radius:13px; padding:14px 16px;
+    font-size:13.5px; line-height:1.5; box-shadow:4px 4px 0 var(--shadow); max-width:480px; margin:0 auto;
+  }
+  #toast.err { background:var(--err); }
+
+  .foot { text-align:center; font-size:10.5px; color:var(--ink-soft); margin-top:18px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="sandbox-warn" style="display:none; background:#9E5B44; color:#fff; border-radius:13px; padding:13px 15px; margin:12px 0 2px; font-size:13px; line-height:1.6; font-weight:600;">
+    ⚠️ 지금은 미리보기 화면이라 변환이 실행되지 않아요.<br>
+    이 파일(index.html)을 <b>브라우저에서 직접</b> 열어주세요 — 맥이라면 Finder에서 더블클릭!
+  </div>
+
+  <header>
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <rect x="2" y="4" width="22" height="16" rx="2.5" stroke="#F5EEDC" stroke-width="2"/>
+          <circle cx="9.5" cy="11" r="2.6" fill="#E0688F"/>
+          <path d="M4 18 L10 13 L14 16 L18 12 L22 15" stroke="#E8C877" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="5" y="1" width="3" height="3" rx="1" fill="#F5EEDC"/>
+          <rect x="12" y="1" width="3" height="3" rx="1" fill="#F5EEDC"/>
+          <rect x="19" y="1" width="3" height="3" rx="1" fill="#F5EEDC"/>
+        </svg>
+      </div>
+      <div>
+        <h1>셀뽑기</h1>
+        <div class="tag">사진 한 장 → 90년대 만화셀 한 프레임</div>
+      </div>
+    </div>
+    <button class="gear" id="btn-gear" aria-label="설정">⚙️</button>
+  </header>
+
+  <!-- STEP 1 : 사진 -->
+  <div class="card">
+    <h2><span class="step-no">1</span> 사진 고르기</h2>
+    <input type="file" id="file" accept="image/*" hidden>
+    <div class="drop" id="drop">
+      <div class="big">📷</div>
+      <div class="txt">사진 또는 이미지 선택</div>
+      <div class="sub">키프레임 원본 · 실사 사진 · 스크린샷 전부 OK</div>
+    </div>
+    <div class="preview-box" id="preview-box">
+      <img id="preview" alt="원본 미리보기">
+      <button class="repick" id="btn-repick">다시 선택</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 : 스타일 -->
+  <div class="card">
+    <h2><span class="step-no">2</span> 작화감 고르기</h2>
+    <div class="styles" id="styles"></div>
+  </div>
+
+  <details class="extra">
+    <summary>추가 지시 (선택 — 캐릭터 고정 규칙 등)</summary>
+    <textarea id="extra" placeholder="예) 캐릭터의 딸기우유 핑크색 허리 아래 생머리와 반쯤 감긴 처진 눈은 그대로 유지"></textarea>
+  </details>
+
+  <label class="vhs-row">
+    <input type="checkbox" id="vhs" checked>
+    <div>
+      <div class="vt">📼 2차 패스 — 아날로그 방송 마감</div>
+      <div class="vd">1차 결과물에 VHS 질감 프롬프트를 자동으로 한 번 더 입혀요 (완성본 기준 · 요금은 2장분)</div>
+    </div>
+  </label>
+
+  <button class="go" id="btn-go" disabled>🎞 셀로 뽑기</button>
+
+  <!-- 진행 -->
+  <div class="card" id="progress">
+    <div class="reel"></div>
+    <div id="prog-status">촬영대 준비 중…</div>
+    <div id="prog-time"></div>
+    <div class="prog-note">보통 30초~2분 정도 걸려요.<br>화면을 끄지 말고 잠깐만 기다려주세요.</div>
+  </div>
+
+  <!-- 결과 -->
+  <div class="card" id="result">
+    <h2><span class="step-no">✓</span> <span id="result-title">완성된 셀</span></h2>
+    <div class="result-img-box" id="result-box">
+      <img id="result-img" alt="변환 결과">
+      <div class="hold-hint">꾹 누르면 원본 비교</div>
+    </div>
+    <div class="act-row">
+      <button class="act primary" id="btn-share">📤 공유·저장</button>
+      <button class="act primary" id="btn-folder" style="display:none">📁 폴더에 저장</button>
+      <button class="act" id="btn-again">🔁 다시 뽑기</button>
+    </div>
+    <div class="patch-title">결과가 아쉬우면 — 부분 패치 (이 결과물만 한 번 더 다듬기)</div>
+    <div class="patch-row" id="patches"></div>
+  </div>
+
+  <!-- 히스토리 -->
+  <div class="card" id="history-card">
+    <h2>🗂 이번 세션 결과</h2>
+    <div class="hist-row" id="hist-row"></div>
+  </div>
+
+  <div class="foot">
+    프롬프트: 지영님 볼트 · 마스터통합 8090 저예산 셀 (2026-07-07 확정)<br>
+    나만 쓰는 앱 · API 키는 이 기기에만 저장돼요
+  </div>
+</div>
+
+<!-- 설정 시트 -->
+<div id="sheet-bg"></div>
+<div id="sheet">
+  <h3>⚙️ 설정</h3>
+  <div class="field">
+    <label>OpenAI API 키</label>
+    <div class="keyrow">
+      <input type="password" id="in-key" placeholder="sk-..." autocomplete="off">
+      <button class="eye" id="btn-eye">👁</button>
+    </div>
+    <div class="hint">platform.openai.com → API keys에서 발급. 키는 이 기기의 브라우저에만 저장되고 OpenAI로만 전송돼요. (챗지피티 플러스 구독과는 별도로, API 크레딧 충전이 필요해요)</div>
+    <button class="act" id="btn-testkey" style="width:100%; margin-top:8px;">🔑 키 확인 (무료)</button>
+    <div class="hint" id="key-test-result"></div>
+  </div>
+  <div class="field">
+    <label>모델</label>
+    <div class="seg" id="seg-model"></div>
+  </div>
+  <div class="field">
+    <label>화질</label>
+    <div class="seg" id="seg-quality"></div>
+    <div class="hint">high가 셀 질감이 제일 잘 살아요. 테스트할 땐 medium으로 아끼기.</div>
+  </div>
+  <div class="field">
+    <label>출력 크기</label>
+    <div class="seg" id="seg-size"></div>
+    <div class="hint">자동 = 원본 비율에 맞춰줌. 릴스 키프레임은 세로(1024×1536) 추천.</div>
+  </div>
+  <div class="field" id="field-dir" style="display:none">
+    <label>저장 폴더 (맥)</label>
+    <button class="act" id="btn-changedir" style="width:100%">📁 저장 폴더 선택·변경</button>
+    <div class="hint" id="dir-name-hint">"폴더에 저장" 버튼이 쓰는 폴더예요. 처음 누르면 선택창이 떠요.</div>
+  </div>
+  <button class="sheet-save" id="btn-save">저장하고 닫기</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ============================================================
+// 셀뽑기 — 프롬프트 자산 (지영님 볼트 40_프롬프트 기반)
+// 베이스 = 마스터통합_8090저예산셀_프롬프트 (2026-07-07 확정본)
+// 스타일 모드 = 애니스터디 노트(오렌지로드 07-09, 메종일각 07-10) 반영
+// ============================================================
+
+const BASE_PROMPT = `첨부한 이미지를, 1980-90년대 일본 저예산 주간 TV 애니메이션 제작사가 방금 만들어낸
+한 프레임처럼 바꿔줘. 종이에 연필 원화를 그리고, 제록스로 셀에 선을 뜨고, 아세테이트
+뒷면에 물감을 칠하고, 손으로 채색한 과슈 배경 위에 올려 촬영대에서 찍은 진짜 셀 화면 —
+그걸 아날로그 TV 방송으로 내보낸 걸 VHS로 녹화해 캡처한 느낌으로.
+
+[유지]
+- 원본의 구도, 카메라 앵글, 원근, 프레이밍, 포즈, 사물 위치는 100% 그대로.
+
+[셀·선화]
+- 손으로 칠한 아세테이트 셀, 무광의 마른 물감 질감, 살짝 어긋난 채색, 셀 경계의 미세한 들뜸
+- 제록스로 뜬 선화 — 살짝 불균일한 중간 굵기 잉크선, 다크브라운/네이비 외곽선
+- 넓은 단색 면, 렌더링된 조명 없음
+
+[음영 — 최소한으로]
+- 얼굴은 무음영 (목 아래 그림자 한 덩어리만), 꼭 필요한 곳에만 한 단계 어두운 톤
+- 머리카락은 큰 단색 덩어리 + 어두운 톤 1단계 또는 하이라이트 덩어리 1개, 내부 디테일·잔머리 없음
+- 옷은 어두운 톤 주름 선 몇 개만, 그라데이션 절대 금지
+- 뺨 홍조는 사선 빗금 2~3줄
+
+[작화]
+- 단순하고 살짝 모델에서 벗어난 TV 작화, 옛날 원화 비율, 주간 방송 일정에 쫓긴 듯한 러프함
+- 얼굴: 넓은 이마, 짧고 둥근 턱, 부드러운 볼, 작은 코, 아주 작은 입
+- 눈: 홍채 작고 단순, 하이라이트 크고 단순하게 딱 1개, 홍채는 2~3톤 셀 음영만,
+  속눈썹은 굵고 뭉툭하게 몇 가닥만, 눈매 선 굵고 균일, 눈꼬리 다듬지 않기, 눈 주변 피부 평평
+- 손·손가락 단순, 선 개수 최소화
+
+[사물·배경]
+- 사물은 애니 소품처럼 — 실루엣·비율만 유지, 작은 글씨·장식은 큰 색면으로, 미세 질감 제거
+- 배경은 빠르게 칠한 과슈 — 큰 색 덩어리, 균일한 단색 벽·바닥, 붓자국이 느껴질 정도의 러프함
+- 꽃·잎·잡동사니는 색 점·색 덩어리로 뭉개기
+
+[색감]
+- 채도 낮지만 깔끔한 색: 크림 화이트, 따뜻한 아이보리, 탁한 베이지, 뮤트 틸, 탁한 녹색,
+  탁한 파랑, 연한 라벤더, 깊은 네이비 그림자
+- 살짝 따뜻한 TV 색감, 채도만 5% 높이기
+- 조명은 평평한 색면으로
+
+[화질 — 아날로그 방송 캡처]
+- 전체적으로 흐릿한 VHS 캡처, 아날로그 방송 화면
+- 약한 색 번짐, 부드러운 초점, 살짝 뿌연 화면, 낮은 해상도 TV 캡처감
+
+[반드시 피할 것]
+- 현대 미소녀 작화, 다듬은 얼굴, 이상화된 비율 / 반짝이는 큰 눈, 촉촉한 눈망울, 광택 입술,
+  에어브러시 볼터치, 뷰티필터, 섬세한 속눈썹, 매끈한 그라데이션·도자기 피부
+- 사실적/시네마틱 조명, HDR, 블룸, 렌즈플레어, 앰비언트 오클루전, 시네마틱 컬러그레이딩
+- 화사한 파스텔·쨍한 디지털 색감 / 작은 폰트 정밀묘사
+- 광택 표면, 플라스틱 재질, 포토리얼, 3D·CGI, 사실적 반사·그림자, 리얼한 재질감
+- 하이퍼 디테일, 미세 질감, 개별 머리카락 렌더링, 잔머리
+- 4K·8K 선명함, AI 업스케일감, 과한 샤프닝, 선명한 현대 디지털 일러스트
+- 신카이 마코토/쿄애니/유포테이블, 상업 일러스트·포스터·굿즈 마감, 완벽하게 정렬된 셀
+- 배경 얼룩·지저분한 노이즈 (배경은 깨끗한 색면)
+
+Looks like a real frame captured from a 1980s-90s Japanese television anime,
+freshly painted cel photographed on an animation stand.
+Soft blurry cel animation frame. Old analog TV broadcast quality.`;
+
+const STYLES = {
+  orangeroad: {
+    name: '오렌지로드',
+    sub: '지영님 워크플로우 원문 · 1980s 저예산 셀 (2패스 권장)',
+    emoji: '🍊',
+    color: '#E0688F',
+    // 지영님이 킷사텐 워크플로우에서 실전 사용하는 1차 프롬프트 원문 (2026-07-13 전달본)
+    full: `[COMPOSITION LOCK — HIGHEST PRIORITY]
+Redraw the attached image IN PLACE: keep the original composition, camera angle, perspective, framing, crop, character poses, face directions, and the position and scale of every object and prop 100% IDENTICAL to the input image. Do NOT zoom, do NOT recrop, do NOT move or resize anything, do NOT change the aspect ratio. ONLY the rendering style changes.
+
+[FRAMING]
+Keep the input image's framing and aspect ratio exactly as-is (vertical 9:16 Reels/Shorts source).
+
+[STYLE]
+Draw the image in a classic 1980s Japanese TV anime cel-animation style.
+Make it look like a real hand-painted acetate cel frame from an old television anime.
+
+Use thin-to-medium, clean, slightly soft hand-inked linework.
+The lines should be simple, controlled, and minimally detailed — not sketchy, not rough, and not crisp like modern vector lineart.
+Use dark brown or colored hold-lines on hair, skin, and soft areas instead of pure black harsh outlines.
+
+Use very simple character rendering:
+- simplified 1980s anime facial structure
+- slightly longer, more mature face structure
+- NOT modern moe
+- large but minimally rendered eyes
+- little to no eyelash detail
+- simple irises with very little internal detail
+- only 1–2 small simple eye highlights
+- tiny simple nose
+- small simple mouth
+- no glossy eyes
+- no modern cute anime sparkle rendering
+
+Hair should keep the original hairstyle and silhouette, but be rendered in the 1980s cel-anime manner:
+- large simple hair masses
+- soft 1980s volume where appropriate
+- minimal strand detail
+- clean broad strand groupings
+- broad, simple hair highlights
+- flat cel-style hair shading
+- matte finish
+- no glossy shine
+- no hyper-detailed individual hairs
+
+Coloring must be flat and simple, like paint applied to the back of an acetate cel:
+- large flat color areas
+- solid color fills
+- no painterly blending
+- no smooth digital gradients
+- no airbrush shading
+- no realistic skin rendering
+- no material realism
+
+Shading should be classic cel shading:
+- hard-edged 2-tone cel shading
+- one base color + one darker shadow shape
+- simple and broad shadow shapes
+- minimal shadow detail
+- even flat lighting
+- no single dramatic light source
+- no complex lighting logic
+- no soft rendered volume
+- no realistic highlights
+- no ambient occlusion
+- no rim light
+
+Use a muted, softly desaturated vintage palette:
+- gentle pastel-like colors
+- soft mint
+- pale turquoise
+- dusty rose pink
+- pale lavender
+- off-white
+- neutral cream
+- pale blue-gray
+- cool blue-green shadows
+- low contrast
+- slightly faded analog color harmony
+- no neon colors
+- no oversaturation
+- no vivid HDR color grading
+
+[COLOR CONTROL — IMPORTANT]
+Avoid yellow cast.
+Avoid sepia cast.
+Avoid dirty beige wash.
+Avoid orange skin tone.
+Do not cover the whole image with a warm yellow filter.
+Whites should stay clean off-white, not yellowed.
+Skin should be neutral pale peach-beige, not yellow or orange.
+Warm colors are allowed, but the overall image must remain neutral and slightly cool-balanced.
+Keep the palette soft, muted, clean, and vintage without becoming yellow or sepia.
+
+[BACKGROUND]
+Backgrounds should be simplified and readable:
+- clean shapes
+- minimal texture
+- low-detail environment rendering
+- flat painted background look
+- background figures and props quieter than the foreground
+- preserve all original objects, signs, perspective, and positions
+- no photorealistic materials
+- no modern highly detailed background painting
+
+[ANALOG FINISH]
+Soft analog cel-animation look.
+Subtle film grain.
+Very faint chromatic aberration at edges only.
+Tiny cel color-bleed.
+Slight cel-scan softness.
+Slightly faded and calm.
+Mild film-like softness only.
+Simple, clean, readable composition.
+
+[MOOD / MEDIUM]
+Looks like a frame from an old Japanese weekly TV anime, shot from hand-painted cels.
+Not polished.
+Not glossy.
+Not cinematic.
+Not modern digital illustration.
+
+[NEGATIVE]
+no modern anime rendering,
+no modern moe face,
+no glossy shading,
+no glossy eyes,
+no shiny hair,
+no realistic lighting,
+no painterly rendering,
+no highly detailed skin,
+no 3D look,
+no HDR,
+no bloom-heavy digital finish,
+no lens flare,
+no strong gradients,
+no airbrush shading,
+no over-detailed eyelashes,
+no highly detailed irises,
+no hyper-detailed hair strands,
+no photorealistic textures,
+no pure-black harsh outlines,
+no dramatic single-source lighting,
+no ambient occlusion,
+no rim light,
+no neon palette,
+no oversaturation,
+no yellow tint,
+no sepia tone,
+no dirty beige wash,
+no orange skin tone,
+no busy hyper-detailed background.
+
+[SCENE]
+{{EXTRA}}`,
+  },
+  sailormoon: {
+    name: '세일러문',
+    sub: '초기 세일러문 TV · 1992 토에이',
+    emoji: '🌙',
+    color: '#C9B8D8',
+    mod: `[스타일 지정 — 초기 세일러문 TV (1992, 토에이 주간 방송분)]
+- 음영을 극단적으로 뺀 초기 세일러문 TV 기준: 완전 플랫 셀 채색
+- 얼굴 거의 무음영(목 아래 그림자 한 덩어리만), 2톤 음영도 꼭 필요한 곳에만
+- 머리카락 = 큰 단색 덩어리 + 밝은 하이라이트 덩어리 1개, 내부 디테일 없음
+- 배경 = 균일한 단색 색면(벽·가구 전부), 배경 소품 외곽선은 가늘고 단순, 질감 없음
+- 색 구성 = 뮤트 파스텔 베이스 + 비비드 포인트 원색 딱 1개 (예: 빨간 리본 같은)
+- 옷 주름 = 꼭 필요한 접힘 몇 줄만
+- 90년대 초 토에이 주간 TV 특유의 밝고 깨끗한 셀 화면`,
+  },
+  maison: {
+    name: '메종일각',
+    sub: '메종일각 · 1986 스튜디오 딘',
+    emoji: '🏠',
+    color: '#B07A3E',
+    mod: `[스타일 지정 — 메종일각 (1986, 스튜디오 딘 / 루미코 타카하시)]
+- 쇼와 후기 생활 로맨스의 낡고 따뜻한 일상감으로
+- 생활 소품(전화기, 장지문, 나무 마루, 간판)은 큰 색면으로 단순화하되 시대감 유지
+- 배경은 색면 2~3단, 인물은 1~2단으로 평평하게 — 배경이 감정을 대신 연기하게
+- 밤 실내면: 딥 인디고 네이비 벽(#22314F~#2B3A5A) + 장지문에서 새어나오는 웜 골드 빛(#E8C877), 바닥 빛 웅덩이(#D9B25C), 브라운 마루(#6E5433)
+- 낮 실내·카페면: 크림 벽(#E8DCC4)/웜 베이지(#DCCBA8), 벽돌 포인트(#9E5B44), 나무 가구(#B07A3E)
+- 황혼 외경이면: 벽돌 색면(#7E4A3C), 네이비 황혼 하늘(#3A4A63), 창문 램프 글로우(#F2D48A)
+- 1986년 TV 방송의 아련하고 포근한 색 번짐`,
+  },
+  eva: {
+    name: '에반게리온',
+    sub: '신세기 에반게리온 TV · 1995 가이낙스',
+    emoji: '⚡',
+    color: '#5C7F86',
+    mod: `[스타일 지정 — 신세기 에반게리온 TV판 (1995-96, 가이낙스)]
+- 이 스타일에서는 [작화]의 둥근 얼굴 기준 대신 아래를 적용:
+  사다모토 요시유키 계열의 갸름하고 샤프한 얼굴선, 가늘고 예리한 눈매, 얇은 입
+- 음영은 여전히 셀 2톤이지만 경계가 칼같이 하드하고 대비가 강하게 — 드라마틱한 그림자 덩어리
+- 팔레트: 뮤트 밀리터리 그린, 딥 네이비, 차가운 베이지, 블랙 대비 강하게 —
+  형광등 아래 실내의 서늘한 색면, 채도 억제
+- 배경은 크고 조용한 색면 + 직선적인 구조물 실루엣, 여백을 넓게
+- 정적이고 긴장감 있는 무드, 90년대 중반 TV 필름의 거친 질감
+- 화사함·귀여움 금지, 건조하고 서늘한 공기감`,
+  },
+};
+
+const PATCHES = {
+  eyes: {
+    name: '👁 눈만 재작화 (눈꼬리 내리기)',
+    desc: '눈이 현대 미소녀풍이거나 눈꼬리가 올라갔을 때',
+    prompt: `얼굴·구도·색감·화풍은 그대로 두고, 눈만 아래 스펙대로 다시 그려줘.
+
+EYES — strongly downturned droopy outer eye corners (outer corners angled sharply downward for a sleepy, humble look), SMALL irises and small pupils set low with plenty of visible sclera around them (NOT big shiny anime eyes), slightly heavy upper lids, thin soft lashes, sparse thin eyebrows. Gentle, tired, ordinary/comedic gaze. Flat cel linework, no airbrush. DO NOT specify or assign any iris color.
+
+딱 이미지 1장만 출력.`,
+  },
+  mob: {
+    name: '🧍 못캐릭 (엑스트라화)',
+    desc: '인물을 평범하고 못생긴 동네사람 모브 캐릭터로',
+    prompt: `구도·배경·색감·화풍은 그대로 두고, 인물의 외모만 아래 스펙대로 바꿔줘.
+
+A plain, homely, ordinary-looking 1980s-90s cel-anime mob/background character (not conventionally attractive): an asymmetric everyday face, small narrow eyes with downturned outer corners, a large or bulbous nose, thin or slightly protruding lips, uneven teeth, a weak or double chin, sparse eyebrows, mild skin blemishes and under-eye bags, plain unstyled flat hair, a tired mundane expression, average or slightly dumpy build. Realistic 'person on the street' everyman look, flat two-tone cel shading, clean linework, muted palette, no glamorization, no idealized proportions, no airbrush, no lens flare, no 3D.
+
+딱 이미지 1장만 출력.`,
+  },
+  tone: {
+    name: '📼 쨍함 제거',
+    desc: '색이 너무 선명·현대적으로 나왔을 때',
+    prompt: `구도·작화·내용은 그대로 두고, 색감과 마감만 고쳐줘.
+
+- 쨍한 디지털 채도, 과한 샤프닝, 4K 선명함, AI 업스케일 느낌을 전부 제거
+- 채도 낮지만 깔끔한 색으로: 크림 화이트, 따뜻한 아이보리, 탁한 베이지, 뮤트 틸, 연한 라벤더
+- 그라데이션·에어브러시가 생겼다면 평평한 단색 색면으로 되돌리기
+- 전체를 흐릿한 VHS 캡처, 아날로그 TV 방송 화면 질감으로: 약한 색 번짐, 부드러운 초점, 낮은 해상도 TV 캡처감
+- 살짝 따뜻한 TV 색감
+
+딱 이미지 1장만 출력.`,
+  },
+  smudge: {
+    name: '📺 좀더 뭉개기',
+    desc: '아날로그 방송 질감을 한 번 더 — 더 뿌옇고 부드럽게',
+    prompt: `구도·작화·내용은 그대로 두고, 아래 질감만 한 번 더 입혀줘.
+
+아날로그 방송 화면.
+약한 색 번짐.
+부드러운 초점.
+살짝 뿌연 화면.
+낮은 해상도 TV 캡처감.
+채도5%높히기
+밝기5%높히기
+선명한 현대 디지털 일러스트 금지.
+하이퍼 디테일 금지.
+리얼한 재질감 금지.
+HDR 금지.
+광택 금지.
+렌즈플레어 금지.
+시네마틱 컬러그레이딩 금지.
+
+Looks like a real frame captured from a late-1990s Japanese television anime.
+Soft blurry cel animation frame.
+Old analog TV broadcast quality.
+
+딱 이미지 1장만 출력.`,
+  },
+  flat: {
+    name: '🎨 음영 더 빼기',
+    desc: '음영이 너무 많이 들어갔을 때',
+    prompt: `구도·작화·색감은 그대로 두고, 음영만 초기 세일러문 TV 수준으로 극단적으로 빼줘.
+
+- 얼굴은 거의 무음영으로 — 목 아래 그림자 한 덩어리 정도만 남기기
+- 머리카락은 큰 단색 덩어리 + 어두운 톤 1단계(또는 하이라이트 덩어리 1개)로 정리, 내부 디테일 제거
+- 옷은 어두운 톤 주름 선 몇 개만 남기고 그라데이션·잔음영 제거
+- 배경 벽·바닥은 균일한 단색 색면으로, 질감·얼룩 제거
+- 그림자는 한 단계 어두운 같은 계열 색으로 딱 1단, 크고 단순한 덩어리, 하드 엣지
+
+딱 이미지 1장만 출력.`,
+  },
+};
+
+const CLOSING = '\n\n딱 이미지 1장만 출력.';
+
+// 2차 패스 — 아날로그 방송 마감 (지영님 워크플로우 두 번째 프롬프트 원문)
+const PASS2_PROMPT = `아날로그 방송 화면.
+약한 색 번짐.
+부드러운 초점.
+살짝 뿌연 화면.
+낮은 해상도 TV 캡처감.
+채도5%높히기
+선명한 현대 디지털 일러스트 금지.
+하이퍼 디테일 금지.
+리얼한 재질감 금지.
+HDR 금지.
+광택 금지.
+렌즈플레어 금지.
+시네마틱 컬러그레이딩 금지.
+
+Looks like a real frame captured from a late-1990s Japanese television anime.
+Soft blurry cel animation frame.
+Old analog TV broadcast quality.
+
+구도·작화·내용은 그대로 두고 위 질감만 입혀줘. 딱 이미지 1장만 출력.`;
+
+function buildPrompt(styleKey, extra) {
+  const s = STYLES[styleKey];
+  const ex = (extra || '').trim();
+  if (s.full) {
+    // 지영님 원문 프롬프트: [SCENE] 자리에 추가 지시 삽입
+    return s.full.replace('{{EXTRA}}', ex ? ex : '[]');
+  }
+  let p = BASE_PROMPT + '\n\n' + s.mod;
+  if (ex) p += '\n\n[추가 지시]\n' + ex;
+  return p + CLOSING;
+}
+
+
+/* ============================================================
+   앱 로직
+============================================================ */
+const $ = (id) => document.getElementById(id);
+
+const MODELS = [
+  { v:'gpt-image-1.5', n:'GPT Image 1.5', cap:'기본 · 균형' },
+  { v:'gpt-image-2',   n:'GPT Image 2',   cap:'최고 화질' },
+  { v:'gpt-image-1-mini', n:'1 mini', cap:'절약 · 테스트용' },
+];
+const QUALITIES = [
+  { v:'high', n:'high', cap:'추천' },
+  { v:'medium', n:'medium', cap:'절약' },
+  { v:'low', n:'low', cap:'초안' },
+];
+const SIZES = [
+  { v:'auto', n:'자동', cap:'원본 비율' },
+  { v:'1024x1536', n:'세로', cap:'릴스 9:16용' },
+  { v:'1536x1024', n:'가로', cap:'와이드' },
+  { v:'1024x1024', n:'정방', cap:'1:1' },
+];
+
+const settings = {
+  key:  localStorage.getItem('cel_key') || '',
+  model: localStorage.getItem('cel_model') || 'gpt-image-1.5',
+  quality: localStorage.getItem('cel_quality') || 'high',
+  size: localStorage.getItem('cel_size') || 'auto',
+};
+
+const state = {
+  file: null,          // 사용자가 고른 원본 File
+  inputBlob: null,     // 리사이즈된 업로드용 Blob
+  originalURL: null,   // 원본 미리보기 URL
+  styleKey: 'orangeroad',
+  resultBlob: null,    // 최근 결과 Blob (패치 입력으로 사용)
+  resultURL: null,
+  busy: false,
+  history: [],         // {url, blob, label}
+};
+
+/* ---------- UI 초기화 ---------- */
+function renderStyles() {
+  const box = $('styles');
+  box.innerHTML = '';
+  Object.entries(STYLES).forEach(([key, s]) => {
+    const el = document.createElement('div');
+    el.className = 'style-card' + (state.styleKey === key ? ' sel' : '');
+    el.innerHTML = `<div class="band" style="background:${s.color}"></div>
+      <div class="em">${s.emoji}</div><div class="nm">${s.name}</div><div class="sb">${s.sub}</div>`;
+    el.onclick = () => { state.styleKey = key; renderStyles(); };
+    box.appendChild(el);
+  });
+}
+
+function renderPatches() {
+  const box = $('patches');
+  box.innerHTML = '';
+  Object.entries(PATCHES).forEach(([key, p]) => {
+    const b = document.createElement('button');
+    b.className = 'patch';
+    b.innerHTML = `<div><div class="pn">${p.name}</div><div class="pd">${p.desc}</div></div><div class="arrow">›</div>`;
+    b.onclick = () => runPatch(key);
+    box.appendChild(b);
+  });
+}
+
+function renderSeg(elId, list, cur, onPick) {
+  const box = $(elId);
+  box.innerHTML = '';
+  list.forEach(item => {
+    const b = document.createElement('button');
+    b.innerHTML = `${item.n}<span class="cap">${item.cap}</span>`;
+    if (item.v === cur) b.classList.add('on');
+    b.onclick = () => onPick(item.v);
+    box.appendChild(b);
+  });
+}
+
+function renderSheet() {
+  $('in-key').value = settings.key;
+  renderSeg('seg-model', MODELS, settings.model, v => { settings.model = v; renderSheet(); });
+  renderSeg('seg-quality', QUALITIES, settings.quality, v => { settings.quality = v; renderSheet(); });
+  renderSeg('seg-size', SIZES, settings.size, v => { settings.size = v; renderSheet(); });
+}
+
+function openSheet() { renderSheet(); $('sheet').style.display = 'block'; $('sheet-bg').style.display = 'block'; }
+function closeSheet() { $('sheet').style.display = 'none'; $('sheet-bg').style.display = 'none'; }
+
+$('btn-gear').onclick = openSheet;
+$('sheet-bg').onclick = closeSheet;
+$('btn-eye').onclick = () => {
+  const i = $('in-key');
+  i.type = i.type === 'password' ? 'text' : 'password';
+};
+function cleanKey(v) { return (v || '').replace(/\s+/g, ''); }
+
+$('btn-testkey').onclick = async () => {
+  const key = cleanKey($('in-key').value);
+  const out = $('key-test-result');
+  if (!key) { out.textContent = '키를 먼저 붙여넣어주세요.'; return; }
+  if (!key.startsWith('sk-')) { out.textContent = '⚠️ 키가 sk- 로 시작하지 않아요. 복사가 잘못된 것 같아요.'; return; }
+  out.textContent = '확인 중…';
+  try {
+    const r = await fetch('https://api.openai.com/v1/models', {
+      headers: { Authorization: 'Bearer ' + key },
+    });
+    if (r.ok) {
+      out.textContent = '✅ 키가 유효해요! (길이 ' + key.length + '자) 저장하고 닫기를 눌러주세요.';
+    } else if (r.status === 401) {
+      out.textContent = '❌ OpenAI가 이 키를 거부했어요 (길이 ' + key.length + '자). platform.openai.com/api-keys에서 새 키를 만들어 바로 여기 붙여넣어주세요.';
+    } else {
+      out.textContent = '⚠️ 응답 코드 ' + r.status + ' — 잠시 후 다시 시도해주세요.';
+    }
+  } catch (e) {
+    out.textContent = '⚠️ 네트워크 오류 — 인터넷 연결을 확인해주세요.';
+  }
+};
+
+$('btn-save').onclick = () => {
+  settings.key = cleanKey($('in-key').value);
+  localStorage.setItem('cel_key', settings.key);
+  localStorage.setItem('cel_model', settings.model);
+  localStorage.setItem('cel_quality', settings.quality);
+  localStorage.setItem('cel_size', settings.size);
+  closeSheet();
+  toast('설정을 저장했어요 ✓');
+  updateGo();
+};
+
+/* ---------- 토스트 ---------- */
+let toastTimer = null;
+function toast(msg, isErr) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = isErr ? 'err' : '';
+  t.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.style.display = 'none'; }, isErr ? 6000 : 2600);
+}
+
+/* ---------- 사진 선택 & 리사이즈 ---------- */
+$('drop').onclick = () => $('file').click();
+$('btn-repick').onclick = () => $('file').click();
+$('file').onchange = async (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  state.file = f;
+  try {
+    state.inputBlob = await resizeImage(f, 2048);
+  } catch (err) {
+    toast('이미지를 읽지 못했어요. 다른 파일로 시도해주세요.', true);
+    return;
+  }
+  if (state.originalURL) URL.revokeObjectURL(state.originalURL);
+  state.originalURL = URL.createObjectURL(state.inputBlob);
+  $('preview').src = state.originalURL;
+  $('drop').style.display = 'none';
+  $('preview-box').style.display = 'block';
+  updateGo();
+};
+
+async function resizeImage(file, maxSide) {
+  const bmp = await createImageBitmap(file).catch(async () => {
+    // createImageBitmap이 실패하면 <img> 경유 (HEIC 등)
+    const url = URL.createObjectURL(file);
+    const img = await new Promise((res, rej) => {
+      const i = new Image();
+      i.onload = () => res(i); i.onerror = rej; i.src = url;
+    });
+    URL.revokeObjectURL(url);
+    return img;
+  });
+  const w = bmp.width || bmp.naturalWidth, h = bmp.height || bmp.naturalHeight;
+  const scale = Math.min(1, maxSide / Math.max(w, h));
+  const cw = Math.round(w * scale), ch = Math.round(h * scale);
+  const canvas = document.createElement('canvas');
+  canvas.width = cw; canvas.height = ch;
+  canvas.getContext('2d').drawImage(bmp, 0, 0, cw, ch);
+  return await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.92));
+}
+
+function updateGo() {
+  $('btn-go').disabled = !(state.inputBlob && !state.busy);
+}
+
+/* ---------- 진행 표시 ---------- */
+const STATUS_LINES = [
+  '연필로 원화 그리는 중…',
+  '제록스로 셀에 선 뜨는 중…',
+  '아세테이트 뒷면에 물감 칠하는 중…',
+  '과슈 배경 위에 셀 올리는 중…',
+  '촬영대에서 찍는 중…',
+  'VHS로 녹화하는 중…',
+];
+let progTimer = null, progStart = 0, progIdx = 0;
+function showProgress(title) {
+  state.busy = true; updateGo();
+  $('progress').style.display = 'block';
+  $('prog-status').textContent = title || STATUS_LINES[0];
+  progStart = Date.now(); progIdx = 0;
+  $('prog-time').textContent = '0초';
+  clearInterval(progTimer);
+  progTimer = setInterval(() => {
+    const s = Math.floor((Date.now() - progStart) / 1000);
+    $('prog-time').textContent = s + '초';
+    if (s > 0 && s % 5 === 0) {
+      progIdx = (progIdx + 1) % STATUS_LINES.length;
+      $('prog-status').textContent = STATUS_LINES[progIdx];
+    }
+  }, 1000);
+  $('progress').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+function hideProgress() {
+  state.busy = false; updateGo();
+  clearInterval(progTimer);
+  $('progress').style.display = 'none';
+}
+
+/* ---------- OpenAI 호출 ---------- */
+async function callEdit(imageBlob, prompt) {
+  const fd = new FormData();
+  fd.append('model', settings.model);
+  fd.append('image', imageBlob, 'input.jpg');
+  fd.append('prompt', prompt);
+  fd.append('size', settings.size);
+  fd.append('quality', settings.quality);
+  // input_fidelity는 gpt-image-1 계열만 지원 (gpt-image-2는 자체적으로 원본을 잘 유지)
+  if (settings.model.startsWith('gpt-image-1')) fd.append('input_fidelity', 'high');
+  fd.append('n', '1');
+
+  const res = await fetch('https://api.openai.com/v1/images/edits', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + settings.key },
+    body: fd,
+  });
+  if (!res.ok) {
+    let msg = 'HTTP ' + res.status;
+    try {
+      const j = await res.json();
+      msg = (j.error && j.error.message) ? j.error.message : msg;
+    } catch (_) {}
+    if (res.status === 401) throw new Error('API 키가 올바르지 않아요. 설정에서 키를 확인해주세요.');
+    if (/postMessage|could not be cloned/i.test(msg)) throw new Error('미리보기 화면에서는 변환이 안 돼요. index.html 파일을 브라우저에서 직접 열어주세요 (Finder에서 더블클릭).');
+    if (res.status === 429) throw new Error('요청 한도에 걸렸어요. 잠시 후 다시 시도해주세요. (크레딧 잔액도 확인)');
+    if (/safety|content policy|moderation/i.test(msg)) throw new Error('안전 정책에 걸린 이미지예요. 다른 사진으로 시도해주세요.');
+    if (/parameter/i.test(msg) && /not support/i.test(msg)) throw new Error('모델과 옵션 조합 문제예요. 설정에서 모델을 GPT Image 1.5로 바꿔보세요.\n(' + msg + ')');
+    if (/model/i.test(msg) && /not|invalid|access/i.test(msg)) throw new Error('이 모델을 쓸 수 없는 계정이에요. 설정에서 다른 모델을 골라주세요.\n(' + msg + ')');
+    throw new Error(msg);
+  }
+  const j = await res.json();
+  const b64 = j.data && j.data[0] && j.data[0].b64_json;
+  if (!b64) throw new Error('응답에 이미지가 없어요.');
+  const bin = atob(b64);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], { type: 'image/png' });
+}
+
+/* ---------- 변환 실행 ---------- */
+$('btn-go').onclick = () => runConvert();
+$('btn-again').onclick = () => runConvert();
+
+async function runConvert() {
+  if (!state.inputBlob) return;
+  if (!settings.key) { openSheet(); toast('먼저 OpenAI API 키를 넣어주세요', true); return; }
+  const prompt = buildPrompt(state.styleKey, $('extra').value);
+  const twoPass = $('vhs').checked;
+  showProgress(twoPass ? '1차: 작화감 입히는 중…' : undefined);
+  $('result').style.display = 'none';
+  try {
+    const blob1 = await callEdit(state.inputBlob, prompt);
+    if (!twoPass) {
+      showResult(blob1, STYLES[state.styleKey].name + ' 셀');
+      return;
+    }
+    showResult(blob1, STYLES[state.styleKey].name + ' · 1차');
+    showProgress('2차: 아날로그 방송 질감 입히는 중…');
+    const blob2 = await callEdit(blob1, PASS2_PROMPT);
+    showResult(blob2, STYLES[state.styleKey].name + ' · 완성본 📼');
+  } catch (err) {
+    const m = /postMessage|could not be cloned/i.test(err.message)
+      ? '미리보기 화면에서는 변환이 안 돼요. index.html 파일을 브라우저에서 직접 열어주세요 (Finder에서 더블클릭).'
+      : err.message;
+    toast('변환 실패: ' + m, true);
+  } finally {
+    hideProgress();
+  }
+}
+
+async function runPatch(key) {
+  if (!state.resultBlob || state.busy) return;
+  if (!settings.key) { openSheet(); return; }
+  showProgress(PATCHES[key].name.replace(/^[^\s]+\s/, '') + ' 작업 중…');
+  try {
+    const blob = await callEdit(state.resultBlob, PATCHES[key].prompt);
+    showResult(blob, PATCHES[key].name + ' 적용');
+  } catch (err) {
+    toast('패치 실패: ' + err.message, true);
+  } finally {
+    hideProgress();
+  }
+}
+
+/* ---------- 결과 표시 ---------- */
+function showResult(blob, label) {
+  state.resultBlob = blob;
+  if (state.resultURL) { /* keep old URLs for history */ }
+  state.resultURL = URL.createObjectURL(blob);
+  $('result-img').src = state.resultURL;
+  $('result-title').textContent = label || '완성된 셀';
+  $('result').style.display = 'block';
+  state.history.unshift({ url: state.resultURL, blob, label });
+  renderHistory();
+  $('result').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function renderHistory() {
+  if (!state.history.length) return;
+  $('history-card').style.display = 'block';
+  const row = $('hist-row');
+  row.innerHTML = '';
+  state.history.slice(0, 20).forEach(item => {
+    const img = document.createElement('img');
+    img.src = item.url;
+    img.onclick = () => {
+      state.resultBlob = item.blob;
+      state.resultURL = item.url;
+      $('result-img').src = item.url;
+      $('result-title').textContent = item.label || '완성된 셀';
+      $('result').style.display = 'block';
+      $('result').scrollIntoView({ behavior:'smooth', block:'start' });
+    };
+    row.appendChild(img);
+  });
+}
+
+/* ---------- 꾹 눌러 원본 비교 ---------- */
+(function holdCompare() {
+  const box = $('result-box'), img = $('result-img');
+  let holding = false;
+  const down = (e) => {
+    if (!state.originalURL) return;
+    holding = true;
+    img.src = state.originalURL;
+    e.preventDefault();
+  };
+  const up = () => {
+    if (!holding) return;
+    holding = false;
+    if (state.resultURL) img.src = state.resultURL;
+  };
+  box.addEventListener('touchstart', down, { passive:false });
+  box.addEventListener('touchend', up);
+  box.addEventListener('touchcancel', up);
+  box.addEventListener('mousedown', down);
+  window.addEventListener('mouseup', up);
+  box.addEventListener('contextmenu', e => e.preventDefault());
+})();
+
+/* ---------- 맥 폴더 직접 저장 (File System Access API) ---------- */
+const FSA_OK = 'showDirectoryPicker' in window;
+
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('celapp', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('kv');
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+async function idbGet(key) {
+  const db = await idbOpen();
+  return new Promise((res, rej) => {
+    const t = db.transaction('kv').objectStore('kv').get(key);
+    t.onsuccess = () => res(t.result); t.onerror = () => rej(t.error);
+  });
+}
+async function idbSet(key, val) {
+  const db = await idbOpen();
+  return new Promise((res, rej) => {
+    const t = db.transaction('kv', 'readwrite').objectStore('kv').put(val, key);
+    t.onsuccess = () => res(); t.onerror = () => rej(t.error);
+  });
+}
+
+async function pickDir() {
+  const dir = await window.showDirectoryPicker({ mode: 'readwrite' });
+  await idbSet('dir', dir);
+  const hint = $('dir-name-hint');
+  if (hint) hint.textContent = '현재 저장 폴더: "' + dir.name + '"';
+  return dir;
+}
+
+async function getDir() {
+  let dir = null;
+  try { dir = await idbGet('dir'); } catch (_) {}
+  if (dir) {
+    try {
+      let perm = await dir.queryPermission({ mode: 'readwrite' });
+      if (perm !== 'granted') perm = await dir.requestPermission({ mode: 'readwrite' });
+      if (perm === 'granted') return dir;
+    } catch (_) {}
+  }
+  return await pickDir();
+}
+
+function celFileName() {
+  const d = new Date();
+  const p = (n) => String(n).padStart(2, '0');
+  return '셀뽑기_' + d.getFullYear() + p(d.getMonth()+1) + p(d.getDate()) + '_' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds()) + '.png';
+}
+
+async function saveToFolder() {
+  if (!state.resultBlob) return;
+  try {
+    const dir = await getDir();
+    const fname = celFileName();
+    const fh = await dir.getFileHandle(fname, { create: true });
+    const w = await fh.createWritable();
+    await w.write(state.resultBlob);
+    await w.close();
+    toast('📁 "' + dir.name + '" 폴더에 저장했어요 — ' + fname);
+  } catch (e) {
+    if (e.name === 'AbortError') return; // 사용자가 선택창 닫음
+    toast('폴더 저장이 안 돼서 다운로드로 대신 저장할게요 (' + e.message + ')', true);
+    const a = document.createElement('a');
+    a.href = state.resultURL; a.download = celFileName();
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+}
+
+if (FSA_OK) {
+  $('btn-folder').style.display = '';
+  $('field-dir').style.display = '';
+  $('btn-folder').onclick = saveToFolder;
+  $('btn-changedir').onclick = async () => {
+    try { await pickDir(); toast('저장 폴더를 바꿨어요 ✓'); } catch (e) { if (e.name !== 'AbortError') toast('폴더 선택 실패: ' + e.message, true); }
+  };
+  (async () => {
+    try {
+      const dir = await idbGet('dir');
+      if (dir) $('dir-name-hint').textContent = '현재 저장 폴더: "' + dir.name + '"';
+    } catch (_) {}
+  })();
+}
+
+/* ---------- 저장/공유 ---------- */
+$('btn-share').onclick = async () => {
+  if (!state.resultBlob) return;
+  const fname = 'cel_' + new Date().toISOString().replace(/[:.]/g,'-').slice(0,19) + '.png';
+  const file = new File([state.resultBlob], fname, { type:'image/png' });
+  if (navigator.canShare && navigator.canShare({ files:[file] })) {
+    try {
+      await navigator.share({ files:[file] });
+      return;
+    } catch (e) { if (e.name === 'AbortError') return; }
+  }
+  // 폴백: 다운로드
+  const a = document.createElement('a');
+  a.href = state.resultURL; a.download = fname;
+  document.body.appendChild(a); a.click(); a.remove();
+  toast('다운로드했어요. 공유가 안 되면 이미지를 꾹 눌러 "사진에 저장"을 쓰세요.');
+};
+
+/* ---------- 시작 ---------- */
+renderStyles();
+renderPatches();
+updateGo();
+// 샌드박스(채팅 미리보기 등 iframe) 감지 → 안내 배너
+try {
+  if (window.self !== window.top) $('sandbox-warn').style.display = 'block';
+} catch (_) { $('sandbox-warn').style.display = 'block'; }
+if (!settings.key) setTimeout(openSheet, 600);
+</script>
+</body>
+</html>
