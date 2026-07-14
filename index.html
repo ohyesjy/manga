@@ -573,6 +573,73 @@ Keep the input image's framing and aspect ratio exactly as-is.
 - 필름 그레인·노이즈는 아주 약하게만 — 거친 입자로 화면을 덮지 말 것
 - 정적이고 담백한 무드, 90년대 중반 TV 셀의 깨끗하고 밝은 색면`,
   },
+  videogirl: {
+    name: '비디오걸 아이',
+    sub: '비디오걸 아이 · 미드나잇 블루 + VHS 기계 연출 (2패스 권장)',
+    emoji: '🌌',
+    color: '#232E52',
+    // 마스터 저예산 셀 규칙 유지 + 미드나잇 블루/VHS 스테이징 애드온 (2026-07-14 전달본)
+    mod: `[스타일 지정 — 비디오걸 아이 (VIDEO GIRL AI) · 미드나잇 블루 + VHS 기계 연출 애드온]
+마스터 저예산 셀 규칙을 그대로 유지할 것 — 카츠라식 리얼 비율 절대 금지, 마스터의 단순하고 둥근 TV 애니 얼굴 유지.
+
+VIDEO-GIRL-AI MIDNIGHT BLUE + VHS MACHINE STAGING (add-on; keep master low-budget cel rules — do NOT use Katsura realistic proportions, keep the master's simple round TV-anime faces):
+MIDNIGHT BLUE SCENE (the nighttime emotional stage):
+- Night interior palette = deep navy flats #1C2438-#232E52; moonlit skin highlight pale blue-gray #C8CCD4, shadow side #3A4258. Almost no saturation — a "blue night".
+- MOONLIT ONE-STEP SHADOW: cover 50-70% of the face with ONE cool blue-gray shadow shape, single big curved edge, no modeling. Only the light-facing rim keeps pale skin tone.
+- EMOTIONAL STRAIN HATCHING: several long diagonal hatch lines on the cheek / under the eye (longer and denser than the 2-3 blush hatches) to show tension or exhaustion, readable even in the dark.
+- TV-LIGHT FACE: a character in front of a TV/monitor gets a cold blue-white rim on the screen side and an overall bluish cast — the machine is the light source.
+SURREAL STARFIELD SWAP (emotional climax):
+- At the emotional peak, DELETE the room: keep only the bed/furniture island floating in a black-to-navy starfield — irregular white star dots #E8ECF4, faint purple nebula blotches #4A3E78, translucent drifting mist cels #9CA8C8.
+- High-angle long shot, characters small and isolated, near-silhouette.
+- MIST BOIL: only the mist cels drift slowly on loop; stars, bed, characters stay static painted cels.
+MACHINE INSERT CODES (retro-tech punctuation):
+- VCR PANEL INSERT: hard cut to a front-panel close-up of a VCR/appliance — black panel, glowing cyan logo #40C8E0, amber counter digits #E8A020, yellow level gauge #F0C830. Only the digits change; everything else static. Use as a scene-ending "period" that marks time passing.
+- VHS STATIC TITLE CARD: full-frame gray-white analog static noise with ONE line of white gothic text (black outline) centered — a zero-background title/dialogue card.
+- GLASSES DOUBLE REFLECTION: close-up of a bespectacled character with the other person's face drawn twice, once in each lens.
+- FALLING STONE-KANJI GAG: one giant word rendered as a cracked stone slab dropping onto the character's head, dark background, a few crack lines for texture.
+MIDNIGHT SHOP STAGE:
+- Night store interior = flat navy #202A50 everywhere, EXCEPT a glowing warm-white floor-light grid #F0EAD0 — two color fields that make an ordinary shop look like the entrance to another world.`,
+  },
+  expr: {
+    name: 'only표정변환',
+    sub: '좌: 래퍼런스 / 우: 캐릭터시트 · 표정만 이식, 원본 100% 유지',
+    emoji: '🎭',
+    color: '#7E8AAE',
+    noPass2: true,   // 표정만 바꾸는 편집 — 색감/조명 유지 위해 2차 VHS 패스 자동 skip
+    full: `only표정
+좌: 래퍼런스 / 우: 캐릭터시트
+
+좌측 래퍼런스의 표정을 우측 이미지 캐릭터 얼굴에 재현해주세요.
+
+절대 우측 원본 이미지 변경 금지:
+- 배경
+- 구도
+- 카메라 거리
+- 인물 위치
+- 몸 포즈
+- 손 모양
+- 의상
+- 헤어스타일
+- 머리 길이
+- 머리 색
+- 얼굴형
+- 눈매 구조
+- 피부톤
+- 그림체
+- 색감
+- 조명
+- 편의점 봉투
+
+수정할 부분:
+- 표정만 변경
+- 입 모양, 눈썹 각도, 눈꺼풀 정도, 땀방울 정도만 조정
+
+This is an expression-only edit.
+Do not redraw the characters.
+Do not change hairstyle, outfit, pose, body, background, or composition.
+
+딱 이미지 1장만 출력.`,
+  },
 };
 
 const PATCHES = {
@@ -950,7 +1017,7 @@ async function runConvert() {
   if (!state.inputBlob) return;
   if (!settings.key) { openSheet(); toast('먼저 OpenAI API 키를 넣어주세요', true); return; }
   const prompt = buildPrompt(state.styleKey, $('extra').value);
-  const twoPass = $('vhs').checked;
+  const twoPass = $('vhs').checked && !STYLES[state.styleKey].noPass2;
   showProgress(twoPass ? '1차: 작화감 입히는 중…' : undefined);
   $('result').style.display = 'none';
   try {
