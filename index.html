@@ -560,18 +560,14 @@ Keep the input image's framing and aspect ratio exactly as-is.
     sub: '신세기 에반게리온 TV · 1995 가이낙스',
     emoji: '⚡',
     color: '#5C7F86',
-    mod: `[스타일 지정 — 신세기 에반게리온 TV판 (1995-96, 가이낙스)]
-- 이 스타일에서는 [작화]의 둥근 얼굴 기준 대신 아래를 적용:
-  사다모토 요시유키 계열의 갸름하고 샤프한 얼굴선, 가늘고 예리한 눈매, 얇은 입
-- 음영은 하드엣지 2톤 셀 — 단, 그림자 면적은 작게, 꼭 필요한 곳에만.
-  얼굴·피부를 뒤덮는 거대한 어두운 그림자 덩어리 절대 금지
-- [밝기 — 중요] 실제 TV 방송 화면처럼 밝고 깨끗하게: 전체 명도는 원본 이미지 수준을 유지하고,
-  화면을 어둡고 침침하게 만들지 말 것. 밤 장면이 아니면 밝은 하이키 셀 컬러로
-- 팔레트: 밝은 크림·페일 베이지 벽, 페일 민트·틸, 밝은 오프화이트, 파스텔 핑크·페일 블루 베이스에
-  에바 특유의 비비드 포인트 원색 소량(레드·오렌지, 네이비)
-- 배경은 크고 조용한 색면 + 직선적인 구조물 실루엣, 여백을 넓게
-- 필름 그레인·노이즈는 아주 약하게만 — 거친 입자로 화면을 덮지 말 것
-- 정적이고 담백한 무드, 90년대 중반 TV 셀의 깨끗하고 밝은 색면`,
+    mod: `[스타일 지정 — 신세기 에반게리온 TV판 (1995-96, 가이낙스) · 안노 히데아키 연출감]
+- 얼굴은 사다모토 요시유키 계열: 갸름하고 각진 얼굴선, 가늘고 날카로운 홑꺼풀 눈, 얇고 곧게 다문 입, 감정을 눌러담은 무표정. 둥글고 아기자기한 얼굴 금지
+- 음영은 하드엣지 2톤 셀. 그림자 면적은 작게 하되, 광원 반대쪽에 선명한 한 덩어리 그림자 + 뚜렷한 림라이트로 명암 대비를 또렷하게 (전체를 침침하게 덮지는 말 것)
+- [밝기 — 중요] 밤 장면이 아니면 밝고 깨끗한 하이키 TV 셀 유지, 전체 명도는 원본 수준. 화면을 어둡거나 탁하게 만들지 말 것
+- [에바 시그니처 색] 밝은 오프화이트·페일 베이지·페일 민트/틸을 베이스로, 에바 특유의 포인트 원색을 화면에 1~2개만 강하게: LCL 앰버오렌지(#E3931A), NERV 레드(#C0271E), 유닛-01 바이올렛(#6B4E9E), 터미널 그린(#5E8A4E)
+- [안노식 연출·구도] 넓은 여백과 정적 — 미니멀한 기하 배경(콘크리트 벽면, 직선 구조물), 전신주·고압선·신호등·표지판 실루엣, 극단적 롱숏 또는 얼굴·눈 클로즈업, 살짝 기운 앵글의 긴장감
+- [질감] 아주 옅은 명조/고딕 텍스트 플레이트나 모노스코프 방송 질감이 은은하게 배어도 좋음(과하지 않게). 필름 그레인은 아주 약하게만
+- 서늘하고 담백하며 정적인 무드, 90년대 중반 TV 셀의 깨끗한 색면 위에 에바 특유의 불안한 여백감`,
   },
   videogirl: {
     name: '비디오걸 아이',
@@ -599,46 +595,6 @@ MACHINE INSERT CODES (retro-tech punctuation):
 - FALLING STONE-KANJI GAG: one giant word rendered as a cracked stone slab dropping onto the character's head, dark background, a few crack lines for texture.
 MIDNIGHT SHOP STAGE:
 - Night store interior = flat navy #202A50 everywhere, EXCEPT a glowing warm-white floor-light grid #F0EAD0 — two color fields that make an ordinary shop look like the entrance to another world.`,
-  },
-  expr: {
-    name: 'only표정변환',
-    sub: '좌: 래퍼런스 / 우: 캐릭터시트 · 표정만 이식, 원본 100% 유지',
-    emoji: '🎭',
-    color: '#7E8AAE',
-    noPass2: true,   // 표정만 바꾸는 편집 — 색감/조명 유지 위해 2차 VHS 패스 자동 skip
-    full: `only표정
-좌: 래퍼런스 / 우: 캐릭터시트
-
-좌측 래퍼런스의 표정을 우측 이미지 캐릭터 얼굴에 재현해주세요.
-
-절대 우측 원본 이미지 변경 금지:
-- 배경
-- 구도
-- 카메라 거리
-- 인물 위치
-- 몸 포즈
-- 손 모양
-- 의상
-- 헤어스타일
-- 머리 길이
-- 머리 색
-- 얼굴형
-- 눈매 구조
-- 피부톤
-- 그림체
-- 색감
-- 조명
-- 편의점 봉투
-
-수정할 부분:
-- 표정만 변경
-- 입 모양, 눈썹 각도, 눈꺼풀 정도, 땀방울 정도만 조정
-
-This is an expression-only edit.
-Do not redraw the characters.
-Do not change hairstyle, outfit, pose, body, background, or composition.
-
-딱 이미지 1장만 출력.`,
   },
 };
 
@@ -710,6 +666,43 @@ Old analog TV broadcast quality.
 - 옷은 어두운 톤 주름 선 몇 개만 남기고 그라데이션·잔음영 제거
 - 배경 벽·바닥은 균일한 단색 색면으로, 질감·얼룩 제거
 - 그림자는 한 단계 어두운 같은 계열 색으로 딱 1단, 크고 단순한 덩어리, 하드 엣지
+
+딱 이미지 1장만 출력.`,
+  },
+  expr: {
+    name: '🎭 only표정변환 (좌: 래퍼런스 / 우: 캐릭터시트)',
+    desc: '좌우 붙인 이미지 → 표정만 이식, 원본 100% 유지',
+    prompt: `only표정
+좌: 래퍼런스 / 우: 캐릭터시트
+
+좌측 래퍼런스의 표정을 우측 이미지 캐릭터 얼굴에 재현해주세요.
+
+절대 우측 원본 이미지 변경 금지:
+- 배경
+- 구도
+- 카메라 거리
+- 인물 위치
+- 몸 포즈
+- 손 모양
+- 의상
+- 헤어스타일
+- 머리 길이
+- 머리 색
+- 얼굴형
+- 눈매 구조
+- 피부톤
+- 그림체
+- 색감
+- 조명
+- 편의점 봉투
+
+수정할 부분:
+- 표정만 변경
+- 입 모양, 눈썹 각도, 눈꺼풀 정도, 땀방울 정도만 조정
+
+This is an expression-only edit.
+Do not redraw the characters.
+Do not change hairstyle, outfit, pose, body, background, or composition.
 
 딱 이미지 1장만 출력.`,
   },
@@ -1017,7 +1010,7 @@ async function runConvert() {
   if (!state.inputBlob) return;
   if (!settings.key) { openSheet(); toast('먼저 OpenAI API 키를 넣어주세요', true); return; }
   const prompt = buildPrompt(state.styleKey, $('extra').value);
-  const twoPass = $('vhs').checked && !STYLES[state.styleKey].noPass2;
+  const twoPass = $('vhs').checked;
   showProgress(twoPass ? '1차: 작화감 입히는 중…' : undefined);
   $('result').style.display = 'none';
   try {
