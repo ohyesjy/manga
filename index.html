@@ -698,9 +698,55 @@ Looks like the SAME character redrawn as a real frame from a 1980s-90s Japanese 
 
 딱 이미지 1장만 출력.`,
   },
+  retrocel: {
+    name: '레트로작화',
+    sub: '범용 8090 작화감만 · 팔레트 자유 (오렌지로드 3화 실측 2026-07-23)',
+    emoji: '🖌️',
+    color: '#8A5C34',
+    // 애니스터디 2026-07-23 (오렌지로드 3화 68프레임 실측) — 특정 작품 팔레트 없이 "작화감"만 적용하는 범용 스타일
+    full: `[COMPOSITION LOCK — HIGHEST PRIORITY]
+Redraw the attached image IN PLACE: keep the original composition, camera angle, perspective, framing, crop, character poses, face directions, and the position and scale of every object and prop 100% IDENTICAL to the input image. Do NOT zoom, do NOT recrop, do NOT move or resize anything, do NOT change the aspect ratio. ONLY the rendering style changes.
+
+이건 "화풍 변환"이 아니라 "마감 변환"이다 — 원본이 무엇을 담고 있는지는 하나도 건드리지 말고,
+그것이 어떻게 그려져(칠해져) 있는지만 1980-90년대 TV 셀 애니메이션 방식으로 바꾼다.
+
+[절대 고정 — 변경 시 실패]
+- 장소·배경: 원본의 장소, 배경 구조물, 가구·소품의 종류와 배치 전부 원본 그대로. 다른 장소로 바꾸거나 요소를 추가·삭제하지 마.
+- 캐릭터 생김새: 눈·코·입의 모양·크기·위치·간격, 얼굴형, 인상 100% 원본 그대로 — 같은 사람으로 알아볼 수 있게.
+- 헤어스타일: 가르마, 앞머리, 길이, 묶음 방식, 전체 실루엣 원본 그대로.
+- 의상: 옷의 종류, 디자인, 형태 원본 그대로.
+- 고유색: 머리색·눈동자색·피부톤·의상색·배경 색조(hue) 전부 원본 그대로 — 팔레트를 바꾸지 말고, 칠하는 방식만 바꾼다.
+- Keep the location, background, props, each character's facial features, hairstyle, outfit design and ALL original color hues 100% IDENTICAL to the input. Change ONLY the drawing/rendering style.
+
+[바꾸는 것 — 8090 셀 작화감만]
+1980s-90s retro TV cel anime drawing style: uniform medium-weight outlines in dark brown or sepia (never pure black), completely flat cel colors, skin with a single hard-edged shadow step, hair with 1-2 shadow steps and an angular zigzag highlight band, blush drawn as a flat pink band across the cheeks (no airbrush, no gradient), eye rendering simplified to 2-3 solid white highlights (keep original eye shape and size), tiny dot or single-stroke nose rendering, hands simplified with merged fingers, background repainted as quick gouache color planes (same place, same layout — just hand-painted), subtle cel texture and faint film grain, hand-painted look, no digital gradients, no soft shading, no modern anime rendering.
+
+[반드시 피할 것]
+- 현대 미소녀 작화, 촉촉한 눈망울, 에어브러시 볼터치, 매끈한 그라데이션 피부, 섬세한 속눈썹
+- 사실적/시네마틱 조명, HDR, 블룸, 렌즈플레어, 3D·CGI, 포토리얼 질감
+- 하이퍼 디테일, 개별 머리카락 렌더링, 4K 선명함, 과한 샤프닝, 순검정 외곽선
+
+[SCENE]
+{{EXTRA}}
+
+Looks like a real frame captured from a 1980s-90s Japanese television anime,
+freshly painted cel photographed on an animation stand.
+
+딱 이미지 1장만 출력.`,
+  },
 };
 
 const PATCHES = {
+  retrofinish: {
+    name: '🖌️ 레트로작화 마감',
+    desc: '어떤 프리셋 결과물에든 — 색은 그대로, 작화감만 8090 셀로 한 번 더',
+    prompt: `구도·내용·팔레트(고유색)는 그대로 두고, 작화감(칠하는 방식)만 아래 스펙대로 고쳐줘.
+[고정] 장소·배경·소품, 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상 디자인, 머리색·의상색 등 고유색 전부 원본 그대로 100% 고정 — 작화감만 조정.
+
+Retro cel drawing finish: dark-brown uniform outlines (not black), flat cel colors, single-step hard shadows, zigzag hair highlight band, flat pink blush band (no airbrush), 2-3 white eye highlights, dot nose, simplified hands, faint film grain, no digital gradients.
+
+딱 이미지 1장만 출력.`,
+  },
   eyes: {
     name: '👁 눈만 재작화 (눈꼬리 내리기)',
     desc: '눈이 현대 미소녀풍이거나 눈꼬리가 올라갔을 때',
