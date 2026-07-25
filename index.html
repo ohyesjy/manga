@@ -382,6 +382,7 @@ body::before{display:none !important}
 
   <div class="foot">
     프롬프트: 지영님 볼트 · 마스터통합 8090 저예산 셀 (2026-07-07 확정)<br>
+    애니스터디 07-25 오렌지로드 실측 반영 — 범용/씬 버튼 구분<br>
     나만 쓰는 앱 · API 키는 이 기기에만 저장돼요
   </div>
 </div>
@@ -747,6 +748,26 @@ Retro cel drawing finish: dark-brown uniform outlines (not black), flat cel colo
 
 딱 이미지 1장만 출력.`,
   },
+  celcore87: {
+    name: '🎞 87 셀 작화감 (실측)',
+    desc: '애니스터디 07-25 신규 — 시앙 밴드 · 별 하이라이트 눈 · 1단 음영 · 셀 그레인',
+    prompt: `구도·내용·팔레트(고유색)는 그대로 두고, 작화감(칠하는 방식)만 1987년 TV 셀 실측 스펙으로 고쳐줘.
+[고정] 장소·배경·소품, 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상 디자인, 머리색·의상색 등 고유색 전부 원본 그대로 100% 고정 — 작화감만 조정.
+
+1987 hand-painted TV anime cel finish (Kimagure Orange Road TV study): uniform medium-weight dark-brown outlines, flat cel colors with exactly ONE hard-edged shadow tone (no gradients on characters), two-tone hair with a single lighter sheen band, feathered bangs with split strand tips, glossy iris simplified to 3 flat tones (dark rim / mid / pale bottom) with 2-3 star-shaped white highlights, single-line nose, simplified hands with one crease per knuckle, subtle cel grain and slight VHS chroma bleed.
+
+딱 이미지 1장만 출력.`,
+  },
+  rimlight: {
+    name: '🌙 밤 림라이트',
+    desc: '감색 어둠 + 뺨을 스치는 빛 한 줄기 — 80년대 멜로 조명 (어떤 프리셋에든)',
+    prompt: `구도·작화·인물·내용은 그대로 두고, 조명만 아래 스펙의 밤 조명으로 바꿔줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상, 포즈, 구도 전부 원본 그대로 100% 고정 — 조명·명암만 변경.
+
+night cel lighting: face and scene mostly in flat navy shadow (#18233F), ONE airbrushed rim-light streak (#C8D2E8) sweeping across cheek and hair from a single light source, rest of frame near-black, glossy iris highlights catching the light, melancholic 1987 TV anime night mood, subtle cel grain.
+
+딱 이미지 1장만 출력.`,
+  },
   eyes: {
     name: '👁 눈만 재작화 (눈꼬리 내리기)',
     desc: '눈이 현대 미소녀풍이거나 눈꼬리가 올라갔을 때',
@@ -871,6 +892,39 @@ Exaggerated romantic comedy reaction, small sweat drops, flustered expression, a
 
 플랫 셀 작화 유지 — 눈썹 각도·눈매·입 모양·땀방울만 조정. 딱 이미지 1장만 출력.`,
   },
+  forest: {
+    scene: true,
+    name: '💚 파스텔 러버즈숲',
+    desc: '배경만 파스텔 판타지 숲으로 — 청록 나무 · 민트 수풀 · 떠다니는 하트',
+    prompt: `인물은 그대로 두고, 배경만 아래 스펙의 파스텔 판타지 숲으로 교체해줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상, 포즈, 카메라 앵글, 인물 위치·크기 전부 원본 그대로 100% 고정 — 배경만 교체.
+
+romantic pastel fantasy forest background, 1987 hand-painted cel style: flat teal-cyan tree trunks (#62A4BC), sponge-textured pastel foliage in mint (#A4DFCD), pink and butter-yellow, floating heart ornaments, white heart-shaped bench, cream tiled floor (#F0ECA8), poster-color texture, soft VHS color bleed.
+
+딱 이미지 1장만 출력.`,
+  },
+  eyecatch: {
+    scene: true,
+    name: '📺 아이캐치 카드',
+    desc: '인물을 통통한 마스코트로 — 80년대 광고 전 범퍼 카드 (보너스컷용)',
+    prompt: `이 이미지를 1980년대 애니메이션 아이캐치(광고 전 범퍼) 카드로 다시 그려줘.
+[유지] 인물의 머리색·의상색 등 고유색과 알아볼 수 있는 특징(헤어스타일 실루엣, 안경 등)은 마스코트에도 유지.
+
+1980s anime eyecatch bumper card: flat color-block panels in pastel cyan (#A4E8F0), pink (#F5C4D4) and yellow (#F5F080), the subject redrawn as a chubby cute mascot sitting center, playful rainbow-arc logo lettering, zero shading, pure flat graphic design, cel-painted flatness, 4:3, slight VHS chroma shift.
+
+딱 이미지 1장만 출력.`,
+  },
+  feetcut: {
+    scene: true,
+    name: '👟 발 인서트 컷',
+    desc: '리미티드 절약 컷 — 발+그림자만 남기는 인서트 장면으로 재연출',
+    prompt: `이 이미지를 80년대 리미티드 애니메이션의 "발 인서트 컷"으로 다시 연출해줘.
+[유지] 인물의 신발·하의(바지/치마) 디자인과 고유색은 원본 그대로.
+
+limited animation insert shot: only the character's legs and shoes walking on a flat single-color floor, one hard black cast shadow, background is one solid color field, 3-frame walk cycle held on twos, 1987 low-budget TV cel anime economy cut, camera locked, hand-painted cel finish.
+
+딱 이미지 1장만 출력.`,
+  },
 };
 
 const CLOSING = '\n\n딱 이미지 1장만 출력.';
@@ -965,16 +1019,33 @@ function renderStyles() {
   });
 }
 
-function renderPatches() {
-  const box = $('patches');
+const PATCH_GROUPS = [
+  { title: '🌐 범용 버튼 — 어떤 사진·프리셋에든 (작화감·질감·조명·표정)', match: p => !p.scene },
+  { title: '🎬 씬 버튼 — 장면 연출로 재해석', match: p => !!p.scene },
+];
+
+function renderPatchList(boxId, arrow, onClickFn) {
+  const box = $(boxId);
   box.innerHTML = '';
-  Object.entries(PATCHES).forEach(([key, p]) => {
-    const b = document.createElement('button');
-    b.className = 'patch';
-    b.innerHTML = `<div><div class="pn">${p.name}</div><div class="pd">${p.desc}</div></div><div class="arrow">›</div>`;
-    b.onclick = () => runPatch(key);
-    box.appendChild(b);
+  PATCH_GROUPS.forEach(g => {
+    const entries = Object.entries(PATCHES).filter(([, p]) => g.match(p));
+    if (!entries.length) return;
+    const h = document.createElement('div');
+    h.className = 'patch-title';
+    h.textContent = g.title;
+    box.appendChild(h);
+    entries.forEach(([key, p]) => {
+      const b = document.createElement('button');
+      b.className = 'patch';
+      b.innerHTML = `<div><div class="pn">${p.name}</div><div class="pd">${p.desc}</div></div><div class="arrow">${arrow}</div>`;
+      b.onclick = () => onClickFn(key, p);
+      box.appendChild(b);
+    });
   });
+}
+
+function renderPatches() {
+  renderPatchList('patches', '›', (key) => runPatch(key));
 }
 
 function renderSeg(elId, list, cur, onPick) {
@@ -1391,15 +1462,7 @@ async function copyText(t, label) {
 }
 
 function renderFreePatches() {
-  const box = $('free-patches');
-  box.innerHTML = '';
-  Object.entries(PATCHES).forEach(([key, p]) => {
-    const b = document.createElement('button');
-    b.className = 'patch';
-    b.innerHTML = `<div><div class="pn">${p.name}</div><div class="pd">${p.desc}</div></div><div class="arrow">📋</div>`;
-    b.onclick = () => copyText(p.prompt, p.name);
-    box.appendChild(b);
-  });
+  renderPatchList('free-patches', '📋', (key, p) => copyText(p.prompt, p.name));
 }
 
 function applyFreeMode() {
