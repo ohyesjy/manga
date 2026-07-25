@@ -781,6 +781,26 @@ Retro cel drawing finish: dark-brown uniform outlines (not black), flat cel colo
 
 딱 이미지 1장만 출력.`,
   },
+  moonwash: {
+    name: '🌃 달빛 블루 워시',
+    desc: '애니스터디 07-25 에바 실측 — 씬 전체 청색 재도색 + 하드섀도 한 장 (어떤 프리셋에든)',
+    prompt: `구도·작화·인물·내용은 그대로 두고, 색과 조명만 아래 스펙의 "달빛 청색 모노톤"으로 전면 재도색해줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상 디자인, 포즈, 구도 전부 원본 그대로 100% 고정 — 색·명암만 변경.
+
+entire scene repainted in deep night-blue monochrome (1995 TV cel night scene): palette #030415 #1C265C #465785 #6E9FAF #7AB1C1, skin and clothing recolored in cool slate blues with zero warm colors, one oversized hard-edged shadow shape covering half of the face and body, single pale-cyan moonlight rim band on the hair, background simplified to near-flat indigo shapes, still and quiet mood, strict two-tone cel shading preserved, subtle cel grain.
+
+딱 이미지 1장만 출력.`,
+  },
+  flatbg: {
+    name: '🫒 플랫 대화 배경',
+    desc: '애니스터디 07-25 에바 실측 — 배경을 올리브 그라데이션 한 장으로 (인물 강조 대화컷)',
+    prompt: `인물은 그대로 두고, 배경만 아래 스펙의 단색 그라데이션 한 장으로 교체해줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상, 포즈, 카메라 앵글, 인물 위치·크기 전부 원본 그대로 100% 고정 — 배경만 교체.
+
+low-budget 1990s TV anime dialogue shot: background replaced by a single flat olive gradient (#919561 to #7B864A) with a soft airbrushed vignette and zero detail, all attention on the character's face, uniform cel outlines and two-tone shading preserved, subtle film grain, 4:3 framing.
+
+딱 이미지 1장만 출력.`,
+  },
   rimlight: {
     name: '🌙 밤 림라이트',
     desc: '감색 어둠 + 뺨을 스치는 빛 한 줄기 — 80년대 멜로 조명 (어떤 프리셋에든)',
@@ -948,6 +968,17 @@ limited animation insert shot: only the character's legs and shoes walking on a 
 
 딱 이미지 1장만 출력.`,
   },
+  evacountdown: {
+    scene: true,
+    name: '⏱ 작전 카운트다운',
+    desc: '애니스터디 07-25 에바 EP.09 — 황혼 보라 팔레트 + 「残時間」 타이머 자막 (에바 프리셋 추천)',
+    prompt: `인물·작화는 그대로 두고, 장면을 아래 스펙의 "작전 카운트다운" 연출로 재해석해줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상 디자인, 고유색 전부 원본 그대로 100% 고정 — 조명·배경·오버레이 연출만 추가.
+
+tense military-operation scene at twilight (1995 TV cel anime staging): purple dusk palette #59389E #1C0B4F #979DCA with crimson accents #A20228, a white Japanese countdown caption like "残時間 07:10秒" burned into the lower frame in plain gothic type, hard purple rim light on the character, optional monitor glow in the background, suspenseful operation mood, strict two-tone cel shading, subtle cel grain.
+
+딱 이미지 1장만 출력.`,
+  },
 };
 
 const CLOSING = '\n\n딱 이미지 1장만 출력.';
@@ -1035,6 +1066,7 @@ const SHORT_PATCH = {
   mob:'못캐릭', tone:'쨍함 제거', smudge:'뭉개기', flat:'음영 빼기',
   expr:'표정 이식', comic:'코믹 표정',
   forest:'러버즈숲', eyecatch:'아이캐치', feetcut:'발 인서트',
+  moonwash:'달빛 워시', flatbg:'플랫 배경', evacountdown:'카운트다운',
 };
 const SHORT_STYLE = { videogirl:'비디오걸', kodocha:'오모챠', eva:'에바' };
 
