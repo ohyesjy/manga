@@ -44,7 +44,7 @@
   /* ---------- 헤더 ---------- */
   header {
     display:flex; align-items:center; justify-content:space-between;
-    padding: calc(14px + env(safe-area-inset-top)) 2px 10px;
+    padding: calc(11px + env(safe-area-inset-top)) 2px 8px;
   }
   .logo { display:flex; align-items:center; gap:10px; }
   .logo-mark {
@@ -64,9 +64,9 @@
   /* ---------- 공통 카드 ---------- */
   .card {
     background:#FBF6E9; border:2px solid var(--ink); border-radius:16px;
-    padding:16px; margin-bottom:14px; box-shadow: 4px 4px 0 var(--shadow);
+    padding:13px; margin-bottom:11px; box-shadow: 4px 4px 0 var(--shadow);
   }
-  .card h2 { font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:7px; }
+  .card h2 { font-size:13.5px; margin-bottom:9px; display:flex; align-items:center; gap:7px; }
   .step-no {
     background:var(--ink); color:var(--paper); font-size:11px; width:20px; height:20px;
     border-radius:7px; display:inline-flex; align-items:center; justify-content:center; font-weight:700;
@@ -75,11 +75,11 @@
   /* ---------- 업로드 ---------- */
   .drop {
     border:2px dashed var(--ink-soft); border-radius:12px; background:var(--ivory);
-    min-height:150px; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:8px; cursor:pointer; text-align:center; padding:18px; transition: background .15s;
+    min-height:112px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:6px; cursor:pointer; text-align:center; padding:14px; transition: background .15s;
   }
   .drop:active { background:#E7DCC0; }
-  .drop .big { font-size:34px; }
+  .drop .big { font-size:30px; }
   .drop .txt { font-size:14px; font-weight:600; }
   .drop .sub { font-size:12px; color:var(--ink-soft); }
   .preview-box { position:relative; display:none; }
@@ -92,25 +92,49 @@
     box-shadow:2px 2px 0 var(--shadow);
   }
 
-  /* ---------- 스타일 그리드 ---------- */
-  .styles { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .style-card {
+  /* ---------- 정사각 타일 그리드 (작화감 · 패치 공통) ---------- */
+  .styles, .patch-row { display:grid; grid-template-columns:repeat(4, 1fr); gap:7px; }
+  .style-card, .patch {
+    aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:3px; text-align:center; padding:4px 3px;
     border:2px solid var(--ink-soft); border-radius:13px; background:var(--ivory);
-    padding:12px 12px 10px; cursor:pointer; position:relative; overflow:hidden; transition: all .12s;
+    cursor:pointer; position:relative; overflow:hidden;
+    font-family:inherit; color:var(--ink); transition: transform .1s;
+    -webkit-touch-callout:none; user-select:none;
   }
-  .style-card .em { font-size:22px; }
-  .style-card .nm { font-size:14.5px; font-weight:800; margin-top:5px; letter-spacing:-0.3px; }
-  .style-card .sb { font-size:10px; color:var(--ink-soft); margin-top:2px; line-height:1.35; }
-  .style-card .band { position:absolute; top:0; left:0; right:0; height:5px; opacity:.55; }
+  .style-card .em, .patch .em { font-size:23px; line-height:1.15; }
+  .style-card .nm, .patch .nm {
+    font-size:10.5px; font-weight:800; letter-spacing:-0.5px; line-height:1.2;
+    word-break:keep-all; max-width:100%;
+  }
+  .style-card:active, .patch:active { transform:scale(.93); }
+  .style-card .band { position:absolute; top:0; left:0; right:0; height:4px; opacity:.55; }
   .style-card.sel {
-    border-color:var(--ink); background:#FFF9EA;
-    box-shadow: 3px 3px 0 var(--shadow); transform: translateY(-1px);
+    border-color:var(--ink); background:#FFF9EA; box-shadow: 3px 3px 0 var(--shadow);
   }
   .style-card.sel .band { opacity:1; }
   .style-card.sel::after {
-    content:'✓'; position:absolute; top:8px; right:9px; width:20px; height:20px;
-    background:var(--ink); color:var(--paper); border-radius:7px; font-size:12px;
+    content:'✓'; position:absolute; top:4px; right:5px; width:16px; height:16px;
+    background:var(--ink); color:var(--paper); border-radius:5px; font-size:10px;
     display:flex; align-items:center; justify-content:center; font-weight:700;
+  }
+  .hold-tip { font-size:10.5px; color:var(--ink-soft); text-align:center; margin-top:9px; }
+
+  /* ---------- 길게 누르면 뜨는 설명 ---------- */
+  #info-bg { display:none; position:fixed; inset:0; background:#18264288; z-index:70; }
+  #info-card {
+    display:none; position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); z-index:71;
+    width:min(330px, calc(100vw - 44px)); background:var(--paper);
+    border:2px solid var(--ink); border-radius:18px; padding:20px 18px 16px;
+    text-align:center; box-shadow:5px 5px 0 var(--shadow);
+  }
+  #info-card .ic-em { font-size:34px; line-height:1.1; }
+  #info-card .ic-t { font-size:15px; font-weight:800; margin-top:7px; letter-spacing:-0.3px; }
+  #info-card .ic-d { font-size:12.5px; color:var(--ink-soft); line-height:1.65; margin-top:9px; }
+  #info-card .ic-x {
+    margin-top:15px; padding:11px; border:2px solid var(--ink); border-radius:12px;
+    background:var(--ink); color:var(--paper); font-size:13px; font-weight:800;
+    cursor:pointer; font-family:inherit; width:100%;
   }
 
   /* ---------- 추가 지시 ---------- */
@@ -129,13 +153,13 @@
 
   /* ---------- 2차 패스 토글 ---------- */
   .vhs-row {
-    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px; margin-bottom:10px;
     border:2px solid var(--ink-soft); border-radius:13px; background:#FBF6E9;
-    padding:12px 14px; cursor:pointer; user-select:none;
+    padding:10px 12px; cursor:pointer; user-select:none;
   }
-  .vhs-row input { width:20px; height:20px; accent-color:#2B3A5A; flex-shrink:0; }
-  .vhs-row .vt { font-size:13.5px; font-weight:800; }
-  .vhs-row .vd { font-size:11px; color:var(--ink-soft); margin-top:2px; line-height:1.4; }
+  .vhs-row input { width:19px; height:19px; accent-color:#2B3A5A; flex-shrink:0; }
+  .vhs-row .vt { font-size:13px; font-weight:800; }
+  .vhs-row .vd { font-size:10.5px; color:var(--ink-soft); margin-top:2px; line-height:1.4; }
 
   /* ---------- 변환 버튼 ---------- */
   .go {
@@ -170,21 +194,11 @@
   .act {
     flex:1; padding:12px 6px; border:2px solid var(--ink); border-radius:12px; background:var(--ivory);
     font-size:13.5px; font-weight:800; cursor:pointer; font-family:inherit; color:var(--ink);
-    box-shadow:2px 2px 0 var(--shadow);
+    box-shadow:2px 2px 0 var(--shadow); word-break:keep-all; line-height:1.3;
   }
   .act:active { transform:translate(1px,1px); box-shadow:none; }
   .act.primary { background:var(--gold); }
-  .patch-title { font-size:12px; font-weight:800; color:var(--ink-soft); margin:16px 0 8px; }
-  .patch-row { display:flex; flex-direction:column; gap:8px; }
-  .patch {
-    display:flex; align-items:center; justify-content:space-between; gap:8px;
-    border:2px solid var(--ink-soft); border-radius:12px; background:var(--ivory);
-    padding:11px 13px; cursor:pointer; font-family:inherit; text-align:left;
-  }
-  .patch:active { background:#E7DCC0; }
-  .patch .pn { font-size:13.5px; font-weight:800; color:var(--ink); }
-  .patch .pd { font-size:11px; color:var(--ink-soft); margin-top:2px; }
-  .patch .arrow { font-size:15px; color:var(--ink-soft); }
+  .patch-title { font-size:11.5px; font-weight:800; color:var(--ink-soft); margin:15px 0 7px; }
 
   /* ---------- 히스토리 ---------- */
   #history-card { display:none; }
@@ -421,6 +435,15 @@ body::before{display:none !important}
     <div class="hint" id="dir-name-hint">"폴더에 저장" 버튼이 쓰는 폴더예요. 처음 누르면 선택창이 떠요.</div>
   </div>
   <button class="sheet-save" id="btn-save">저장하고 닫기</button>
+</div>
+
+<!-- 길게 누르면 뜨는 설명 -->
+<div id="info-bg"></div>
+<div id="info-card">
+  <div class="ic-em" id="info-em"></div>
+  <div class="ic-t" id="info-t"></div>
+  <div class="ic-d" id="info-d"></div>
+  <button class="ic-x" id="info-x">닫기</button>
 </div>
 
 <div id="toast"></div>
@@ -1005,22 +1028,88 @@ const state = {
   history: [],         // {url, blob, label}
 };
 
+/* ---------- 타일 라벨 (4열 정사각 타일용 짧은 이름) ---------- */
+// 타일에는 이모지 + 짧은 이름만 보여주고, 원래 긴 이름·설명은 길게 누르면 뜬다.
+const SHORT_PATCH = {
+  retrofinish:'레트로마감', celcore87:'87 셀', rimlight:'밤 림라이트', eyes:'눈 재작화',
+  mob:'못캐릭', tone:'쨍함 제거', smudge:'뭉개기', flat:'음영 빼기',
+  expr:'표정 이식', comic:'코믹 표정',
+  forest:'러버즈숲', eyecatch:'아이캐치', feetcut:'발 인서트',
+};
+const SHORT_STYLE = { videogirl:'비디오걸', kodocha:'오모챠', eva:'에바' };
+
+// 이름 문자열 앞머리의 이모지와 나머지 텍스트를 분리
+function splitEmoji(name) {
+  const i = name.indexOf(' ');
+  return i < 0 ? { em: name, rest: name } : { em: name.slice(0, i), rest: name.slice(i + 1) };
+}
+
+/* ---------- 길게 누르면 설명 ---------- */
+function showInfo(em, title, desc) {
+  $('info-em').textContent = em;
+  $('info-t').textContent = title;
+  $('info-d').textContent = desc || '';
+  $('info-card').style.display = 'block';
+  $('info-bg').style.display = 'block';
+}
+function closeInfo() {
+  $('info-card').style.display = 'none';
+  $('info-bg').style.display = 'none';
+}
+
+// 롱프레스(모바일) / 길게 클릭·우클릭(데스크톱) 시 설명 표시.
+// 길게 누른 뒤 이어지는 click 은 el._held 로 삼켜서 오작동을 막는다.
+// pointer 이벤트를 쓰는 이유: :active 로 타일이 줄어들면 커서가 타일 밖으로 나가
+// mouseleave 가 즉시 떠서 mouse 이벤트 기반 롱프레스는 절대 성립하지 않는다.
+function attachHold(el, em, title, desc) {
+  let timer = null, sx = 0, sy = 0;
+  const fire = () => {
+    el._held = true;
+    showInfo(em, title, desc);
+    if (navigator.vibrate) { try { navigator.vibrate(15); } catch (_) {} }
+  };
+  const cancel = () => clearTimeout(timer);
+  el.addEventListener('pointerdown', e => {
+    // 새 조작이 시작되면 이전 롱프레스 흔적을 지운다.
+    // (설명 팝업이 뜬 경우 뒤따르는 click 이 오버레이로 가버려서 플래그가 남는다)
+    el._held = false;
+    sx = e.clientX; sy = e.clientY;
+    cancel(); timer = setTimeout(fire, 420);
+  });
+  // 스크롤·드래그로 시작한 터치는 설명을 띄우지 않는다
+  el.addEventListener('pointermove', e => {
+    if (Math.hypot(e.clientX - sx, e.clientY - sy) > 10) cancel();
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(n =>
+    el.addEventListener(n, e => { if (n !== 'pointerleave' || e.pointerType !== 'mouse') cancel(); }));
+  el.addEventListener('contextmenu', e => { e.preventDefault(); cancel(); fire(); });
+}
+// 롱프레스 직후의 click 이면 true (그리고 플래그를 되돌림)
+function swallowedByHold(el) {
+  if (el._held) { el._held = false; return true; }
+  return false;
+}
+
 /* ---------- UI 초기화 ---------- */
 function renderStyles() {
   const box = $('styles');
   box.innerHTML = '';
   Object.entries(STYLES).forEach(([key, s]) => {
-    const el = document.createElement('div');
+    const el = document.createElement('button');
     el.className = 'style-card' + (state.styleKey === key ? ' sel' : '');
     el.innerHTML = `<div class="band" style="background:${s.color}"></div>
-      <div class="em">${s.emoji}</div><div class="nm">${s.name}</div><div class="sb">${s.sub}</div>`;
-    el.onclick = () => { state.styleKey = key; renderStyles(); };
+      <div class="em">${s.emoji}</div><div class="nm">${SHORT_STYLE[key] || s.name}</div>`;
+    attachHold(el, s.emoji, s.name, s.sub);
+    el.onclick = () => {
+      if (swallowedByHold(el)) return;
+      state.styleKey = key; renderStyles();
+    };
     box.appendChild(el);
   });
 }
 
 const PATCH_GROUPS = [
-  { title: '🌐 범용 버튼 — 어떤 사진·프리셋에든 (작화감·질감·조명·표정)', match: p => !p.scene },
+  { title: '🌐 범용 버튼 — 어떤 사진·프리셋에든', match: p => !p.scene },
   { title: '🎬 씬 버튼 — 장면 연출로 재해석', match: p => !!p.scene },
 ];
 
@@ -1033,15 +1122,24 @@ function renderPatchList(boxId, arrow, onClickFn) {
     const h = document.createElement('div');
     h.className = 'patch-title';
     h.textContent = g.title;
+    h.style.gridColumn = '1 / -1';
     box.appendChild(h);
     entries.forEach(([key, p]) => {
+      const { em, rest } = splitEmoji(p.name);
       const b = document.createElement('button');
       b.className = 'patch';
-      b.innerHTML = `<div><div class="pn">${p.name}</div><div class="pd">${p.desc}</div></div><div class="arrow">${arrow}</div>`;
-      b.onclick = () => onClickFn(key, p);
+      b.innerHTML = `<div class="em">${em}</div><div class="nm">${SHORT_PATCH[key] || rest}</div>`;
+      b.title = rest + ' — ' + p.desc;
+      attachHold(b, em, rest, p.desc);
+      b.onclick = () => { if (swallowedByHold(b)) return; onClickFn(key, p); };
       box.appendChild(b);
     });
   });
+  const tip = document.createElement('div');
+  tip.className = 'hold-tip';
+  tip.style.gridColumn = '1 / -1';
+  tip.textContent = '버튼을 길게 누르면 설명이 떠요';
+  box.appendChild(tip);
 }
 
 function renderPatches() {
@@ -1072,6 +1170,8 @@ function closeSheet() { $('sheet').style.display = 'none'; $('sheet-bg').style.d
 
 $('btn-gear').onclick = openSheet;
 $('sheet-bg').onclick = closeSheet;
+$('info-bg').onclick = closeInfo;
+$('info-x').onclick = closeInfo;
 $('btn-eye').onclick = () => {
   const i = $('in-key');
   i.type = i.type === 'password' ? 'text' : 'password';
