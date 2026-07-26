@@ -324,6 +324,29 @@ body::before{display:none !important}
   </header>
 
   <!-- STEP 1 : 사진 -->
+  <!-- 🔗 체인 모드 -->
+  <div class="card" id="chain-card">
+    <h2>🔗 체인 모드 — 순서대로 작화 입히기</h2>
+    <div class="hint" style="line-height:1.7">
+      단계를 쌓으면 <b>무료 모드</b>에선 프롬프트를 순서대로 하나씩 복사해주고,
+      <b>API 모드</b>에선 자동으로 연속 변환해요. (각 단계 결과에 다음 단계를 입히는 방식)
+    </div>
+    <div class="chain-row">
+      <button class="act" id="chain-preset1" style="flex:1">⭐ 성인셀 미니멀 → 세일러문</button>
+    </div>
+    <div class="chain-row">
+      <select id="chain-sel"></select>
+      <button class="act" id="chain-add">➕ 추가</button>
+    </div>
+    <div id="chain-q"></div>
+    <button class="go" id="chain-copy" style="display:none; margin-top:12px"></button>
+    <button class="go" id="chain-run" style="display:none; margin-top:12px"></button>
+    <div class="chain-row" id="chain-tools" style="display:none">
+      <button class="act" id="chain-restart" style="flex:1">↺ 1단계부터 다시</button>
+      <button class="act" id="chain-clear" style="flex:1">🗑 비우기</button>
+    </div>
+  </div>
+
   <div class="card">
     <h2><span class="step-no">1</span> 사진 고르기</h2>
     <input type="file" id="file" accept="image/*" hidden>
@@ -377,29 +400,6 @@ body::before{display:none !important}
     </div>
     <div class="patch-title">부분 패치 프롬프트 복사</div>
     <div class="patch-row" id="free-patches"></div>
-  </div>
-
-  <!-- 🔗 체인 모드 -->
-  <div class="card" id="chain-card">
-    <h2>🔗 체인 모드 — 순서대로 작화 입히기</h2>
-    <div class="hint" style="line-height:1.7">
-      단계를 쌓으면 <b>무료 모드</b>에선 프롬프트를 순서대로 하나씩 복사해주고,
-      <b>API 모드</b>에선 자동으로 연속 변환해요. (각 단계 결과에 다음 단계를 입히는 방식)
-    </div>
-    <div class="chain-row">
-      <button class="act" id="chain-preset1" style="flex:1">⭐ 성인셀 미니멀 → 세일러문</button>
-    </div>
-    <div class="chain-row">
-      <select id="chain-sel"></select>
-      <button class="act" id="chain-add">➕ 추가</button>
-    </div>
-    <div id="chain-q"></div>
-    <button class="go" id="chain-copy" style="display:none; margin-top:12px"></button>
-    <button class="go" id="chain-run" style="display:none; margin-top:12px"></button>
-    <div class="chain-row" id="chain-tools" style="display:none">
-      <button class="act" id="chain-restart" style="flex:1">↺ 1단계부터 다시</button>
-      <button class="act" id="chain-clear" style="flex:1">🗑 비우기</button>
-    </div>
   </div>
 
   <!-- 진행 -->
