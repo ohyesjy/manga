@@ -171,6 +171,21 @@
   .go:disabled { opacity:.4; box-shadow:none; }
 
   /* ---------- 진행 ---------- */
+  /* ---------- 🔗 체인 모드 ---------- */
+  #chain-q { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .chain-chip {
+    display:flex; align-items:center; gap:6px; border:2px solid var(--ink); border-radius:10px;
+    padding:5px 9px; font-size:11.5px; font-weight:800; background:var(--paper);
+  }
+  .chain-chip.done { opacity:.4; }
+  .chain-chip.cur { background:#FFE9A8; }
+  .chain-chip .x { cursor:pointer; opacity:.55; padding:0 2px; }
+  #chain-sel {
+    flex:1; min-width:0; border:2px solid var(--ink); border-radius:10px; padding:9px 7px;
+    font-family:inherit; font-size:12.5px; font-weight:700; color:var(--ink); background:var(--paper);
+  }
+  .chain-row { display:flex; gap:7px; margin-top:9px; }
+
   #progress { display:none; text-align:center; padding:26px 16px; }
   .reel {
     width:58px; height:58px; margin:0 auto 14px; border-radius:50%;
@@ -362,6 +377,29 @@ body::before{display:none !important}
     </div>
     <div class="patch-title">부분 패치 프롬프트 복사</div>
     <div class="patch-row" id="free-patches"></div>
+  </div>
+
+  <!-- 🔗 체인 모드 -->
+  <div class="card" id="chain-card">
+    <h2>🔗 체인 모드 — 순서대로 작화 입히기</h2>
+    <div class="hint" style="line-height:1.7">
+      단계를 쌓으면 <b>무료 모드</b>에선 프롬프트를 순서대로 하나씩 복사해주고,
+      <b>API 모드</b>에선 자동으로 연속 변환해요. (각 단계 결과에 다음 단계를 입히는 방식)
+    </div>
+    <div class="chain-row">
+      <button class="act" id="chain-preset1" style="flex:1">⭐ 성인셀 미니멀 → 세일러문</button>
+    </div>
+    <div class="chain-row">
+      <select id="chain-sel"></select>
+      <button class="act" id="chain-add">➕ 추가</button>
+    </div>
+    <div id="chain-q"></div>
+    <button class="go" id="chain-copy" style="display:none; margin-top:12px"></button>
+    <button class="go" id="chain-run" style="display:none; margin-top:12px"></button>
+    <div class="chain-row" id="chain-tools" style="display:none">
+      <button class="act" id="chain-restart" style="flex:1">↺ 1단계부터 다시</button>
+      <button class="act" id="chain-clear" style="flex:1">🗑 비우기</button>
+    </div>
   </div>
 
   <!-- 진행 -->
@@ -1640,6 +1678,7 @@ function applyFreeMode() {
   $('vhs-row').style.display = on ? 'none' : '';
   $('btn-go').style.display = on ? 'none' : '';
   $('free-actions').style.display = on ? '' : 'none';
+  renderChain();
 }
 
 $('free').checked = !!localStorage.getItem('cel_free');
@@ -1647,10 +1686,122 @@ $('free').onchange = applyFreeMode;
 $('btn-copy1').onclick = () => copyText(buildPrompt(state.styleKey, $('extra').value), '1차 프롬프트');
 $('btn-copy2').onclick = () => copyText(PASS2_PROMPT, '2차 프롬프트');
 
+/* ---------- 🔗 체인 모드 ---------- */
+// 단계 = {kind:'style'|'patch'|'pass2', key}
+let chain = { steps: [], idx: 0 };
+try { chain = JSON.parse(localStorage.getItem('cel_chain')) || chain; } catch (_) {}
+if (!Array.isArray(chain.steps)) chain = { steps: [], idx: 0 };
+// 저장된 단계 중 지금은 없는 키 제거
+chain.steps = chain.steps.filter(st =>
+  st.kind === 'pass2' || (st.kind === 'style' ? STYLES[st.key] : PATCHES[st.key]));
+
+function chainSave() { localStorage.setItem('cel_chain', JSON.stringify(chain)); }
+
+function chainLabel(st) {
+  if (st.kind === 'pass2') return '📼 VHS 마감(2차)';
+  if (st.kind === 'style') { const x = STYLES[st.key]; return x.emoji + ' ' + x.name; }
+  return PATCHES[st.key].name;
+}
+function chainPrompt(st) {
+  if (st.kind === 'pass2') return PASS2_PROMPT;
+  if (st.kind === 'style') return buildPrompt(st.key, $('extra').value);
+  return PATCHES[st.key].prompt;
+}
+
+function initChainSelect() {
+  const sel = $('chain-sel');
+  const og = (label) => { const g = document.createElement('optgroup'); g.label = label; sel.appendChild(g); return g; };
+  const opt = (g, v, t) => { const o = document.createElement('option'); o.value = v; o.textContent = t; g.appendChild(o); };
+  let g = og('🎨 작화감 (스타일)');
+  Object.entries(STYLES).forEach(([k, x]) => opt(g, 'style:' + k, x.emoji + ' ' + x.name));
+  g = og('🌐 범용 패치');
+  Object.entries(PATCHES).filter(([, x]) => !x.scene).forEach(([k, x]) => opt(g, 'patch:' + k, x.name));
+  g = og('🎬 씬 패치');
+  Object.entries(PATCHES).filter(([, x]) => !!x.scene).forEach(([k, x]) => opt(g, 'patch:' + k, x.name));
+  g = og('📼 마감');
+  opt(g, 'pass2', '📼 VHS 마감(2차 패스)');
+}
+
+function renderChain() {
+  const q = $('chain-q');
+  q.innerHTML = '';
+  chain.steps.forEach((st, i) => {
+    const c = document.createElement('div');
+    c.className = 'chain-chip' + (i < chain.idx ? ' done' : (i === chain.idx ? ' cur' : ''));
+    c.innerHTML = `<span>${i + 1}. ${chainLabel(st)}</span><span class="x">✕</span>`;
+    c.querySelector('.x').onclick = () => {
+      chain.steps.splice(i, 1);
+      if (chain.idx > i) chain.idx--;
+      if (chain.idx > chain.steps.length) chain.idx = chain.steps.length;
+      chainSave(); renderChain();
+    };
+    q.appendChild(c);
+  });
+  const has = chain.steps.length > 0;
+  const free = $('free').checked;
+  $('chain-tools').style.display = has ? '' : 'none';
+  $('chain-run').style.display = has && !free ? '' : 'none';
+  $('chain-copy').style.display = has && free ? '' : 'none';
+  if (has && !free) $('chain-run').textContent = `▶ 체인 실행 (${chain.steps.length}단계 연속 변환)`;
+  if (has && free) {
+    $('chain-copy').textContent = chain.idx >= chain.steps.length
+      ? '✅ 체인 끝! (누르면 1단계부터 다시)'
+      : `📋 단계 ${chain.idx + 1}/${chain.steps.length} 복사 — ${chainLabel(chain.steps[chain.idx])}`;
+  }
+}
+
+$('chain-add').onclick = () => {
+  const v = $('chain-sel').value;
+  if (!v) return;
+  const st = v === 'pass2' ? { kind: 'pass2' } : { kind: v.split(':')[0], key: v.split(':')[1] };
+  chain.steps.push(st);
+  chainSave(); renderChain();
+};
+
+$('chain-preset1').onclick = () => {
+  chain = { steps: [{ kind: 'patch', key: 'minimcel' }, { kind: 'style', key: 'sailormoon' }], idx: 0 };
+  chainSave(); renderChain();
+  toast('⭐ 성인셀 미니멀 → 세일러문 체인 준비 완료');
+};
+
+$('chain-restart').onclick = () => { chain.idx = 0; chainSave(); renderChain(); };
+$('chain-clear').onclick = () => { chain = { steps: [], idx: 0 }; chainSave(); renderChain(); };
+
+$('chain-copy').onclick = () => {
+  if (!chain.steps.length) return;
+  if (chain.idx >= chain.steps.length) { chain.idx = 0; chainSave(); renderChain(); return; }
+  const st = chain.steps[chain.idx];
+  copyText(chainPrompt(st), `단계 ${chain.idx + 1}/${chain.steps.length} (${chainLabel(st)})`);
+  chain.idx++;
+  chainSave(); renderChain();
+};
+
+$('chain-run').onclick = async () => {
+  if (!chain.steps.length || state.busy) return;
+  if (!state.inputBlob) { toast('먼저 사진을 골라주세요', true); return; }
+  if (!settings.key) { openSheet(); toast('먼저 OpenAI API 키를 넣어주세요', true); return; }
+  let cur = state.inputBlob;
+  $('result').style.display = 'none';
+  try {
+    for (let i = 0; i < chain.steps.length; i++) {
+      const st = chain.steps[i];
+      showProgress(`체인 ${i + 1}/${chain.steps.length}: ${chainLabel(st)} 적용 중…`);
+      cur = await callEdit(cur, chainPrompt(st));
+      showResult(cur, `체인 ${i + 1}/${chain.steps.length} · ${chainLabel(st)}`);
+    }
+    toast('🔗 체인 완료!');
+  } catch (err) {
+    toast('체인 실패: ' + err.message, true);
+  } finally {
+    hideProgress();
+  }
+};
+
 /* ---------- 시작 ---------- */
 renderStyles();
 renderPatches();
 renderFreePatches();
+initChainSelect();
 applyFreeMode();
 updateGo();
 // 샌드박스(채팅 미리보기 등 iframe) 감지 → 안내 배너
