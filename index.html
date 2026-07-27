@@ -1044,6 +1044,24 @@ A vast empty hall bathed in indigo-violet: near-black mirror-like floor #020111 
 A quiet narrow alley in early morning light: cream and dusty-rose pastel walls in #EBC3CC and #D9B0AD, all shadows painted in soft gray-violet #A8979F with no pure black anywhere, a string of small triangular bunting flags printed with a tiny four-petal flower pattern hanging across the alley, milk-glass round streetlamps still faintly glowing, potted plants lining a short stone stair, thin morning steam rising from one warm window, gentle peach-colored sunlight entering from one side, cozy and nostalgic.
 딱 이미지 1장만 출력.`,
   },
+  opg_impact: {
+    scene: true,
+    name: '⚡ 임팩트 인서트 컷',
+    desc: '애니스터디 07-27 1파운드 복음 실측 — 일그러진 얼굴 익스트림 클로즈업 + 사선 스피드라인',
+    prompt: `업로드한 캐릭터를 80년대 개그 애니의 '임팩트 인서트 컷'으로 재연출해줘.
+[고정] 캐릭터의 눈코입 생김새·얼굴형·헤어스타일·의상 디자인·고유 색상은 100% 그대로 고정 — 표정 과장·구도·배경만 변경.
+1988 OVA gag impact insert: extreme close-up of the character's contorted face — squeezed-shut eyes and clenched teeth drawn as one solid white band, effort/anger drawn as a literal wrinkle map (3-4 forehead crease lines, knotted brows, nose-bridge wrinkles), huge trapezoid open mouth up to 1/3 of the face if shouting, diagonal speed lines over a flat single-color background, 2-3 static solid-white outlined sweat drops stuck on the temple, flat one-step cel shading, hard-edged comic energy, no realistic rendering.
+딱 이미지 1장만 출력.`,
+  },
+  opg_gagshot: {
+    scene: true,
+    name: '🥊 80s 개그 투샷',
+    desc: '애니스터디 07-27 1파운드 복음 실측 — 펀치라인 프리즈 와이드 투샷 · 절약형 체육관 배경',
+    prompt: `업로드한 캐릭터(들)를 80년대 개그 애니의 '펀치라인 프리즈' 와이드 컷으로 재연출해줘.
+[고정] 캐릭터의 눈코입 생김새·얼굴형·헤어스타일·의상 디자인·고유 색상은 100% 그대로 고정 — 포즈 연출·배경만 변경.
+late-80s OVA comedy-mode wide two-shot: characters completely frozen mid-reaction in one fixed wide shot (deliberate comedic dead air), bright flat cel with exactly one shadow step, ultra-economical background — a single cream wall #D6CBB4 with one brush-calligraphy poster, plain wood floor #8F6142 with a few plank lines, one flat black oval shadow under each figure, any extras painted as fully frozen background figures, optionally two characters pressed into one silhouette bouncing on the same beat; reference palette: orange #D96830, dull red #B0473A, khaki #C9BC9C, navy #2A2C38.
+딱 이미지 1장만 출력.`,
+  },
   bgextras: {
     scene: true,
     name: '👥 배경 엑스트라 군중',
@@ -1103,6 +1121,14 @@ Retro emotion-background cut: the real background is completely replaced by broa
     prompt: `업로드한 캐릭터를 90년대 셀 애니 악역 등장신처럼 인디고-바이올렛 조명으로 다시 그려줘.
 [고정] 캐릭터의 눈코입 생김새·얼굴형·헤어스타일·의상 디자인·고유 색상은 100% 그대로 고정. 표정·형태 변경 금지. 아래는 조명·팔레트·구도·배경에만 적용.
 90s cel anime villain lighting: deep indigo-violet palette (near-black floor #020111, space tones #2D2354 and #5F4B8B), the character lit flat with brightness contrast only — pale skin tones popping against the dark indigo, no realistic light source, low-angle dutch tilt framing, background figures rendered as flat lavender-gray silhouettes #ABA0CA with zero facial detail, hard cel edges, ominous but colorful, VHS-era grain.
+딱 이미지 1장만 출력.`,
+  },
+  opg_feel: {
+    name: '🥊 1파운드 작화감 (88 OVA)',
+    desc: '애니스터디 07-27 1파운드 복음 실측 — 굵은 균일선 · 뭉툭 주먹 · 통짜 이빨 · 정적 땀방울',
+    prompt: `구도·내용·팔레트(고유색)는 그대로 두고, 작화감(그리는 방식)만 1988년 OVA 「1파운드 복음」 실측 스펙으로 고쳐줘.
+[고정] 장소·배경·소품, 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상 디자인, 머리색·의상색 등 고유색 전부 원본 그대로 100% 고정 — 작화감만 조정.
+ONE POUND GOSPEL (1988) DRAWING FEEL — universal add-on, any cut: confident, slightly bold uniform ink outlines, a touch thicker than standard weekly TV anime of the era; round soft cheeks, compact sturdy grounded poses with a sense of weight; hands as simple mitten-like shapes — a fist is one solid block with 2-3 knuckle lines max; any open mouth shows a single solid white tooth band, never individual teeth; sweat = 2-3 solid-white outlined teardrops stuck in place on the temple, never dripping; late-80s OVA finish — linework steadier and more even than rushed weekly TV, but shading stays flat one-step cel.
 딱 이미지 1장만 출력.`,
   },
 };
@@ -1195,6 +1221,7 @@ const SHORT_PATCH = {
   moonwash:'달빛 워시', flatbg:'플랫 배경', evacountdown:'카운트다운',
   pastel_daylight:'파스텔 주광', emotion_bg_v2:'감정 BG', indigo_villain:'악역 조명',
   teal_night_funfair:'놀이공원', indigo_crystal_hall:'크리스털 홀', peach_morning_alley:'아침 골목',
+  opg_feel:'1파운드 작화', opg_impact:'임팩트 컷', opg_gagshot:'개그 투샷',
 };
 const SHORT_STYLE = { videogirl:'비디오걸', kodocha:'오모챠', eva:'에바' };
 
