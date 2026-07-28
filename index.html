@@ -506,6 +506,7 @@ const BASE_PROMPT = `첨부한 이미지를, 1980-90년대 일본 저예산 주�
 - 바꾸는 것은 오직 작화감(그림체·화풍·질감·색감)뿐. 스타일 지침은 '그리는 방식'에만 적용하고, 생김새 자체를 다른 얼굴로 바꾸지 말 것.
 - Keep each character's facial features (eyes, nose, mouth, face identity) IDENTICAL to the input. Change ONLY the art style / rendering, never the facial identity.
 - 피부톤: 원본 명도 그대로 또는 한 톤 밝게만 — 누렇게·황색·갈색·탁하게 다운 절대 금지. Skin stays the same value as the input or ONE tone brighter — no yellow/ochre/sepia/tan cast on skin, never darker.
+- 얼굴·목·몸의 점(뷰티마크)·주근깨는 원본 위치·개수 그대로 100% 고정 — 지우거나 옮기거나 새로 만들지 말 것. Preserve every mole and beauty mark exactly.
 
 [셀·선화]
 - 손으로 칠한 아세테이트 셀, 무광의 마른 물감 질감, 살짝 어긋난 채색, 셀 경계의 미세한 들뜸
@@ -573,6 +574,7 @@ Keep the input image's framing and aspect ratio exactly as-is.
 - 바꾸는 것은 오직 작화감(그림체·화풍·질감·색감)뿐. 스타일 지침은 '그리는 방식'에만 적용하고, 생김새 자체를 다른 얼굴로 바꾸지 말 것.
 - Keep each character's facial features (eyes, nose, mouth, face identity) IDENTICAL to the input. Change ONLY the art style / rendering, never the facial identity.
 - 피부톤: 원본 명도 그대로 또는 한 톤 밝게만 — 누렇게·황색·갈색·탁하게 다운 절대 금지. Skin stays the same value as the input or ONE tone brighter — no yellow/ochre/sepia/tan cast on skin, never darker.
+- 얼굴·목·몸의 점(뷰티마크)·주근깨는 원본 위치·개수 그대로 100% 고정 — 지우거나 옮기거나 새로 만들지 말 것. Preserve every mole and beauty mark exactly.
 
 [스타일 — 변덕쟁이 오렌지로드 TV판 (1987-88, 스튜디오 피에로)]
 첨부한 이미지를 1987년 「변덕쟁이 오렌지로드」 TV판의 진짜 방송 프레임처럼 처음부터 다시 그려줘.
@@ -1160,6 +1162,223 @@ PROPORTION FIX ONLY: rebalance the body to classic late-80s/early-90s romcom OVA
 90s gag-anime expression translation: simplify the eyes into comic shorthand — dot eyes, simple line eyes or squeezed ">_<" eyes as fits the emotion; thick blunt comedic eyebrows; puffed-out round cheeks for pouting; a huge trapezoid open mouth with one solid white tooth band when shouting or laughing; 2-3 short diagonal blush hatch lines on the cheek; 2-3 static solid-white outlined sweat drops when flustered; optional comic anger cross mark; exaggeration applies to the FACE ONLY — body proportions, pose and rendering stay exactly as the original; flat cel finish, no modern glossy eyes.
 딱 이미지 1장만 출력.`,
   },
+  romcom_tvcel: {
+    name: '📺 87 로코 TV셀 (전신)',
+    desc: '얼굴은 건드리지 않는 전신 스타일 — 6.2~6.7등신 둥근 몸 · 부드러운 해부 단순화 · 제록스 선 · 과슈 배경 · 점 고정',
+    prompt: `[OVERALL STYLE — HIGHEST PRIORITY]
+Draw this as a genuine frame from a late-1980s Japanese romantic-comedy television anime.
+It must look like an actual hand-drawn weekly TV animation cel produced during the late 1980s:
+pencil key animation, slightly imperfect xerox-transferred outlines, hand-painted acetate cels, a quickly painted gouache background, photographed on an animation stand and captured from an old analog television broadcast.
+This prompt does NOT define the characters' eyes, nose, mouth, facial structure, or facial identity.
+Keep the intended character design unchanged.
+
+[IDENTITY MARKS LOCK]
+얼굴·목·몸에 있는 점(뷰티마크)·주근깨 등 고유 마크는 원본의 위치·개수·크기 그대로 100% 고정 — 지우거나, 옮기거나, 새로 만들지 말 것.
+Preserve every mole, beauty mark and freckle from the original — exact same position, count and size on face, neck and body. Never remove, relocate, or invent marks.
+
+Apply the following instructions only to body proportions, anatomy simplification, linework, cel painting, color, and background rendering.
+
+━━━━━━━━━━━━━━━━━━
+FULL-BODY PROPORTIONS
+━━━━━━━━━━━━━━━━━━
+Charming, rounded, compact proportions from a late-1980s Japanese romantic-comedy TV anime.
+• approximately 6.2–6.7 heads tall for women
+• approximately 6.5–7 heads tall for men
+• slightly larger head relative to the body than realistic anatomy
+• compact upper body
+• short, simple torso
+• natural, gently sloping shoulders
+• softly rounded ribcage
+• modest waist definition
+• modest hips
+• legs slightly shorter than modern anime or fashion illustration
+• limbs have soft cylindrical volume
+• thighs and calves are gently rounded
+• small, simplified hands
+• compact, simplified feet
+• stable, grounded center of gravity
+• youthful, approachable, everyday silhouette
+The body should feel cute and rounded, but not chibi or childlike.
+The proportions should remain mature enough for teenage or young-adult characters.
+
+━━━━━━━━━━━━━━━━━━
+SOFT, SIMPLIFIED ANATOMY
+━━━━━━━━━━━━━━━━━━
+Simplify the human body into soft, readable animation shapes.
+• smooth transition from shoulders to upper arms
+• arms drawn as gently tapered tubes
+• legs drawn as soft, slightly tapered cylinders
+• elbows and knees indicated only by a small change in contour
+• wrists and ankles narrow gently without visible bone structure
+• pelvis and ribcage are not anatomically emphasized
+• chest, waist, hips, thighs, and calves are described with broad rounded shapes
+• body weight is communicated through pose and silhouette, not anatomical rendering
+• standing and sitting poses feel relaxed and slightly loose
+• hands use a minimum number of lines
+• fingers are grouped into simple shapes
+• joints bend clearly but remain visually soft
+No protruding collarbones.
+No visible ribs.
+No sharply defined knees, elbows, ankles, hip bones, or shoulder bones.
+No muscle separation.
+No detailed tendons.
+No precise anatomical construction.
+No realistic body contour rendering.
+
+━━━━━━━━━━━━━━━━━━
+SILHOUETTE AND POSE
+━━━━━━━━━━━━━━━━━━
+Prioritize a clear, readable silhouette over anatomical accuracy.
+• slightly rounded posture
+• relaxed shoulders
+• naturally bent elbows and knees
+• modest, everyday gestures
+• simple but expressive body language
+• mild irregularity and looseness typical of weekly television animation
+• characters should feel warm, ordinary, and physically approachable
+• avoid perfectly straight mannequin posture
+• avoid fashion-model posing
+• avoid excessively elegant or elongated gestures
+Even in action poses, keep the limbs soft, compact, and simply constructed.
+
+━━━━━━━━━━━━━━━━━━
+SKETCH AND LINEWORK
+━━━━━━━━━━━━━━━━━━
+Late-1980s xerox-transferred television cel linework.
+• medium-weight dark brown, charcoal, or deep navy outlines
+• slightly uneven hand-drawn contour lines
+• soft, rounded contour construction
+• occasional subtle wobble in long lines
+• minor variation between body parts
+• limited interior construction lines
+• folds indicated with only a few short strokes
+• hands, shoes, clothing, and props simplified into clear silhouettes
+• outlines should feel copied from pencil drawings onto acetate
+• slightly rough weekly-TV drawing quality
+• small, natural inconsistencies are desirable
+• linework remains readable but never digitally pristine
+Do not use delicate modern line art.
+Do not use razor-sharp vector outlines.
+Do not use dense sketch hatching.
+Do not use highly polished illustration lines.
+Do not add excessive clothing folds or anatomical contour lines.
+
+━━━━━━━━━━━━━━━━━━
+CEL PAINTING
+━━━━━━━━━━━━━━━━━━
+Traditional hand-painted acetate cel rendering.
+• broad, opaque areas of flat color
+• mostly one base color per material
+• a maximum of one simple shadow tone where necessary
+• shadows appear as large, clean, hard-edged shapes
+• no rendered light transitions
+• no soft digital gradients
+• no volumetric modeling
+• no detailed surface texture
+• subtle hand-painted irregularity along color boundaries
+• slightly imperfect alignment between paint and outline
+• matte, dry cel-paint appearance
+Skin and limbs should generally remain flat and minimally shaded.
+Use a single compact shadow shape only when needed to clarify overlap or pose.
+Hair and clothing should be treated as large graphic color masses.
+Clothing folds should be expressed with silhouette changes and a few short ink lines, not detailed shading.
+
+━━━━━━━━━━━━━━━━━━
+COLOR PALETTE
+━━━━━━━━━━━━━━━━━━
+Clean but gently muted late-1980s television colors.
+Day scenes:
+• soft turquoise
+• mint green
+• muted emerald
+• powder blue
+• pale lavender
+• warm pink
+• coral red
+• soft cream
+• pale yellow
+• subdued brown
+• cool blue-gray
+Night scenes:
+• deep indigo
+• muted navy
+• blue-violet
+• dark teal
+• cool gray-blue
+• restrained pools of pale green or warm yellow light
+Color relationships should be simple and graphic.
+Use a small number of clearly separated colors.
+Keep characters readable against the background.
+The image may be colorful, but it should not look neon, glossy, digitally luminous, or aggressively saturated.
+Avoid heavy yellow, sepia, or orange vintage filters.
+피부톤은 원본 명도 그대로 또는 한 톤 밝게만 — 누런 필터 금지.
+
+━━━━━━━━━━━━━━━━━━
+BACKGROUND DRAWING
+━━━━━━━━━━━━━━━━━━
+Simplified hand-painted gouache background made for weekly television animation.
+• describe the location with only its most recognizable large shapes
+• broad painted color areas
+• simplified perspective
+• slightly loose architectural lines
+• walls and floors divided into large flat planes
+• trees painted as trunks plus clustered masses of foliage
+• bushes represented as overlapping green and blue color clumps
+• distant buildings reduced to simple silhouettes and a few windows
+• furniture reduced to clear geometric shapes
+• pavement indicated by a small number of perspective lines
+• props retain their recognizable silhouette but lose minor decoration
+• background details become progressively simpler with distance
+• small objects may be suggested by short strokes or color spots
+• visible but restrained gouache brush character
+The background supports the characters without competing with them.
+It should feel designed for fast production and easy readability on a small CRT television.
+Do not individually render every leaf, brick, tile, window, or fabric texture.
+Do not use photorealistic architecture.
+Do not use complex cinematic environmental lighting.
+Do not fill empty areas with unnecessary detail.
+
+━━━━━━━━━━━━━━━━━━
+DEPTH AND LIGHTING
+━━━━━━━━━━━━━━━━━━
+Use simple television-animation depth separation.
+• foreground, middle ground, and background divided by value and color
+• characters remain slightly cleaner and more graphic than the background
+• lighting expressed through flat local colors
+• night scenes use large indigo or navy masses
+• daylight scenes use pale, evenly distributed color
+• cast shadows are simple flat shapes
+• minimal reflected light
+• no realistic light simulation
+• no dramatic rim light
+• no ambient occlusion
+• no complex color bounce
+The scene should feel evenly exposed for an old television broadcast.
+
+━━━━━━━━━━━━━━━━━━
+ANALOG TV FINISH
+━━━━━━━━━━━━━━━━━━
+Looks like a real frame captured from a late-1980s Japanese television broadcast.
+• slightly soft focus
+• low-resolution analog image
+• gentle chroma bleed
+• mild color misregistration
+• very subtle broadcast haze
+• restrained analog grain
+• faint softness around outlines
+• slightly unstable but clean cel colors
+• no modern digital sharpness
+• no artificial heavy VHS damage
+• no dirty texture covering the artwork
+The analog effect should remain subtle enough that the original drawing and flat colors are still clearly readable.
+
+━━━━━━━━━━━━━━━━━━
+NEGATIVE PROMPT
+━━━━━━━━━━━━━━━━━━
+modern anime rendering, modern moe proportions, chibi, super-deformed anatomy, baby proportions, oversized head, fashion illustration anatomy, 8-head or 9-head proportions, supermodel body, extremely long legs, tiny waist, oversized chest, sharp shoulders, angular body, visible collarbones, protruding joints, defined kneecaps, defined elbows, hip-bone definition, rib definition, muscle definition, realistic tendons, detailed anatomy, body contour rendering, ultra-thin limbs, mannequin stiffness, oversized hands, oversized feet, precise digital line art, vector-clean outlines, delicate tapered line art, dense internal linework, excessive clothing folds, hyper-detailed hair, individual hair strands, airbrush shading, soft digital gradients, 3D lighting, glossy cel shading, HDR, bloom, lens flare, ambient occlusion, cinematic color grading, photorealism, CGI, plastic texture, realistic materials, hyper-detail, 4K sharpness, AI-upscaled appearance, photorealistic background, intricate architecture, individual leaves, detailed bricks, detailed ground texture, cinematic environment painting, modern concept-art background, overly polished commercial illustration, poster finish, merchandise artwork finish, removed moles, missing beauty marks.
+
+딱 이미지 1장만 출력.`,
+  },
   flat: {
     name: '🎨 음영 더 빼기',
     desc: '음영이 너무 많이 들어갔을 때',
@@ -1480,6 +1699,7 @@ const SHORT_PATCH = {
   retrofinish:'레트로마감', celcore87:'87 셀', rimlight:'밤 림라이트', eyes:'눈 재작화',
   mob:'못캐릭', tone:'쨍함 제거', smudge:'뭉개기', smudge0:'뭉개기 톤유지', flat:'음영 빼기',
   ova_proportion:'가분수 교정', fashion_8090:'패션 번역', ratio_6575:'비율만', gag_face:'개그 표정',
+  romcom_tvcel:'로코 TV셀',
   expr:'표정 이식', comic:'코믹 표정',
   forest:'러버즈숲', eyecatch:'아이캐치', feetcut:'발 인서트',
   moonwash:'달빛 워시', flatbg:'플랫 배경', evacountdown:'카운트다운',
