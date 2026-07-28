@@ -505,6 +505,7 @@ const BASE_PROMPT = `첨부한 이미지를, 1980-90년대 일본 저예산 주�
 - 캐릭터의 눈·코·입 등 이목구비 생김새, 얼굴형, 인상은 원본 그대로 100% 고정 — 같은 사람으로 알아볼 수 있게.
 - 바꾸는 것은 오직 작화감(그림체·화풍·질감·색감)뿐. 스타일 지침은 '그리는 방식'에만 적용하고, 생김새 자체를 다른 얼굴로 바꾸지 말 것.
 - Keep each character's facial features (eyes, nose, mouth, face identity) IDENTICAL to the input. Change ONLY the art style / rendering, never the facial identity.
+- 피부톤: 원본 명도 그대로 또는 한 톤 밝게만 — 누렇게·황색·갈색·탁하게 다운 절대 금지. Skin stays the same value as the input or ONE tone brighter — no yellow/ochre/sepia/tan cast on skin, never darker.
 
 [셀·선화]
 - 손으로 칠한 아세테이트 셀, 무광의 마른 물감 질감, 살짝 어긋난 채색, 셀 경계의 미세한 들뜸
@@ -532,7 +533,7 @@ const BASE_PROMPT = `첨부한 이미지를, 1980-90년대 일본 저예산 주�
 [색감]
 - 채도 낮지만 깔끔한 색: 크림 화이트, 따뜻한 아이보리, 탁한 베이지, 뮤트 틸, 탁한 녹색,
   탁한 파랑, 연한 라벤더, 깊은 네이비 그림자
-- 살짝 따뜻한 TV 색감, 채도만 5% 높이기
+- 살짝 따뜻한 TV 색감, 채도만 5% 높이기 (단 피부는 제외 — 피부에 노란 필터 금지, 밝고 맑게)
 - 조명은 평평한 색면으로
 
 [화질 — 아날로그 방송 캡처]
@@ -571,6 +572,7 @@ Keep the input image's framing and aspect ratio exactly as-is.
 - 캐릭터의 눈·코·입 등 이목구비 생김새, 얼굴형, 인상은 원본 그대로 100% 고정 — 같은 사람으로 알아볼 수 있게.
 - 바꾸는 것은 오직 작화감(그림체·화풍·질감·색감)뿐. 스타일 지침은 '그리는 방식'에만 적용하고, 생김새 자체를 다른 얼굴로 바꾸지 말 것.
 - Keep each character's facial features (eyes, nose, mouth, face identity) IDENTICAL to the input. Change ONLY the art style / rendering, never the facial identity.
+- 피부톤: 원본 명도 그대로 또는 한 톤 밝게만 — 누렇게·황색·갈색·탁하게 다운 절대 금지. Skin stays the same value as the input or ONE tone brighter — no yellow/ochre/sepia/tan cast on skin, never darker.
 
 [스타일 — 변덕쟁이 오렌지로드 TV판 (1987-88, 스튜디오 피에로)]
 첨부한 이미지를 1987년 「변덕쟁이 오렌지로드」 TV판의 진짜 방송 프레임처럼 처음부터 다시 그려줘.
@@ -880,7 +882,7 @@ A plain, homely, ordinary-looking 1980s-90s cel-anime mob/background character (
 - 채도 낮지만 깔끔한 색으로: 크림 화이트, 따뜻한 아이보리, 탁한 베이지, 뮤트 틸, 연한 라벤더
 - 그라데이션·에어브러시가 생겼다면 평평한 단색 색면으로 되돌리기
 - 전체를 흐릿한 VHS 캡처, 아날로그 TV 방송 화면 질감으로: 약한 색 번짐, 부드러운 초점, 낮은 해상도 TV 캡처감
-- 살짝 따뜻한 TV 색감
+- 살짝 따뜻한 TV 색감 (피부 제외 — 피부는 원본 명도 유지, 누런 필터 금지)
 
 딱 이미지 1장만 출력.`,
   },
@@ -1361,7 +1363,7 @@ Soft blurry cel animation frame.
 Old analog TV broadcast quality.
 
 구도·작화·내용은 그대로 두고 위 질감만 입혀줘.
-[고정] 캐릭터의 눈·코·입 생김새와 얼굴형은 원본 그대로 100% 고정.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형은 원본 그대로 100% 고정. 피부톤은 원본 명도 그대로 — 누렇게·어둡게 만드는 필터 금지.
 딱 이미지 1장만 출력.`;
 
 function buildPrompt(styleKey, extra) {
