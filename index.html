@@ -645,6 +645,61 @@ Keep the input image's framing and aspect ratio exactly as-is.
 [레퍼런스 실측 색 — 이 팔레트를 최우선으로 따를 것]
 따뜻한 소프트 파스텔: 소프트 핑크 #F0AEC4 (그림자 #E08CA8), 소프트 옐로 #E9D48A (그림자 #D0B96A), 딥 인디고 머리 #1E2140 (윤 #4A4E78), 블루 눈 #3A4E8E, 로즈 포인트 #D83A5E, 병아리 오렌지 #E89A3A, 페일 웜 스킨 #F0D6BC. 뮤트 골목: 페일 탄 #D8C0A0, 블루그레이 #9AA8B8, 페일 스카이 #C8D0DC.`,
   },
+  maison2: {
+    name: '메종일각 2',
+    sub: '메종일각 + 87 로코 비율 보정 · 6.3~6.7등신 둥근 실루엣',
+    emoji: '🏡',
+    color: '#B07A3E',
+    mod: `[스타일 지정 — 메종일각 (1986, 스튜디오 딘 / 루미코 타카하시)]
+- [피부톤 고정] 캐릭터 피부는 원본 명도·혈색 그대로 100% 유지 — 따뜻한 색면·조명을 쓰더라도 피부를 누렇게·검게·탁하게 다운시키지 말 것. Keep the original skin brightness — no yellow/ochre/sepia cast on skin, never darker than the input.
+- 쇼와 후기 생활 로맨스의 낡고 따뜻한 일상감으로
+- 생활 소품(전화기, 장지문, 나무 마루, 간판)은 큰 색면으로 단순화하되 시대감 유지
+- 배경은 색면 2~3단, 인물은 1~2단으로 평평하게 — 배경이 감정을 대신 연기하게
+- 밤 실내면: 딥 인디고 네이비 벽(#22314F~#2B3A5A) + 장지문에서 새어나오는 웜 골드 빛(#E8C877), 바닥 빛 웅덩이(#D9B25C), 브라운 마루(#6E5433)
+- 낮 실내·카페면: 크림 벽(#E8DCC4)/웜 베이지(#DCCBA8), 벽돌 포인트(#9E5B44), 나무 가구(#B07A3E)
+- 황혼 외경이면: 벽돌 색면(#7E4A3C), 네이비 황혼 하늘(#3A4A63), 창문 램프 글로우(#F2D48A)
+- 1986년 TV 방송의 아련하고 포근한 색 번짐
+
+[레퍼런스 실측 색 — 이 팔레트를 최우선으로 따를 것]
+따뜻한 소프트 파스텔: 소프트 핑크 #F0AEC4 (그림자 #E08CA8), 소프트 옐로 #E9D48A (그림자 #D0B96A), 딥 인디고 머리 #1E2140 (윤 #4A4E78), 블루 눈 #3A4E8E, 로즈 포인트 #D83A5E, 병아리 오렌지 #E89A3A, 페일 웜 스킨 #F0D6BC. 뮤트 골목: 페일 탄 #D8C0A0, 블루그레이 #9AA8B8, 페일 스카이 #C8D0DC.
+
+━━━━━━━━━━━━━━━━━━
+PROPORTION REFINEMENT (VERY IMPORTANT)
+━━━━━━━━━━━━━━━━━━
+Aim for the charming proportions of late-1980s Japanese romantic comedy television anime.
+The character should feel slightly cuter than realistic while remaining mature.
+• around 6.3–6.7 heads tall for women
+• around 6.8–7.2 heads tall for men
+Head:
+• slightly larger relative to the body (about 3–5% larger than realistic)
+• short compact chin
+• softly rounded jaw
+• slightly fuller cheeks
+• shorter lower face
+• forehead slightly taller than the lower face
+Body:
+• compact upper body
+• slightly shorter torso
+• gently rounded ribcage
+• narrow but natural shoulders
+• modest hips
+• legs long but not elongated
+• soft thighs and calves
+• natural weight distribution
+Arms:
+• slightly shorter upper arms
+• compact forearms
+• tiny simplified hands
+Legs:
+• slightly shorter than modern fashion proportions
+• rounded knees
+• compact ankles
+• tiny feet
+Overall silhouette:
+cute, approachable, soft, compact, balanced, youthful, late-80s romantic comedy TV anime.
+Never:
+fashion illustration, long face, pointed chin, supermodel proportions, extremely long legs, ultra slim limbs, sharp shoulders, mannequin anatomy.`,
+  },
   cityhunter: {
     name: '시티헌터',
     sub: '시티헌터 · 1987 선라이즈 · 도회적 80s',
@@ -1432,7 +1487,7 @@ const SHORT_PATCH = {
   teal_night_funfair:'놀이공원', indigo_crystal_hall:'크리스털 홀', peach_morning_alley:'아침 골목',
   opg_feel:'1파운드 작화', opg_impact:'임팩트 컷', opg_gagshot:'개그 투샷',
 };
-const SHORT_STYLE = { videogirl:'비디오걸', kodocha:'오모챠', eva:'에바' };
+const SHORT_STYLE = { videogirl:'비디오걸', kodocha:'오모챠', eva:'에바', maison2:'메종일각 2' };
 
 // 이름 문자열 앞머리의 이모지와 나머지 텍스트를 분리
 function splitEmoji(name) {
