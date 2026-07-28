@@ -911,6 +911,34 @@ Old analog TV broadcast quality.
 
 딱 이미지 1장만 출력.`,
   },
+  smudge0: {
+    name: '📺 좀더 뭉개기 (채도0·밝기0)',
+    desc: '채도·밝기 변경 없이 원본 톤 그대로 — 뭉개기 질감만 한 번 더',
+    prompt: `구도·작화·내용은 그대로 두고, 아래 질감만 한 번 더 입혀줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형은 원본 그대로 100% 고정 — 작화감만 조정.
+
+아날로그 방송 화면.
+약한 색 번짐.
+부드러운 초점.
+살짝 뿌연 화면.
+낮은 해상도 TV 캡처감.
+채도 변경 금지 — 원본 채도 100% 그대로 유지.
+밝기 변경 금지 — 원본 밝기 100% 그대로 유지.
+Keep the exact original saturation and brightness — do not boost or reduce either.
+선명한 현대 디지털 일러스트 금지.
+하이퍼 디테일 금지.
+리얼한 재질감 금지.
+HDR 금지.
+광택 금지.
+렌즈플레어 금지.
+시네마틱 컬러그레이딩 금지.
+
+Looks like a real frame captured from a late-1990s Japanese television anime.
+Soft blurry cel animation frame.
+Old analog TV broadcast quality.
+
+딱 이미지 1장만 출력.`,
+  },
   flat: {
     name: '🎨 음영 더 빼기',
     desc: '음영이 너무 많이 들어갔을 때',
@@ -1229,7 +1257,7 @@ const state = {
 // 타일에는 이모지 + 짧은 이름만 보여주고, 원래 긴 이름·설명은 길게 누르면 뜬다.
 const SHORT_PATCH = {
   retrofinish:'레트로마감', celcore87:'87 셀', rimlight:'밤 림라이트', eyes:'눈 재작화',
-  mob:'못캐릭', tone:'쨍함 제거', smudge:'뭉개기', flat:'음영 빼기',
+  mob:'못캐릭', tone:'쨍함 제거', smudge:'뭉개기', smudge0:'뭉개기 톤유지', flat:'음영 빼기',
   expr:'표정 이식', comic:'코믹 표정',
   forest:'러버즈숲', eyecatch:'아이캐치', feetcut:'발 인서트',
   moonwash:'달빛 워시', flatbg:'플랫 배경', evacountdown:'카운트다운',
