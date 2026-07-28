@@ -1075,6 +1075,34 @@ modern anime style, modern moe, chibi, super-deformed, oversized head, baby prop
 현대적인 미소녀 작화나 3D 렌더링으로 바꾸지 않는다.
 딱 완성 이미지 1장만 출력한다.`,
   },
+  fashion_8090: {
+    name: '👗 8090 패션 번역',
+    desc: '의상만 88-92 로코 애니 패션으로 갈아입히기 — 인물·작화·배경은 그대로 (작화 버튼과 따로 쓰는 패션 전용)',
+    prompt: `인물·작화·배경은 그대로 두고, 의상(신발·가방 소품 포함)만 1988-92년 일본 로맨틱코미디 애니메이션 패션으로 갈아입혀줘.
+[고정] 캐릭터의 눈코입 생김새·얼굴형·헤어스타일·헤어색·피부톤·체형·포즈·구도·배경·작화풍·색감 전부 원본 그대로 100% 고정 — 오직 옷과 착용 소품만 교체.
+FASHION TRANSLATION RULE: translate each modern garment into its closest 1988-92 Japanese city-pop / romcom anime equivalent while keeping the outfit's original color identity.
+- 여성: 어깨 패드 있는 파스텔 오버사이즈 블레이저·카디건(소매 걷기), 하이웨이스트 테이퍼드 슬랙스 또는 벨트 있는 A라인 미니스커트, 넣어 입은 블라우스·폴로, 니트 베스트, 원피스, 헤어밴드·슈슈, 가죽 숄더백, 플랫 펌프스·메리제인
+- 남성: 폴로·셔츠 넣어 입기, 하이웨이스트 치노, 봄버·바시티 재킷, 가디건, 로퍼·캔버스화
+- 금지(현대 아이템): 탱크탑+카고·와이드팬츠 조합, 쪼리·청키 스니커즈, 크롭 후드, 레깅스, 스마트폰 등 현대 소품
+- 실루엣은 당시 셀 애니답게 크고 단순한 색면으로, 주름은 큰 면 2~4개
+딱 이미지 1장만 출력.`,
+  },
+  ratio_6575: {
+    name: '📏 비율만 교정 (6.5~7등신)',
+    desc: '작화·색·의상 그대로 — 신체 비율만 88-93 OVA 등신으로 (가분수 교정의 비율 파트만)',
+    prompt: `작화풍·색감·의상·헤어·배경·구도는 전부 그대로 두고, 신체 비율만 아래 스펙으로 교정해줘.
+[고정] 캐릭터의 눈코입 생김새·얼굴형·헤어스타일·의상 디자인·고유색·포즈·카메라 구도 전부 원본 그대로 100% 고정 — 등신 비율만 조정.
+PROPORTION FIX ONLY: rebalance the body to classic late-80s/early-90s romcom OVA proportions — about 6.5-7 heads tall for women, 7-7.5 for men. Make the head smaller and natural (never oversized moe head), natural shoulders, longer tidy torso, slim but grounded limbs with believable weight, small simple hands and feet, stable knees/elbows/pelvis. NO supermodel 8-9 head proportions, NO chibi/SD, NO baby proportions, NO mannequin stiffness.
+딱 이미지 1장만 출력.`,
+  },
+  gag_face: {
+    name: '😝 개그 과장 표정',
+    desc: '표정만 90년대 개그 문법으로 과장 번역 — 점눈·굵은 눈썹·볼빵빵·사선 홍조 (코믹 표정보다 세게)',
+    prompt: `구도·포즈·의상·헤어·색감·작화풍은 그대로 두고, 표정만 90년대 개그 애니 문법으로 과장 번역해줘.
+[고정] 캐릭터의 얼굴형·헤어스타일·의상·고유색·포즈·구도 전부 원본 그대로 100% 고정 — 얼굴 표정 요소만 만화적으로 변형 (같은 캐릭터로 알아볼 수 있게).
+90s gag-anime expression translation: simplify the eyes into comic shorthand — dot eyes, simple line eyes or squeezed ">_<" eyes as fits the emotion; thick blunt comedic eyebrows; puffed-out round cheeks for pouting; a huge trapezoid open mouth with one solid white tooth band when shouting or laughing; 2-3 short diagonal blush hatch lines on the cheek; 2-3 static solid-white outlined sweat drops when flustered; optional comic anger cross mark; exaggeration applies to the FACE ONLY — body proportions, pose and rendering stay exactly as the original; flat cel finish, no modern glossy eyes.
+딱 이미지 1장만 출력.`,
+  },
   flat: {
     name: '🎨 음영 더 빼기',
     desc: '음영이 너무 많이 들어갔을 때',
@@ -1394,7 +1422,7 @@ const state = {
 const SHORT_PATCH = {
   retrofinish:'레트로마감', celcore87:'87 셀', rimlight:'밤 림라이트', eyes:'눈 재작화',
   mob:'못캐릭', tone:'쨍함 제거', smudge:'뭉개기', smudge0:'뭉개기 톤유지', flat:'음영 빼기',
-  ova_proportion:'가분수 교정',
+  ova_proportion:'가분수 교정', fashion_8090:'패션 번역', ratio_6575:'비율만', gag_face:'개그 표정',
   expr:'표정 이식', comic:'코믹 표정',
   forest:'러버즈숲', eyecatch:'아이캐치', feetcut:'발 인서트',
   moonwash:'달빛 워시', flatbg:'플랫 배경', evacountdown:'카운트다운',
