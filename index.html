@@ -534,12 +534,13 @@ const BASE_PROMPT = `첨부한 이미지를, 1980-90년대 일본 저예산 주�
 [색감]
 - 채도 낮지만 깔끔한 색: 크림 화이트, 따뜻한 아이보리, 탁한 베이지, 뮤트 틸, 탁한 녹색,
   탁한 파랑, 연한 라벤더, 깊은 네이비 그림자
-- 살짝 따뜻한 TV 색감, 채도만 5% 높이기 (단 피부는 제외 — 피부에 노란 필터 금지, 밝고 맑게)
+- 살짝 따뜻한 TV 색감, 채도만 5% 높이기 — 단, 따뜻함은 크림·아이보리 '소품의 고유색'으로만 낼 것. 화면 전체를 노랗게 물들이는 워머 필터 금지, 피부에 노란 필터 금지 (밝고 맑게)
 - 조명은 평평한 색면으로
 
 [화질 — 아날로그 방송 캡처]
 - 전체적으로 흐릿한 VHS 캡처, 아날로그 방송 화면
 - 약한 색 번짐, 부드러운 초점, 살짝 뿌연 화면, 낮은 해상도 TV 캡처감
+- 화이트밸런스는 중립 유지 — 화면 전체에 노란·세피아·주황 필터를 씌우지 말 것. 흰색은 뉴트럴 화이트로, 회색은 회색으로. NEUTRAL WHITE BALANCE: no global yellow/sepia/orange cast over the frame; whites stay neutral white. Warmth may come only from the local colors of individual objects, never from an overall tint.
 
 [반드시 피할 것]
 - 현대 미소녀 작화, 다듬은 얼굴, 이상화된 비율 / 반짝이는 큰 눈, 촉촉한 눈망울, 광택 입술,
@@ -940,6 +941,7 @@ A plain, homely, ordinary-looking 1980s-90s cel-anime mob/background character (
 - 그라데이션·에어브러시가 생겼다면 평평한 단색 색면으로 되돌리기
 - 전체를 흐릿한 VHS 캡처, 아날로그 TV 방송 화면 질감으로: 약한 색 번짐, 부드러운 초점, 낮은 해상도 TV 캡처감
 - 살짝 따뜻한 TV 색감 (피부 제외 — 피부는 원본 명도 유지, 누런 필터 금지)
+- 화이트밸런스는 중립 유지 — 화면 전체에 노란·세피아·주황 필터를 씌우지 말 것. 흰색은 뉴트럴 화이트로, 회색은 회색으로. NEUTRAL WHITE BALANCE: no global yellow/sepia/orange cast over the frame; whites stay neutral white. Warmth may come only from the local colors of individual objects, never from an overall tint.
 
 딱 이미지 1장만 출력.`,
   },
@@ -948,6 +950,7 @@ A plain, homely, ordinary-looking 1980s-90s cel-anime mob/background character (
     desc: '아날로그 방송 질감을 한 번 더 — 더 뿌옇고 부드럽게',
     prompt: `구도·작화·내용은 그대로 두고, 아래 질감만 한 번 더 입혀줘.
 [고정] 캐릭터의 눈·코·입 생김새와 얼굴형은 원본 그대로 100% 고정 — 작화감만 조정.
+[화이트밸런스] 화이트밸런스는 중립 유지 — 화면 전체에 노란·세피아·주황 필터를 씌우지 말 것. 흰색은 뉴트럴 화이트로, 회색은 회색으로. NEUTRAL WHITE BALANCE: no global yellow/sepia/orange cast over the frame; whites stay neutral white. Warmth may come only from the local colors of individual objects, never from an overall tint.
 
 아날로그 방송 화면.
 약한 색 번짐.
@@ -975,6 +978,7 @@ Old analog TV broadcast quality.
     desc: '채도·밝기 변경 없이 원본 톤 그대로 — 뭉개기 질감만 한 번 더',
     prompt: `구도·작화·내용은 그대로 두고, 아래 질감만 한 번 더 입혀줘.
 [고정] 캐릭터의 눈·코·입 생김새와 얼굴형은 원본 그대로 100% 고정 — 작화감만 조정.
+[화이트밸런스] 화이트밸런스는 중립 유지 — 화면 전체에 노란·세피아·주황 필터를 씌우지 말 것. 흰색은 뉴트럴 화이트로, 회색은 회색으로. NEUTRAL WHITE BALANCE: no global yellow/sepia/orange cast over the frame; whites stay neutral white. Warmth may come only from the local colors of individual objects, never from an overall tint.
 
 아날로그 방송 화면.
 약한 색 번짐.
@@ -1641,6 +1645,7 @@ Old analog TV broadcast quality.
 
 구도·작화·내용은 그대로 두고 위 질감만 입혀줘.
 [고정] 캐릭터의 눈·코·입 생김새와 얼굴형은 원본 그대로 100% 고정. 피부톤은 원본 명도 그대로 — 누렇게·어둡게 만드는 필터 금지.
+[화이트밸런스] 화이트밸런스는 중립 유지 — 화면 전체에 노란·세피아·주황 필터를 씌우지 말 것. 흰색은 뉴트럴 화이트로, 회색은 회색으로. NEUTRAL WHITE BALANCE: no global yellow/sepia/orange cast over the frame; whites stay neutral white. Warmth may come only from the local colors of individual objects, never from an overall tint.
 딱 이미지 1장만 출력.`;
 
 function buildPrompt(styleKey, extra) {
