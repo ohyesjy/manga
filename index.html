@@ -1705,6 +1705,58 @@ Change ONLY the outfit into 1987 Japanese everyday-life anime clothing. Keep the
 
 딱 이미지 1장만 출력.`,
   },
+  analogtv: {
+    name: '📺 아날로그 80년대 TV',
+    desc: '1980년대 TV 방송 프레임처럼 — 셀 애니메이션 + 아날로그 화질 감소',
+    prompt: `Draw as a genuine frame from a late-1980s to early-1990s Japanese weekly television anime.
+It should look like an actual hand-painted acetate cel photographed on an animation stand and recorded from an analog TV broadcast.
+
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상 디자인, 고유색은 원본 그대로 100% 고정 — 작화감·화질만 조정.
+[피부·화이트밸런스] 피부는 원본 명도 그대로 또는 한 톤 밝게만 — 누렇게·검게 금지. 화면 전체에도 노란·세피아 필터 금지, 흰색은 뉴트럴 화이트로. NEUTRAL WHITE BALANCE: no global yellow/sepia cast, skin never darker or yellower than the input.
+
+NOT modern anime. NOT digital illustration. NOT movie-quality animation. NOT glossy. NOT HDR. NOT high detail.
+
+DRAWING STYLE
+Late-80s / early-90s TV anime drawing.
+• clean but slightly imperfect xerox-transferred ink lines
+• medium-weight uniform outlines
+• slight hand-drawn wobble
+• simplified anatomy
+• simplified fingers
+• rounded cheeks
+• soft facial construction
+• very little line detail
+• minimal clothing wrinkles
+• economical TV production drawing
+Characters should feel slightly chunky and grounded rather than elegant.
+
+CEL PAINTING
+Traditional acetate cel painting.
+Flat colors only. 1–2 tone cel shading. Hard shadow edges. No gradients. No soft airbrush. No rim light. No bloom. No ambient occlusion. No subsurface scattering. No realistic textures.
+
+COLOR
+Slightly muted late-80s TV palette. Natural colors. Moderate saturation. Never oversaturated. No neon digital colors. Whites remain neutral white. No global yellow filter. No orange grading. No teal-orange color grading.
+
+BACKGROUND
+Simple gouache-painted anime background. Large painted shapes. Minimal texture. Soft atmospheric perspective. Background less detailed than characters. Looks quickly painted for weekly television production.
+
+ANALOG TV LOOK
+Captured from an old CRT television. Soft focus. Low apparent resolution. Slight color bleeding. Mild chroma misregistration. Very light analog noise. Subtle VHS softness. Tiny loss of edge sharpness. Slight broadcast compression feel. Very gentle film grain. Slightly crushed blacks. No digital sharpening. No crisp pixels. No ultra-clean rendering.
+
+LIGHTING
+Simple TV animation lighting. Even lighting. Large shadow masses. No cinematic lighting. No volumetric lighting. No dramatic bounce light.
+
+DETAIL LEVEL
+Low-detail TV production. Minimal rendering. Simple shapes. Readable silhouettes. No hyper-detail. No realistic materials. No skin pores. No fabric texture. No physically-based rendering.
+
+EXTRA ANALOG DEGRADATION
+Reduce edge sharpness by about 15%, apply subtle CRT softness, weak chroma bleed, faint luminance noise, tiny broadcast ghosting, preserve the original colors while avoiding any yellow or sepia cast.
+
+FINAL LOOK
+Looks exactly like a frame captured from a Japanese television broadcast between 1987 and 1992. Slightly soft. Slightly blurry. Slight analog color bleed. Simple cel painting. Economical weekly TV animation quality. The image should immediately evoke classic Rumiko Takahashi-era television anime from the late Showa / early Heisei period.
+
+딱 이미지 1장만 출력.`,
+  },
 };
 
 const CLOSING = '\n\n딱 이미지 1장만 출력.';
@@ -1800,6 +1852,7 @@ const SHORT_PATCH = {
   teal_night_funfair:'놀이공원', indigo_crystal_hall:'크리스털 홀', peach_morning_alley:'아침 골목',
   opg_feel:'1파운드 작화', opg_impact:'임팩트 컷', opg_gagshot:'개그 투샷',
   flatcel87:'무음영 플랫', rumikoeyes:'루미코 눈', twilightwash:'황혼 워시', kissaten_night:'쇼와 다방밤',
+  analogtv:'아날로그 TV',
 };
 const SHORT_STYLE = { videogirl:'비디오걸', kodocha:'오모챠', eva:'에바', maison2:'메종일각 2' };
 
