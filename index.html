@@ -626,6 +626,10 @@ Keep the input image's framing and aspect ratio exactly as-is.
 - 색 구성 = 뮤트 파스텔 베이스 + 비비드 포인트 원색 딱 1개 (예: 빨간 리본 같은)
 - 옷 주름 = 꼭 필요한 접힘 몇 줄만
 - 90년대 초 토에이 주간 TV 특유의 밝고 깨끗한 셀 화면
+- [08-19 실측 보강 — 음영 예산] 일상 컷은 얼굴 음영 0단계(완전 플랫)로 두고, 음영 예산은 전부 머리카락 1단계에만.
+  옷 주름은 선 2~3개까지. 선은 세피아 다크브라운 균일 중간 굵기, 클로즈업에서만 약간 굵게
+- [08-19 실측 보강 — 눈] 홍채는 큰 단색 + 상단 어두운 띠 + 큰 하이라이트 1개
+- [08-19 실측 보강 — 엑스트라] 배경 인물은 흑·갈·적갈 3~4색 헤어 블롭으로 통일, 이목구비는 생략하거나 점코만
 
 [레퍼런스 실측 색 — 우사기 컷, 이 팔레트를 최우선으로 따를 것]
 극단적으로 플랫한 셀. 골든 옐로 머리 #E8C84A (그림자 #D0A838), 페일 웜 스킨 #F2D8BE (블러시 #E8A48E), 비비드 로즈 핑크 #E86A9E (그림자 #D25088)를 포인트 원색 1개로, 다크 눈 #3A3630, 뮤트 우드 배경 #C99A6E / 페일 #E0C8A8.`,
@@ -1710,6 +1714,16 @@ Large clear rounded eyes in early-1990s Japanese TV cel style: flat cel iris in 
 
 딱 이미지 1장만 출력.`,
   },
+  mode_switch_cu: {
+    name: '😈 모드 스위치 빌런 CU (92 실측)',
+    desc: '애니스터디 08-19 세일러문 실측 — 실눈·빨간 립·얼굴 세로 2톤 분할 + 심연 소용돌이 배경',
+    prompt: `구도·인물·의상은 그대로 두고, 얼굴 작화 문법만 90년대 애니의 '빌런 모드 클로즈업'으로 갈아끼워줘.
+[고정] 캐릭터가 누구인지 알아볼 수 있는 얼굴형·헤어스타일·헤어색·의상·고유색은 원본 그대로 100% 고정. 이 버튼은 표정 과장이 아니라 '작화 문법 교체'이므로 눈매·입 렌더링만 아래 스펙으로 전환. 피부톤은 원본 명도 그대로 또는 한 톤 밝게 — 누렇게·검게 금지. 화면 전체에도 노란·세피아 필터 금지.
+
+Early-90s TV-anime villain-reveal close-up (mode switch, not an exaggerated expression): the same face redrawn with narrow slit eyes, thin sharp downward brows and painted red lips; a HARD vertical two-tone split across the face with the shadow edge running straight down the bridge of the nose — flat hard-edged, no gradient; the background is replaced by an abstract deep-blue swirl (#1E3A6E) with a few darker spiral bands; strict flat cel rendering, no rim light, no glow, no modern glossy eyes. Keep the body, pose and costume exactly as the original.
+
+딱 이미지 1장만 출력.`,
+  },
   twilightwash: {
     name: '🧡 민트→살몬 황혼 워시',
     desc: '애니스터디 07-30 메종일각 실측 — 민트→크림→살몬 3단 황혼 · 원경 실루엣',
@@ -1761,6 +1775,39 @@ Interior of a 1980s Japanese kissaten coffee shop at night, cel anime: deep navy
 [고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상 디자인, 고유색은 원본 그대로 100% 고정 — 이펙트·표정 긴장감·배경만 추가. 피부톤은 원본 명도 그대로 또는 한 톤 밝게 — 누렇게·검게 금지. 화면 전체에도 노란·세피아 필터 금지.
 
 1987 TV-anime gun-action insert: speed drawn as a long curved bright-yellow ballistic arc sweeping across the frame with a thin white core and hard edges (not a glow), one prop frozen mid-air at the arc's apex rendered as a crisp flat silhouette, the character caught in a recoil grimace — braced shoulders, narrowed eyes, teeth shown as one solid white band, short diagonal speed lines behind the figure, background flattened to one or two dark color fields so the arc reads clearly, flat cel shading, no realistic muzzle flash, no bloom, no 3D.
+
+딱 이미지 1장만 출력.`,
+  },
+  impact_wedge_mob: {
+    scene: true,
+    name: '🌟 군중 임팩트 웨지 (92 실측)',
+    desc: '애니스터디 08-19 세일러문 실측 — 미니피겨 떼 셀 + 노랑주황 방사 웨지로 돌진을 기호화',
+    prompt: `인물·구도는 그대로 두고, 배경에 몰려드는 군중과 임팩트 이펙트를 아래 스펙으로 추가해줘.
+[고정] 주인공 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상, 포즈, 카메라 앵글, 위치·크기는 원본 그대로 100% 고정. 피부톤은 원본 명도 그대로 또는 한 톤 밝게 — 누렇게·검게 금지. 화면 전체에도 노란·세피아 필터 금지.
+
+Early-90s TV-anime gag crowd economy: draw the rushing mob as ONE flat painted cluster of near-identical mini-figures — only 3-4 hair colours (black, brown, auburn) as simple hair blobs, faces left blank or reduced to a dot nose, hands without fingers, muted simple outfits, the whole swarm held completely static. Surround the swarm with yellow-orange triangular impact wedges radiating outward in a starburst so the motion is signalled graphically rather than animated. Flat cel shading, hard-edged shapes, no motion blur, no 3D, no detailed faces in the crowd.
+
+딱 이미지 1장만 출력.`,
+  },
+  legwall_trample: {
+    scene: true,
+    name: '🦵 다리벽 짓밟기 컷 (92 실측)',
+    desc: '애니스터디 08-19 세일러문 실측 — 허리 아래 다리벽 + 납작 엎어짐 + 흰 먼지 퍼프 2개',
+    prompt: `이 이미지를 90년대 개그 애니의 '짓밟히는 컷'으로 재연출해줘.
+[고정] 캐릭터의 얼굴 생김새·헤어스타일·헤어색·의상 디자인과 고유색은 원본 그대로 100% 고정 — 구도와 포즈만 아래 문법으로 교체. 피부톤은 원본 명도 그대로 또는 한 톤 밝게 — 누렇게·검게 금지. 화면 전체에도 노란·세피아 필터 금지.
+
+Early-90s TV-anime trampling gag, low camera angle locked on the floor: a wall of waist-down legs crossing the foreground on one side — many pairs of simple legs and shoes only, no upper bodies visible, painted as flat static shapes; the character lies flattened face-down on the floor in the middle ground with two small white dust puffs floating just above them; background reduced to one or two flat color fields; flat cel shading, hard outlines, comic economy, no motion blur, no gore, no 3D.
+
+딱 이미지 1장만 출력.`,
+  },
+  pink_shop_sale: {
+    scene: true,
+    name: '🩷 핑크 세일 상점 (92 실측)',
+    desc: '애니스터디 08-19 세일러문 실측 — 핑크 벽·바닥 + 틸 문틀 + 비스듬한 세일 종이만으로 세트',
+    prompt: `인물은 그대로 두고, 배경만 아래 스펙의 1990년대 초 일본 상점 실내로 교체해줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상, 포즈, 카메라 앵글, 인물 위치·크기 전부 원본 그대로 100% 고정 — 배경만 교체. 피부톤은 원본 명도 그대로 또는 한 톤 밝게 — 누렇게·검게 금지. 화면 전체에도 노란·세피아 필터 금지.
+
+Early-90s Toei TV-anime shop interior: a bare pink wall (#E8B4C8) and pink floor (#EFC9D6) as large flat color fields, teal door and window frames (#6FB7C4 with darker #3E8FA5 edges), and the ONLY set dressing is paper sale signs pasted at jaunty tilted angles — tan paper (#C89A5A) with bold red brush lettering plus a couple of white paper signs; no readable modern text, no shelves full of detailed merchandise, no texture on the walls. Information comes from the paper signs alone. Flat cel painting, thin simple outlines on props, hand-painted gouache flatness.
 
 딱 이미지 1장만 출력.`,
   },
@@ -1961,6 +2008,7 @@ const SHORT_PATCH = {
   evaeyes:'에바 눈',
   cobalt_night:'코발트 나이트', hardboiled_male:'하드보일드 남', fashion_8090_m:'남성 패션',
   neon_street:'네온 거리', skyline_insert:'스카이라인', ballistic_arc:'탄도 아크',
+  mode_switch_cu:'빌런 모드', impact_wedge_mob:'임팩트 웨지', legwall_trample:'다리벽', pink_shop_sale:'핑크 상점',
 };
 const SHORT_STYLE = { videogirl:'비디오걸', kodocha:'오모챠', eva:'에바', maison2:'메종일각 2' };
 
