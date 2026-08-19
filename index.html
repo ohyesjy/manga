@@ -871,6 +871,74 @@ freshly painted cel photographed on an animation stand.
 };
 
 const PATCHES = {
+  dd_pink_chiffon: {
+    outfit: true,
+    name: '🩰 블러시 시폰 댄스 드레스 (더티댄싱 87)',
+    desc: '여성용 · 랩 보디스 + 2겹 서클 스커트 — 회전하면 꽃잎처럼 퍼지는 모션 소재',
+    prompt: `인물·작화·배경은 그대로 두고, 의상(신발 포함)만 1987년 「더티 댄싱」 파이널 댄스의 블러시 핑크 시폰 드레스로 갈아입혀줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 헤어색, 피부톤, 체형, 포즈, 구도, 배경, 작화풍, 색감 전부 원본 그대로 100% 고정 — 오직 옷과 신발만 교체. 노출을 늘리지 말 것.
+
+OUTFIT: a knee-length blush-pink chiffon dance dress (#F2C4CE) with a softly fitted surplice wrap bodice, thin shoulder straps under sheer flutter cap sleeves, a nipped natural waist, and a full double-layer circle skirt with a paler pink underlayer (#F8D9DE) that fans out in big petal-like panels with movement. Bare legs; ballet-pink low-heeled strappy dance shoes (#D9A99A). No accessories.
+
+[셀 처리 — 필수]
+- 시폰은 플랫 핑크 2톤(겉감·안감)만. 비침·광택·그라데이션 전부 금지
+- 스커트 움직임은 큰 꽃잎 모양 색면 + 어두운 주름 선 2~4개로만
+- 캡소매는 어깨 위 작은 색면 하나로 단순화
+- 인물 머리가 핑크 계열이면 드레스를 피치(#F5CDB8)로 틀어 머리와 분리할 것
+
+딱 이미지 1장만 출력.`,
+  },
+  dd_satin_cami: {
+    outfit: true,
+    name: '🎀 연핑크 새틴 캐미 룩 (더티댄싱 87)',
+    desc: '여성용 · 레이스 트림 캐미 + 핑크 하의 — 저팔계 노란 슬립의 색만 바꾼 자매 시안',
+    prompt: `인물·작화·배경은 그대로 두고, 의상(신발 포함)만 1987년 「더티 댄싱」 연습실의 연핑크 새틴 캐미 룩으로 갈아입혀줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 헤어색, 피부톤, 체형, 포즈, 구도, 배경, 작화풍, 색감 전부 원본 그대로 100% 고정 — 오직 옷과 신발만 교체. 노출을 늘리지 말 것, 단정한 실내 연습복 느낌으로.
+
+OUTFIT: a pale-pink satin camisole (#F3CFD6) with delicate lace trim at the neckline and thin straps, loosely worn over matching pale-pink high-cut practice bottoms; bare legs, low white canvas sneakers (#EDEAE2). Soft late-80s dance-film daywear silhouette.
+
+[셀 처리 — 필수]
+- 새틴 광택은 밝은 핑크 하이라이트 띠 1개로만 표현, 나머지는 완전 플랫
+- 레이스 트림은 물결 흰 선 1줄로 단순화 — 레이스 패턴 그리지 말 것
+- 스니커즈는 흰 색면 + 밑창 선 1줄
+- 음영은 같은 계열 어두운 핑크 1단, 하드엣지
+
+딱 이미지 1장만 출력.`,
+  },
+  dd_allblack: {
+    outfit: true,
+    name: '🕺 올블랙 댄스 룩 (더티댄싱 87)',
+    desc: '남성용 · 딥 오픈칼라 셔츠 + 하이웨스트 슬랙스 — 근검정 2톤과 벨트 선만으로 완성',
+    prompt: `인물·작화·배경은 그대로 두고, 의상(신발 포함)만 1987년 「더티 댄싱」 조니의 올블랙 댄스 룩으로 갈아입혀줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 헤어색, 피부톤, 체형, 포즈, 구도, 배경, 작화풍, 색감 전부 원본 그대로 100% 고정 — 오직 옷과 신발만 교체.
+
+OUTFIT: a slim black long-sleeve shirt (#1C1C1E) with a deep open collar unbuttoned to mid-chest and sleeves slightly pushed up; high-waisted tapered black dance trousers (#141416) with a thin black belt; black Cuban-heeled dance shoes. Inverted-triangle silhouette — broad shoulders, narrow waist, long legs emphasized by the high rise.
+
+[셀 처리 — 필수]
+- 셔츠·바지는 근검정 플랫 2톤, 경계는 벨트 선 하나로만 구분
+- 주름은 팔꿈치·무릎에 어두운 선 2~3개만. 광택·원단 결 금지
+- 하이웨스트 위치를 배꼽 위로 확실히 — 시대감은 허리선 높이에서 나옴
+- 어두운 장면이면 옷 전체를 단색 실루엣 덩어리로 눌러도 됨
+
+딱 이미지 1장만 출력.`,
+  },
+  dd_teal_knit: {
+    outfit: true,
+    name: '🌊 틸 니트 + 하이웨스트 (더티댄싱 87)',
+    desc: '남성용 · 뮤트 틸 색면 하나가 상체가 되는 룩 — 마스터 팔레트와 동일 색이라 보정 불필요',
+    prompt: `인물·작화·배경은 그대로 두고, 의상(신발 포함)만 1987년 「더티 댄싱」 연습실의 틸 니트 룩으로 갈아입혀줘.
+[고정] 캐릭터의 눈·코·입 생김새와 얼굴형, 헤어스타일, 헤어색, 피부톤, 체형, 포즈, 구도, 배경, 작화풍, 색감 전부 원본 그대로 100% 고정 — 오직 옷과 신발만 교체.
+
+OUTFIT: a muted-teal fitted short-sleeve knit shirt (#2F8F8F) tucked into high-waisted pleated black trousers (#1A1A1C) with a thin black belt; black dance shoes; sleeves snug on the upper arms. Clean color-block silhouette — one muted-teal plane over dark trousers.
+
+[셀 처리 — 필수]
+- 니트 조직감 전부 삭제 — 셔츠는 플랫 틸 색면 하나 + 옆면 어두운 1단
+- 플리츠는 허리 아래 세로 어두운 선 3~4개만
+- 턱인 경계는 벨트 선 하나로 깔끔하게
+- 틸(#2F8F8F)은 마스터 팔레트의 '뮤트 틸'과 동일 — 채도 올리지 말 것
+
+딱 이미지 1장만 출력.`,
+  },
   retrofinish: {
     name: '🖌️ 레트로작화 마감',
     desc: '어떤 프리셋 결과물에든 — 색은 그대로, 작화감만 8090 셀로 한 번 더',
@@ -2068,6 +2136,7 @@ const state = {
 /* ---------- 타일 라벨 (4열 정사각 타일용 짧은 이름) ---------- */
 // 타일에는 이모지 + 짧은 이름만 보여주고, 원래 긴 이름·설명은 길게 누르면 뜬다.
 const SHORT_PATCH = {
+  dd_pink_chiffon:'시폰드레스', dd_satin_cami:'새틴캐미', dd_allblack:'올블랙', dd_teal_knit:'틸니트',
   retrofinish:'레트로마감', celcore87:'87 셀', rimlight:'밤 림라이트', eyes:'눈 재작화',
   mob:'못캐릭', tone:'쨍함 제거', smudge:'뭉개기', smudge0:'뭉개기 톤유지', flat:'음영 빼기',
   ova_proportion:'가분수 교정', fashion_8090:'패션 번역', pajama_8090:'파자마 번역', ratio_6575:'비율만', gag_face:'개그 표정',
@@ -2161,7 +2230,8 @@ function renderStyles() {
 }
 
 const PATCH_GROUPS = [
-  { title: '🌐 범용 버튼 — 어떤 사진·프리셋에든', match: p => !p.scene },
+  { title: '🌐 범용 버튼 — 어떤 사진·프리셋에든', match: p => !p.scene && !p.outfit },
+  { title: '👗 의상 버튼 — 미드 패션 시안 (옷만 교체)', match: p => !!p.outfit },
   { title: '🎬 씬 버튼 — 장면 연출로 재해석', match: p => !!p.scene },
 ];
 
