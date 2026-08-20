@@ -214,6 +214,27 @@
   .act:active { transform:translate(1px,1px); box-shadow:none; }
   .act.primary { background:var(--gold); }
   .patch-title { font-size:11.5px; font-weight:800; color:var(--ink-soft); margin:15px 0 7px; }
+  /* ---------- 접이식 그룹 헤더 ---------- */
+  .grp-head {
+    display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none;
+    -webkit-touch-callout:none; margin:14px 0 7px; padding:7px 9px;
+    border:2px solid var(--ink); border-radius:11px; background:var(--paper);
+    font-size:11.5px; font-weight:800; color:var(--ink);
+  }
+  .grp-head:active { transform:scale(.985); }
+  .grp-head .caret { font-size:10px; transition:transform .15s; }
+  .grp-head.open .caret { transform:rotate(90deg); }
+  .grp-head .cnt {
+    margin-left:auto; font-size:10px; font-weight:800; color:var(--ink-soft);
+    background:#00000010; border-radius:7px; padding:2px 6px;
+  }
+  /* ---------- ⭐ 즐겨찾기 ---------- */
+  .patch { position:relative; }
+  .patch .fav {
+    position:absolute; top:2px; right:3px; font-size:11px; line-height:1;
+    opacity:.9; pointer-events:none;
+  }
+  .fav-tip { font-size:10.5px; color:var(--ink-soft); text-align:center; margin:2px 0 0; }
 
   /* ---------- 히스토리 ---------- */
   #history-card { display:none; }
@@ -481,6 +502,7 @@ body::before{display:none !important}
   <div class="ic-em" id="info-em"></div>
   <div class="ic-t" id="info-t"></div>
   <div class="ic-d" id="info-d"></div>
+  <button class="ic-x" id="info-fav" style="display:none; background:var(--paper); color:var(--ink); margin-top:12px">⭐ 즐겨찾기에 담기</button>
   <button class="ic-x" id="info-x">닫기</button>
 </div>
 
@@ -2044,11 +2066,81 @@ Looks exactly like a frame captured from a Japanese television broadcast between
   },
   mi_chara_simple: {
     name: '🏠 메종일각 캐릭터화 (단순 체형)',
-    desc: '86 루미코/스튜디오 딘 일상 로코 작화로 재해석 — 둥근 얼굴·무광 아몬드 눈, 5.5~6.5등신 생활 체형',
-    prompt: `구도·포즈·배경·의상 디자인과 고유색은 그대로 두고, 캐릭터를 1986년 「메종일각」(스튜디오 딘, 루미코 타카하시 원작) TV판 캐릭터 디자인으로 다시 그려줘.
-[고정] 배경·구도·포즈·의상 디자인·의상색·헤어색·머리 길이·헤어 실루엣은 원본 그대로 100% 고정. 캐릭터의 개성(누구인지 알아볼 수 있는 특징)은 유지하되, 아래 작화 스펙으로 재해석할 것 (이 버튼은 얼굴·체형 재해석 버튼이므로 얼굴 잠금은 적용하지 않음). 피부톤은 원본 명도 그대로 또는 한 톤 밝게 — 누렇게·검게 금지. 화면 전체에 노란·세피아 필터 금지.
+    desc: '86 일상 로코 작화로 재해석 — 얼굴·헤어는 원본 100% 잠금, 체형·비율·작화감만 변경 (5.5~6.5등신)',
+    prompt: `구도·포즈·배경·의상 디자인과 고유색은 그대로 두고, 캐릭터를 1986년 일본 일상 로맨틱 코미디 TV 애니메이션의 캐릭터 작화감으로 다시 그려줘.
 
-1986 Rumiko-style everyday romcom character drawing (Studio Deen TV): round soft face with gentle cheeks, small nose as a short line, small modest mouth; MATTE ALMOND EYES — flat almond shape, simple dark iris, one small dull highlight, thick soft upper lid line, absolutely no sparkle or wet gloss; hair as one soft rounded mass with ONE darker shade step, no strand detail. SIMPLIFIED HOMELY BODY: modest 5.5-6.5-head proportions, relaxed posture, rounded shoulders, simple tube-like limbs, mitten-simple hands. Even medium-weight dark-brown outlines, flat one-step cel shading, warm muted mid-80s TV palette, everyday lived-in feeling (never glamorous or idealized).
+[최우선 — 캐릭터 정체성 잠금]
+첨부한 캐릭터시트(원본 이미지)를 캐릭터 외형의 절대 기준으로 사용한다.
+- 눈·코·입의 고유한 생김새를 원본과 100% 동일하게 유지한다.
+- 눈의 모양, 크기, 기울기, 눈매, 눈꺼풀선, 눈동자 크기와 색, 양쪽 눈 사이 간격을 바꾸지 않는다.
+- 코의 크기, 폭, 콧볼, 콧구멍, 코끝 모양과 위치를 바꾸지 않는다.
+- 입의 크기, 폭, 입술 두께, 입꼬리 모양과 위치를 바꾸지 않는다.
+- 얼굴형, 턱 모양, 볼의 너비와 이목구비 배치를 바꾸지 않는다.
+- 헤어스타일을 100% 고정한다. 헤어색, 길이, 전체 실루엣, 앞머리 모양, 가르마, 잔머리, 묶은 위치와 머리카락이 떨어지는 방향을 바꾸지 않는다.
+- 점, 주근깨, 귀걸이 등 캐릭터 식별 요소의 위치·크기·개수를 그대로 유지한다.
+- 같은 캐릭터임을 즉시 알아볼 수 있어야 한다.
+1986년 작화 스타일은 눈·코·입·얼굴형·헤어 디자인을 다시 설계하는 데 적용하지 않는다. 선화, 채색 방식, 음영, 체형과 신체 비율에만 적용한다. 스타일 지침과 원본 외형이 충돌하면 원본 외형을 우선한다.
+
+[100% 고정]
+- 원본의 구도, 카메라 앵글, 원근, 프레이밍과 포즈
+- 배경 구조와 모든 사물의 위치
+- 의상 디자인, 의상색과 액세서리
+- 피부·머리·눈·의상의 고유색
+- 캐릭터의 표정과 시선 방향
+
+[변경 허용 범위 — 이것만 변경]
+1. 선화와 채색 등 전체적인 작화감
+2. 몸의 체형
+3. 머리 대비 몸의 비율
+4. 어깨너비, 몸통 길이, 팔다리 굵기와 길이
+5. 손과 발을 단순화하는 방식
+6. 셀 음영과 머리카락을 칠하는 방식
+
+[체형·비율 변경]
+1986년 일본 일상 로맨틱 코미디 TV 애니메이션의 소박하고 생활감 있는 체형으로 바꾼다.
+- 전체 신체는 자연스러운 5.5~6.5등신
+- 머리는 몸에 비해 약간 크고 친근한 비율
+- 어깨는 부드럽고 둥글게 내려간다
+- 몸통은 지나치게 잘록하거나 길지 않은 단순한 형태
+- 팔다리는 가늘게 미화하지 않고 편안한 원통형으로 단순화
+- 손은 작고 단순하며 손가락 묘사를 최소화
+- 과장된 모델 체형, 긴 다리, 잘록한 허리, 글래머러스한 체형 금지
+- 포즈 자체는 원본과 동일하게 유지하고 체형과 비율만 변경
+
+[1986 TV 애니메이션 작화감]
+1986 Japanese everyday romantic-comedy TV animation rendering:
+- keep the original unique eyes, nose, mouth and face shape exactly as they are
+- even medium-weight dark-brown outlines
+- slightly handmade but clean TV-animation linework
+- broad flat cel-color areas
+- flat one-step cel shading
+- face mostly unshaded, with only one compact shadow under the neck
+- hair rendered as the original locked silhouette, using one flat base color and only one darker shade mass
+- no individual strand rendering
+- minimal clothing-fold lines
+- simplified, modest and lived-in body proportions
+- everyday, friendly and slightly homely visual feeling
+- never glamorous, idealized or fashion-model-like
+
+[색감·피부톤 잠금]
+- 피부톤은 원본 명도 그대로 또는 최대 한 톤 밝게만 표현한다.
+- 피부를 누렇거나 갈색·황토색·탁한 회색으로 만들지 않는다.
+- 원본의 머리색·눈색·의상색과 채도를 그대로 유지한다.
+- 화면 전체에 노란색, 세피아색, 주황색 필터를 씌우지 않는다.
+- 화이트밸런스는 중립으로 유지한다. 흰색은 뉴트럴 화이트, 회색은 중립 회색으로.
+- 따뜻한 느낌은 개별 사물의 고유색에서만 나오게 하고 화면 전체의 색조를 바꾸지 않는다.
+
+[금지]
+- 원본의 눈을 아몬드형 눈이나 다른 눈매로 재설계하지 말 것
+- 눈을 더 크거나 둥글거나 반짝이게 만들지 말 것
+- 코와 입을 작화 스타일에 맞춰 축소하거나 단순한 다른 모양으로 바꾸지 말 것
+- 얼굴을 둥글게 만들거나 턱을 짧게 바꾸지 말 것
+- 헤어 실루엣, 앞머리, 길이와 가르마를 바꾸지 말 것
+- 현대 미소녀 작화, 촉촉한 눈, 다중 하이라이트, 글로시 피부 금지
+- 에어브러시 음영, 부드러운 그라데이션, 3D 렌더링 금지
+- 노란색·세피아·주황색 전체 필터 금지
+
+최종 결과는 원본과 동일한 얼굴과 헤어를 가진 캐릭터가, 체형·신체 비율과 그리는 방식만 1986년 TV 애니메이션풍으로 변경된 모습이어야 한다.
 
 딱 이미지 1장만 출력.`,
   },
@@ -2166,10 +2258,18 @@ function splitEmoji(name) {
 }
 
 /* ---------- 길게 누르면 설명 ---------- */
-function showInfo(em, title, desc) {
+function showInfo(em, title, desc, key) {
   $('info-em').textContent = em;
   $('info-t').textContent = title;
   $('info-d').textContent = desc || '';
+  const fb = $('info-fav');
+  if (fb) {
+    if (key && PATCHES[key]) {
+      fb.style.display = '';
+      fb.textContent = isFav(key) ? '⭐ 즐겨찾기에서 빼기' : '⭐ 즐겨찾기에 담기';
+      fb.onclick = () => { toggleFav(key); closeInfo(); };
+    } else fb.style.display = 'none';
+  }
   $('info-card').style.display = 'block';
   $('info-bg').style.display = 'block';
 }
@@ -2182,11 +2282,11 @@ function closeInfo() {
 // 길게 누른 뒤 이어지는 click 은 el._held 로 삼켜서 오작동을 막는다.
 // pointer 이벤트를 쓰는 이유: :active 로 타일이 줄어들면 커서가 타일 밖으로 나가
 // mouseleave 가 즉시 떠서 mouse 이벤트 기반 롱프레스는 절대 성립하지 않는다.
-function attachHold(el, em, title, desc) {
+function attachHold(el, em, title, desc, key) {
   let timer = null, sx = 0, sy = 0;
   const fire = () => {
     el._held = true;
-    showInfo(em, title, desc);
+    showInfo(em, title, desc, key);
     if (navigator.vibrate) { try { navigator.vibrate(15); } catch (_) {} }
   };
   const cancel = () => clearTimeout(timer);
@@ -2235,32 +2335,73 @@ const PATCH_GROUPS = [
   { title: '🎬 씬 버튼 — 장면 연출로 재해석', match: p => !!p.scene },
 ];
 
+/* ---------- ⭐ 즐겨찾기 / 그룹 접기 상태 ---------- */
+let favs = [];
+try { favs = JSON.parse(localStorage.getItem('cel_favs')) || []; } catch (_) {}
+if (!Array.isArray(favs)) favs = [];
+favs = favs.filter(k => PATCHES[k]);
+const saveFavs = () => localStorage.setItem('cel_favs', JSON.stringify(favs));
+const isFav = k => favs.indexOf(k) >= 0;
+function toggleFav(k) {
+  const i = favs.indexOf(k);
+  if (i >= 0) { favs.splice(i, 1); toast('⭐ 즐겨찾기에서 뺐어요'); }
+  else { favs.unshift(k); toast('⭐ 즐겨찾기에 담았어요'); }
+  saveFavs(); renderPatches(); renderFreePatches();
+}
+
+let openGroups = {};
+try { openGroups = JSON.parse(localStorage.getItem('cel_groups')) || {}; } catch (_) {}
+if (typeof openGroups !== 'object' || !openGroups) openGroups = {};
+const saveGroups = () => localStorage.setItem('cel_groups', JSON.stringify(openGroups));
+
+function makePatchBtn(key, p, onClickFn) {
+  const { em, rest } = splitEmoji(p.name);
+  const b = document.createElement('button');
+  b.className = 'patch';
+  b.innerHTML = `<div class="em">${em}</div><div class="nm">${SHORT_PATCH[key] || rest}</div>` +
+    (isFav(key) ? '<div class="fav">⭐</div>' : '');
+  b.title = rest + ' — ' + p.desc;
+  // 롱프레스: 설명 + 즐겨찾기 토글 버튼
+  attachHold(b, em, rest, p.desc, key);
+  b.onclick = () => { if (swallowedByHold(b)) return; onClickFn(key, p); };
+  return b;
+}
+
 function renderPatchList(boxId, arrow, onClickFn) {
   const box = $(boxId);
   box.innerHTML = '';
-  PATCH_GROUPS.forEach(g => {
+
+  // ⭐ 즐겨찾기 줄 (있을 때만, 항상 펼침)
+  if (favs.length) {
+    const fh = document.createElement('div');
+    fh.className = 'patch-title';
+    fh.style.gridColumn = '1 / -1';
+    fh.textContent = '⭐ 즐겨찾기';
+    box.appendChild(fh);
+    favs.forEach(key => { if (PATCHES[key]) box.appendChild(makePatchBtn(key, PATCHES[key], onClickFn)); });
+  }
+
+  PATCH_GROUPS.forEach((g, gi) => {
     const entries = Object.entries(PATCHES).filter(([, p]) => g.match(p));
     if (!entries.length) return;
+    const gid = boxId + ':' + gi;
+    const open = !!openGroups[gid];
+
     const h = document.createElement('div');
-    h.className = 'patch-title';
-    h.textContent = g.title;
+    h.className = 'grp-head' + (open ? ' open' : '');
     h.style.gridColumn = '1 / -1';
+    h.innerHTML = `<span class="caret">▶</span><span>${g.title}</span><span class="cnt">${entries.length}</span>`;
+    h.onclick = () => { openGroups[gid] = !openGroups[gid]; saveGroups(); renderPatchList(boxId, arrow, onClickFn); };
     box.appendChild(h);
-    entries.forEach(([key, p]) => {
-      const { em, rest } = splitEmoji(p.name);
-      const b = document.createElement('button');
-      b.className = 'patch';
-      b.innerHTML = `<div class="em">${em}</div><div class="nm">${SHORT_PATCH[key] || rest}</div>`;
-      b.title = rest + ' — ' + p.desc;
-      attachHold(b, em, rest, p.desc);
-      b.onclick = () => { if (swallowedByHold(b)) return; onClickFn(key, p); };
-      box.appendChild(b);
-    });
+
+    if (!open) return;
+    entries.forEach(([key, p]) => box.appendChild(makePatchBtn(key, p, onClickFn)));
   });
+
   const tip = document.createElement('div');
   tip.className = 'hold-tip';
   tip.style.gridColumn = '1 / -1';
-  tip.textContent = '버튼을 길게 누르면 설명이 떠요';
+  tip.textContent = '제목을 눌러 펼치고 · 버튼을 길게 누르면 설명과 ⭐담기가 떠요';
   box.appendChild(tip);
 }
 
