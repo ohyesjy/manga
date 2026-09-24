@@ -3512,13 +3512,13 @@ function renderPatchList(boxId, arrow, onClickFn) {
     const entries = Object.entries(PATCHES).filter(([, p]) => g.match(p));
     if (!entries.length) return;
     const gid = boxId + ':' + gi;
-    const open = !!openGroups[gid];
+    const open = openGroups[gid] !== false;   // 기본은 펼침, 사용자가 접은 그룹만 false로 저장
 
     const h = document.createElement('div');
     h.className = 'grp-head' + (open ? ' open' : '');
     h.style.gridColumn = '1 / -1';
     h.innerHTML = `<span class="caret">▶</span><span>${g.title}</span><span class="cnt">${entries.length}</span>`;
-    h.onclick = () => { openGroups[gid] = !openGroups[gid]; saveGroups(); renderPatchList(boxId, arrow, onClickFn); };
+    h.onclick = () => { openGroups[gid] = !open; saveGroups(); renderPatchList(boxId, arrow, onClickFn); };
     box.appendChild(h);
 
     if (!open) return;
@@ -3528,7 +3528,7 @@ function renderPatchList(boxId, arrow, onClickFn) {
   const tip = document.createElement('div');
   tip.className = 'hold-tip';
   tip.style.gridColumn = '1 / -1';
-  tip.textContent = '제목을 눌러 펼치고 · 버튼을 길게 누르면 설명과 ⭐담기가 떠요';
+  tip.textContent = '제목을 눌러 접거나 펼치고 · 버튼을 길게 누르면 설명과 ⭐담기가 떠요';
   box.appendChild(tip);
 }
 
