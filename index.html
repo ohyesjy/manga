@@ -4091,7 +4091,7 @@ updateGo();
 try {
   if (window.self !== window.top) $('sandbox-warn').style.display = 'block';
 } catch (_) { $('sandbox-warn').style.display = 'block'; }
-if (!settings.key) setTimeout(openSheet, 600);
+// 시작 시 설정창 자동 열기 제거 — 필요하면 우상단 ⚙️ 버튼으로 연다
 </script>
 </body>
 </html>
