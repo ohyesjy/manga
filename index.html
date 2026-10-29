@@ -2972,79 +2972,74 @@ optimize=True는 쓰지 않는다. 프레임 간 색이 어긋날 수 있다.
 전체가 누렇거나 탁하면 프레임 생성 단계에서 이미 드리프트가 생긴 것이므로, 조립을 고치지 말고 프레임부터 다시 만든다.`,
   },
   bg_repaint: {
-    name: '🏞 지영픽작화감',
-    desc: '배경·소품·초목만 다시 칠하기 — 색면 내부 변조·가는 구조선·선택적 반사·재질 묘사·공기감 (인물 작화는 건드리지 않음)',
-    prompt: `BACKGROUND ART REVISION — ENVIRONMENT, PROPS, AND NATURE ONLY
+    name: '🏞 지영픽 작화감',
+    desc: '배경·건축·가구·소품·음식·초목만 2단계로 다시 칠하기 — 1차 전면 repaint → 2차 디지털 잔재 제거·강화 (인물·구도·수량 고정)',
+    prompt: `BACKGROUND ART — TWO CONSECUTIVE STAGES, ONE FINAL IMAGE
 
-배경·건축·가구·생활 소품·초목·유리·공기감만 아래 스펙으로 다시 칠한다. 인물에 이미 적용된 작화감은 건드리지 않는다.
-원본의 구도, 카메라, 원근, 건축 배치, 사물 위치·실루엣·비율, 날씨, 시간대는 그대로 유지한다.
-이 배경 지침은 "벽을 전부 평평하게, 배경 음영 2~3단만, 색 변화 금지, 반사 금지, 재질 디테일 전부 제거" 같은 이전의 일괄 제한을 대체한다.
-목표는 1980년대 후반~1990년대 TV 애니메이션의 공들여 그린 배경화다 — 절약된 작도, 가는 구조선, 부드럽게 변조된 색면, 선택적인 재질 묘사, 빛·색·거리의 명확한 관계.
+Apply the hand-painted background treatment through TWO CONSECUTIVE STAGES of rendering and review. Complete both stages before delivering ONE final image.
+The purpose of the second stage is to strengthen the hand-painted background treatment wherever the original digital rendering remains visible.
+Apply this treatment to the BACKGROUND, ARCHITECTURE, FURNITURE, EVERYDAY OBJECTS, FOOD, AND VEGETATION ONLY.
 
-1. PAINTED SURFACES WITH INTERNAL COLOR VARIATION
-Establish broad color areas, then introduce gentle changes in hue and value within those areas.
-A green floor may shift through jade, blue-green, and subdued yellow-green. A blue wall may contain quiet lavender and cyan variations. A tiled surface may carry a broad, pale wash of light crossing several tiles.
-Keep these changes large, restrained, and connected to the surface and lighting. They should feel brushed, washed, or softly scumbled into the painting.
-Allow broad painted gradients and soft transitions in backgrounds. Avoid perfectly mechanical digital gradients, conspicuous brush-stamp patterns, random mottling, and uniform grain.
-The surface should remain calm at viewing size. Small texture must not compete with the painted shapes.
+ABSOLUTE LOCKS — APPLY THROUGHOUT BOTH STAGES
+Preserve the original composition, camera angle, perspective, framing, aspect ratio, architectural layout, object positions, proportions, silhouettes, and spatial relationships.
+Keep all characters unchanged: facial identity, expression, gaze, skin brightness, skin undertone, hair, clothing, pose, anatomy, markings, and existing character rendering.
+Preserve comic symbols, emphasis lines, and effects already present.
+Preserve every object's geometry and state, including container depth, rims, openings, lids, phone orientation, food quantities, and contact with hands or surfaces.
+Keep the original time of day, weather, and light-source locations.
 
-2. THIN STRUCTURAL LINES AND VARIED EDGES
-Use fine gray-brown, blue-gray, muted violet, or locally colored dark lines to describe architectural structure.
-Window frames, tile joints, furniture edges, pipes, shelves, and pavement seams remain readable. Lines may vary slightly in strength and continuity, while perspective stays accurate.
-Combine clear structural edges with softly painted transitions. A window frame can remain distinct while the reflection inside it is diffuse. A tabletop edge can be firm while its reflected light fades gradually.
-Allow some edges to disappear into neighboring colors or shadow. Avoid outlining every background shape with the same dark border.
+STAGE ONE — REPAINT THE ENVIRONMENT
+Repaint the environment as a hand-painted background from a late-1980s or 1990s Japanese television anime.
+Construct architecture and objects from broad painted color areas, fine structural lines, and selectively described materials.
+Within each broad surface, introduce gentle changes of hue and value. Allow soft gouache transitions, thin washes, and restrained overlapping paint. These changes should follow the surface and existing illumination.
+Use clear structural edges where needed and softer painted transitions elsewhere. Window frames, furniture edges, joints, and important contours remain readable.
+Paint light into the surfaces using broad illumination, colored shade, and restrained reflected color. Preserve appropriate cast shadows. Combine firm and soft boundaries according to the scene.
+For wood, establish broad brown planes with subtle warm and cool variation. Retain only selected grain strokes.
+For walls, use calm areas of color with slight internal variation. Keep tile joints and architectural divisions thin and selective.
+For glass and metal, retain a few simple reflection bands, transparent areas, pale contour fragments, or narrow highlights.
+For furniture and props, keep the details that explain the material: selected seams, woven rhythms, bottle necks, rims, labels, and openings. Surround these descriptive areas with quieter surfaces.
+For food, use readable grouped shapes, restrained interior marks, and painted highlights. Preserve the type, quantity, arrangement, and silhouette of the food.
+For vegetation, group distant foliage into irregular masses. Preserve the distinct silhouettes of nearby large leaves and describe them with a few painted tonal changes.
 
-3. LIGHT PAINTED INTO THE ENVIRONMENT
-Describe illumination through the colors and values of the painted surfaces.
-Allow broad pools of light, softly fading shade, pale window illumination, and restrained reflected color where the scene supports them. Preserve necessary cast-shadow shapes beneath furniture and inside architectural recesses.
-Use a mixture of firm shadow boundaries and soft transitions, according to the surface. Do not make every shadow equally sharp or equally blurred.
-Keep night colors present: indigo, blue-green, violet, muted green, and subdued warm accents should remain distinguishable in darkness.
-Maintain neutral overall white balance. Warmth must remain tied to local object colors and existing light sources. Do not apply a global yellow, sepia, or orange filter.
+STAGE TWO — STRENGTHEN AND UNIFY THE SAME STYLE
+Review the entire environment again, concentrating on areas that still resemble the original digital illustration.
+Where realistic surface rendering remains, replace it with deliberate painted shapes and selective marks.
+Where wood grain remains dense or repetitive, remove most of it and restore broad, quietly varied color planes.
+Where food or props still look glossy, highly modeled, or photographically detailed, simplify the rendering while retaining enough reflection and shading to identify the material.
+Where architectural edges look mechanically uniform, vary their painted strength and continuity without bending or changing their geometry.
+Where walls or floors look like flat digital fills, introduce restrained large-scale pigment variation and softly painted light transitions.
+Where a surface looks noisy or artificially distressed, simplify it into cleaner paint.
+Where every object has equal detail or sharpness, establish a clearer hierarchy: necessary structural information stays distinct, secondary detail recedes, and distant edges soften.
+Integrate murals and decorative motifs into the painted surface while preserving their exact designs and positions.
+Keep close, middle, and distant areas coherent through overlap, perspective, selective contrast, and varied edge clarity.
+The second stage must reinforce the SAME visual language. Preserve the result's clean colors, gentle tonal transitions, and spatial readability.
 
-4. SELECTIVE, MATERIAL-SPECIFIC DETAIL
-Preserve the details that explain what an object is made of.
-Wicker may retain a simplified woven rhythm. Upholstered seating may retain seams, tuft divisions, and a few soft changes around the padding. Shelved bottles may retain distinctive necks, labels, and selected reflective edges.
-Balance these descriptive areas with quieter surrounding surfaces. Do not give every object identical detail density.
-Keep object geometry accurate, including rims, thicknesses, openings, handles, and elliptical perspective. Simplifying the painting must not redesign the object.
-For wood, begin with broad brown color planes and restrained tonal variation. Add only selected grain strokes where they help describe the surface. Avoid dense parallel wood-grain lines across every beam, floorboard, and tabletop.
-For walls and tile, emphasize broad painted color and fine structural divisions. Avoid adding scratches, grime, or roughness merely to make the scene look old.
+STRENGTH CONTROL
+Make the style stronger through more decisive repainting, clearer simplification, more selective detail, and more convincing painted surfaces.
+Do not use stronger blur, heavier grain, thicker outlines, greater saturation, darker shadows, or exaggerated brush texture as substitutes for stronger style.
+Maintain both broad quiet areas and small descriptive accents. Do not flatten the entire background into uniform two-tone blocks.
+Keep brushwork integrated into the shapes. Do not place a generic watercolor, canvas, paper, or noise texture over the image.
 
-5. GLASS, REFLECTIONS, AND SMALL HIGHLIGHTS
-Windows may contain broad diagonal reflection bands, softly visible scenery, pale overlapping colors, and a few narrow bright edges.
-Glass tabletops may carry faint vertical or horizontal reflections and subdued color from nearby objects. Drinking glasses and bottles may use pale contour fragments, transparent areas, simple liquid shapes, and a limited number of highlights.
-Reflections should be selective and visibly painted. Preserve their role in explaining the material without calculating a complete mirror image of the room.
-Metal may retain a narrow light edge or a simple cool reflection strip. Ceramic may retain a small, restrained highlight when appropriate.
-Do not remove every reflection in pursuit of a matte appearance. Keep the overall painted finish soft and understated.
+COLOR AND EXPOSURE LOCK
+Preserve the scene's essential local colors and overall lighting level through both stages.
+Keep colors distinct and alive, including muted greens, blue-greens, lavender, pink, cream, brown, and indigo where present.
+Do not repeatedly increase saturation or brightness between stages. Any slight adjustment applies to the final image once.
+Maintain NEUTRAL WHITE BALANCE. Whites remain neutral white and grays remain gray. No global yellow, sepia, orange, or brown cast.
+Do not darken, yellow, gray, or otherwise recolor character skin.
 
-6. NATURAL FORMS AT DIFFERENT SCALES
-For distant trees and shrubs, use overlapping irregular foliage masses with dark gaps and selected lighter clusters. Reduce detail with distance.
-For a nearby broad-leaf houseplant, preserve the separate silhouettes of its main leaves. Describe each leaf with a few painted tonal changes and occasional vein marks. Do not merge recognizable large leaves into a generic bush.
-Use selective descriptive marks along important silhouettes and illuminated edges. Let less important interior areas remain quiet.
-Flowers may appear as small colored clusters, with only the nearest or most important blossoms receiving clearer shapes.
-Avoid repeated leaf stamps, identical rounded foliage clusters, and uniform detail across foreground and background.
+FINAL OPTICAL FINISH — APPLY ONCE
+After both stages, add only restrained analog photographic softness and slight color bleed.
+Keep the drawing, important material details, object geometry, and spatial relationships readable.
+Do not accumulate blur or grain across the two stages. No heavy scanlines, tracking damage, RGB separation, dirty overlays, scratches, or AI-upscaled sharpness.
 
-7. CLEAN, DISTINCT COLOR RELATIONSHIPS
-Use a range of mint, jade, blue-green, lemon cream, dusty pink, lavender, blue-gray, warm brown, and deep blue where compatible with the source scene.
-Allow both pale colors and rich, deeper colors. Preserve the contrast between them. Do not lower saturation everywhere or mix every color toward gray-brown.
-A softly painted image can still contain a strong green floor, a pink sky, a blue exterior wall, or a warm yellow seat. Choose colors according to the existing setting and illumination.
-Do not force sunset colors into a nighttime image or recolor every scene with the same palette. Match the relationships between colors rather than importing a fixed palette into one frame.
+FINAL REVIEW
+Check that the background treatment is visible across the whole environment, including the foreground table and props.
+Check that broad surfaces contain softly painted color variation.
+Check that fine digital texture, mechanical edge uniformity, and excessive glossy rendering have been replaced where necessary.
+Check that the characters, composition, architecture, object placement, and food quantities remain unchanged.
 
-8. DEPTH AND ATMOSPHERE
-Build depth through overlap, perspective, relative scale, selective contrast, and varying edge clarity.
-Allow distant scenery behind glass to become softer and less detailed. When the original composition contains a very close foreground object, it may be softly out of focus while the middle distance remains clearer.
-Keep this softness localized and spatially motivated. Do not blur the entire background to simulate age.
-For humid scenes, use restrained veiling, translucent glass, and softened distant contrast. Draw steam as a few pale, irregular strokes.
-
-9. FINAL SURFACE AND BROADCAST SOFTNESS
-The handmade quality should come primarily from painted color transitions, varied edges, economical lines, and selective detail.
-Keep paper texture and pigment grain subtle enough to disappear at normal viewing size. Avoid a visible canvas texture or a uniform noise layer covering every surface.
-Apply only a restrained final optical softness and slight analog color bleed. Architectural structure, small props, and chosen material details must remain readable.
-Do not use VHS damage, excessive blur, dirt, or scratches as a substitute for background painting.
-
-FINAL BACKGROUND TARGET
-A quietly detailed, hand-painted television-anime environment: fine structural drawing, broad color areas with gentle internal variation, selective reflections, recognizable materials, varied edge softness, and clear atmospheric depth. Spacious, softly painted, and chromatically alive.
-
-[인물 고정] 인물의 눈·코·입 생김새와 얼굴형, 헤어스타일, 의상 디자인, 포즈, 고유색, 그리고 이미 적용된 인물 작화감은 원본 그대로 100% 유지한다. 피부톤은 원본 명도 그대로 또는 한 톤 밝게 — 누렇게·검게 금지.`,
+OUTPUT
+Deliver exactly ONE complete final image after both stages.
+Target: strongly established 1990s television-anime background painting, with fine structural drawing, softly modulated color planes, selective material detail, understated reflections, and natural atmospheric depth.`,
   },
   cel80_reels: {
     name: '📺 80s 셀 변환 (릴스 9:16)',
@@ -3611,7 +3606,7 @@ const SHORT_PATCH = {
   gif_retouch:'GIF 리터치',
   motion_gif:'모션 GIF',
   no_degradation:'열화 방지',
-  bg_repaint:'지영픽작화감',
+  bg_repaint:'지영픽 작화감',
   cel80_reels:'80s 셀 릴스',
   evaeyes:'에바 눈',
   cobalt_night:'코발트 나이트', hardboiled_male:'하드보일드 남', fashion_8090_m:'남성 패션',
