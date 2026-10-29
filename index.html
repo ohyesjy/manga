@@ -3728,6 +3728,8 @@ function renderStyles() {
     el.onclick = () => {
       if (swallowedByHold(el)) return;
       state.styleKey = key; renderStyles();
+      // 작화감 타일을 누르면 선택과 동시에 1차 프롬프트를 바로 복사
+      copyText(buildPrompt(key, $('extra').value), s.name + ' 프롬프트');
     };
     box.appendChild(el);
   });
