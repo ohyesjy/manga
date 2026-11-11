@@ -1185,7 +1185,7 @@ Output one complete image.
   },
   jypick3: {
     name: '지영픽 3 (노란기 제거)',
-    sub: '지영픽 2 + 화이트밸런스 중립~쿨 고정 — 크림/아이보리/황토 팔레트를 쿨 뉴트럴로 교체, 마지막 색온도 검수',
+    sub: '지영픽 2 + 노란기·탁함 차단 — 화이트밸런스 중립~쿨 고정 · 색 분리 잠금 · 쿨 뉴트럴 팔레트 · 최종 색온도/색분리 검수',
     emoji: '❄️',
     color: '#9AA8B8',
     full: `첨부한 이미지를 1980-90년대 일본 저예산 주간 TV 애니메이션의 한 프레임처럼 변환한다.
@@ -1215,6 +1215,18 @@ WHITE BALANCE LOCK — 노란기 차단 (이 버전의 핵심)
 - 색상 판단이 애매할 때는 따뜻한 쪽이 아니라 중립 또는 서늘한 쪽을 택한다.
 - 기준: 전체 평균 색조에서 노랑-파랑 축(LAB b)이 거의 0에 머물러야 한다. 결과가 노랗게 치우쳤다고 판단되면 따뜻함을 걷어내고 다시 중립으로 맞춘다.
 NEUTRAL-TO-COOL WHITE BALANCE IS MANDATORY. No global yellow, amber, sepia, orange, or brown cast anywhere in the frame. Whites stay neutral off-white, never ivory or cream. Shadows lean blue-gray or lavender, never brown. If in doubt, go cooler, never warmer.
+
+━━━━━━━━━━━━━━━━━━
+COLOR SEPARATION LOCK — 색이 탁해지는 것 차단
+━━━━━━━━━━━━━━━━━━
+모든 색은 자기 고유색으로 또렷하게 읽혀야 한다. 색끼리 섞여 한 덩어리의 탁한 톤이 되지 않게 한다.
+- 모든 색면에 공통의 누런 톤이나 회갈색 톤을 섞지 않는다. 파랑은 파랑으로, 초록은 초록으로, 분홍은 분홍으로, 보라는 보라로 또렷하게 유지한다.
+- "채도가 낮다"는 것은 색을 조금 차분하게 만드는 것이지, 모든 색에 같은 흙빛을 섞어 구별이 안 되게 만드는 것이 아니다.
+- 원본에서 서로 다른 색이었던 면은 변환 후에도 서로 다른 색으로 명확히 구분되어야 한다. 인접한 두 색이 비슷해 보이면 색상(hue) 차이를 유지한 채 다시 분리한다.
+- 색을 어둡게 만들 때 갈색이나 황토를 섞지 않는다. 같은 계열의 어두운 톤이나 청회색을 쓴다.
+- 회색이 필요하면 누런 회색이 아니라 중립 회색 또는 청회색을 쓴다.
+- 전체 화면이 한 가지 색조로 뭉쳐 보이면 실패다. 색상환에서 서로 떨어진 색들은 떨어진 채로 남겨둔다.
+KEEP EVERY LOCAL COLOR ITSELF. Do not blend a common yellow, amber, or brown-gray tone into all colors. Blues stay blue, greens stay green, pinks stay pink, purples stay purple. Muted means slightly lower saturation, NOT every color mixed toward the same muddy earth tone. Colors that differ in the source must still read as clearly different after conversion. Darken with the same hue family or blue-gray, never with brown or ochre.
 
 ━━━━━━━━━━━━━━━━━━
 FACE LOCK — 눈·코·입·얼굴형 고정
@@ -1335,7 +1347,8 @@ Keep the original skin brightness, hue, saturation, and undertone. No yellow, oc
 ━━━━━━━━━━━━━━━━━━
 색감
 ━━━━━━━━━━━━━━━━━━
-- 채도가 낮지만 깨끗하고 서늘한 색.
+- 채도는 낮지만 색끼리는 또렷하게 구분되는, 맑고 서늘한 색.
+- 탁하고 흐린 회갈색 덩어리로 뭉개지 않는다. 낮은 채도에서도 색상은 분명해야 한다.
 - 중립 오프화이트, 쿨 그레이, 뮤트 틸, 세이지 그린, 더스티 블루, 연한 라벤더, 네이비 그림자.
 - 원본 고유색을 유지하며 채도는 원본 수준을 유지한다. 채도를 올리지 않는다.
 - 따뜻한 색은 개별 사물의 고유색으로만 쓰고, 화면에서 차지하는 면적을 작게 유지한다.
@@ -1383,6 +1396,7 @@ Keep the original skin brightness, hue, saturation, and undertone. No yellow, oc
 마지막 검수 — 색온도
 ━━━━━━━━━━━━━━━━━━
 완성 직전에 흰 영역과 회색 영역을 확인한다. 노란 기가 보이면 중립으로 되돌린다.
+서로 다른 색이 비슷하게 탁해 보이면 각 색의 고유 색상을 되살려 다시 분리한다.
 피부가 원본보다 누렇거나 어두우면 원본 샘플색으로 되돌린다.
 전체 화면이 따뜻하게 보이면 따뜻함을 걷어내고 중립~서늘로 재조정한다.
 
